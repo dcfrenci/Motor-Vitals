@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- DARK THEME COLOR https://colorhunt.co/palette/f3efe043424222222222a39f -->
+    <color name="dark_background">#191919</color>
+    <color name="dark_less_background">#413F42</color>
+    <color name="dark_accent">#22A39F</color>
+    <color name="dark_text">#F3EFE0</color>
 </resources>

@@ -1,6 +1,10 @@
 package com.motorvitals.classes;
 
+import android.content.Context;
 import android.media.Image;
+import android.widget.ImageView;
+import android.widget.TextView;
+import org.w3c.dom.Text;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +67,20 @@ public class Motorcycle implements Motor{
         this.photo = photo;
     }
 
+    public TextView getNameView(TextView textView) {
+        textView.setText(getName());
+        return textView;
+    }
+
+    public TextView getDescriptionView(TextView textView) {
+        textView.setText(getDescription());
+        return textView;
+    }
+
+    public ImageView getPhotoView(ImageView imageView) {
+        //need to swap photo with the new one
+        return imageView;
+    }
     @Override
     public List<Element> filterWithState(List<Element> list) {
         return list.stream().filter(Element::getState).collect(Collectors.toList());

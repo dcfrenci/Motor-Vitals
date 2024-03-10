@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/Motorcycle"
+          android:id="@+id/motorcycle"
+          android:icon="@drawable/baseline_motorcycle_24"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+    <item android:title="@string/Status"
+          android:id="@+id/status"
+          android:icon="@drawable/baseline_notifications_24"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+    <item android:title="@string/Profile"
+          android:id="@+id/profile"
+          android:icon="@drawable/baseline_helmet_24"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+</menu>
