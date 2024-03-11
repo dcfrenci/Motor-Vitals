@@ -1,6 +1,8 @@
 package com.motorvitals.classes;
 
 import android.media.Image;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -94,6 +96,15 @@ public class Element {
 
     public void setLastServiceKm(Date lastServiceKm) {
         this.lastServiceKm = lastServiceKm;
+    }
+
+    public TextView getTextView(TextView textView) {
+        textView.setText(getName());
+        return textView;
+    }
+
+    public ImageView getImageView(ImageView imageView) {
+        return imageView;
     }
 
     private HashMap<String, Integer> basicMap() {

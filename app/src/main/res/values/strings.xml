@@ -1,4 +1,7 @@
 <resources>
+    <!--  Content description  -->
+    <string name="button">Button</string>
+
     <!--  Bottom navigation menu  -->
     <string name="app_name">motorvitals</string>
     <string name="Motorcycle">Motorcycle</string>
@@ -9,7 +12,7 @@
     <string name="detail_title">Your model name</string>
     <string name="detail_description">Your description</string>
 
-    <!--  Autofill hit  -->
+    <!--  Autofill hint  -->
     <string name="detail_title_fill">Generic model</string>
     <string name="detail_description_fill">Description</string>
 

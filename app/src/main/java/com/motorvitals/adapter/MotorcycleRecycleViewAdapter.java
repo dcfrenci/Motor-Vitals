@@ -15,15 +15,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<MotorcycleRecycleViewAdapter.MotorcycleViewHolder> {
-    private Fragment context;
+    private Fragment fragment;
     private ArrayList<Motorcycle> motorcycles;
-    public MotorcycleRecycleViewAdapter(Fragment context, ArrayList<Motorcycle> motorcycles) {
-        this.context = context;
+    public MotorcycleRecycleViewAdapter(Fragment fragment, ArrayList<Motorcycle> motorcycles) {
+        this.fragment = fragment;
         this.motorcycles = motorcycles;
-    }
-
-    public Fragment getContext() {
-        return this.context;
     }
 
     @NonNull

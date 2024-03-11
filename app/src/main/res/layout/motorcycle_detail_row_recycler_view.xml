@@ -25,9 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-
             <TextView
-                    android:id="@+id/list_element_card"
+                    android:id="@+id/list_title_card"
                     android:text="@string/Motorcycle"
                     android:textStyle="bold"
                     android:textSize="@dimen/card_title_text"
@@ -37,23 +36,43 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
 
                     android:layout_marginStart="@dimen/card_title_margin_sx"
-                    android:layout_marginTop="@dimen/card_top_margin"
-                    android:layout_marginBottom="@dimen/card_top_margin"/>
-            <ToggleButton
-                    android:id="@+id/list_element_toggle"
-                    android:layout_width="50dp"
-                    android:layout_height="30dp"
-                    app:icon="@drawable/baseline_arrow_drop_down_24"
+                    android:layout_marginTop="@dimen/card_top_margin"/>
+            <ImageButton
+                    android:id="@+id/list_button_image_card"
+                    android:src="@drawable/baseline_arrow_drop_down_24"
 
+                    android:background="@color/material_on_background_disabled"
+                    app:tint="@color/dark_text"
+
+                    android:layout_width="@dimen/motorcycle_dropdown_width"
+                    android:layout_height="@dimen/motorcycle_dropdown_height"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginEnd="@dimen/card_title_margin_sx"
                     android:layout_marginTop="@dimen/card_top_margin"
-                    android:layout_marginBottom="@dimen/card_top_margin"/>
+                    android:contentDescription="@string/button"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/list_element_cards"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/motorcycle_list_to_top"
+                android:visibility="visible"
+                >
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
