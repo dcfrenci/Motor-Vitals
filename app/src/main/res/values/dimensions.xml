@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Card dimension  -->
     <dimen name="card_corner">15dp</dimen>
+    <dimen name="card_to_top">7dp</dimen>
     <dimen name="card_title_margin_sx">10dp</dimen>
     <dimen name="card_title_text">20sp</dimen>
     <dimen name="card_description_margin_sx">20dp</dimen>
@@ -8,4 +10,13 @@
     <dimen name="card_top_margin">5dp</dimen>
     <dimen name="card_image">70dp</dimen>
     <dimen name="card_image_padding">3dp</dimen>
+
+    <!--  Detail dimension  -->
+    <dimen name="motorcycle_image">150dp</dimen>
+    <dimen name="motorcycle_title_text">20sp</dimen>
+    <dimen name="motorcycle_text">12sp</dimen>
+    <dimen name="motorcycle_image_to_top">15dp</dimen>
+    <dimen name="motorcycle_title_to_top">20dp</dimen>
+    <dimen name="motorcycle_title_margin_sx">5dp</dimen>
+    <dimen name="motorcycle_text_margin">10dp</dimen>
 </resources>

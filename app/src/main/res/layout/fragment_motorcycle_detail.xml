@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_background"
+        tools:context=".fragments.MotorcycleDetailFragment">
+
+    <ImageView
+            android:id="@+id/detailMotorcycleImageView"
+            android:src="@drawable/baseline_motorcycle_24"
+            android:layout_width="@dimen/motorcycle_image"
+            android:layout_height="@dimen/motorcycle_image"
+            android:padding="@dimen/card_image_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/Motorcycle"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@+id/detailMotorcycleImageView"
+            android:layout_height="@dimen/motorcycle_image"
+            app:layout_constraintStart_toEndOf="@+id/detailMotorcycleImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/detailMotorcycleImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/constraintLayout">
+
+        <EditText
+                android:id="@+id/motorcycleTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="text"
+                android:textSize="@dimen/motorcycle_title_text"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text"
+                android:hint="@string/detail_title"
+                android:autofillHints="@string/detail_title_fill"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_marginTop="@dimen/motorcycle_title_to_top"
+                android:layout_marginStart="@dimen/motorcycle_title_margin_sx"
+                android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
+                android:minHeight="48dp"/>
+        <EditText
+                android:id="@+id/motorcycleDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/dark_text"
+                android:textColorHint="@color/dark_text"
+                android:textSize="@dimen/motorcycle_text"
+                android:hint="@string/detail_description"
+                app:layout_constraintTop_toBottomOf="@+id/motorcycleTitle"
+                android:layout_marginTop="@dimen/motorcycle_title_margin_sx"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/motorcycle_text_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
+                android:autofillHints="@string/detail_description_fill"
+                android:minHeight="48dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/motorcycle_image">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

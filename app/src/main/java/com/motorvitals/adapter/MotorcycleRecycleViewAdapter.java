@@ -1,7 +1,5 @@
 package com.motorvitals.adapter;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +40,7 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
         // Assigning values to the views we created in the recycler_view_row layout file based on the position of the view
         holder.setImageView(motorcycles.get(position).getPhotoView(holder.getImageView()));
         holder.setTextTitle(motorcycles.get(position).getNameView(holder.getTextTitle()));
-        holder.setImageView(motorcycles.get(position).getPhotoView(holder.getImageView()));
+        holder.setTextDescription(motorcycles.get(position).getDescriptionView(holder.getTextDescription()));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
         private TextView textDescription;
         public MotorcycleViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.cardImageView);
+            imageView = itemView.findViewById(R.id.cardMotorcycleImageView);
             textTitle = itemView.findViewById(R.id.titleTextView);
             textDescription = itemView.findViewById(R.id.descriptionTextView);
         }

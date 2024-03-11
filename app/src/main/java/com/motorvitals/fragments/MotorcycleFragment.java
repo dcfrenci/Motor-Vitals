@@ -69,12 +69,11 @@ public class MotorcycleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
+        // Load the recycler view
         recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
-
         MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, motorcycles);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return view;
     }
 
@@ -83,7 +82,7 @@ public class MotorcycleFragment extends Fragment {
         //load motorcycle from saved data
         List<Element> elementList = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 15; i++){
             String name = "moto_" + i;
             Motorcycle moto = new Motorcycle(elementList, name, 15000);
             moto.setDescription("Descrizione di " + name);

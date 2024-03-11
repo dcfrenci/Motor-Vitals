@@ -1,6 +1,18 @@
 <resources>
+    <!--  Bottom navigation menu  -->
     <string name="app_name">motorvitals</string>
     <string name="Motorcycle">Motorcycle</string>
     <string name="Status">Status</string>
     <string name="Profile">Profile</string>
+
+    <!--  Hint to input  -->
+    <string name="detail_title">Your model name</string>
+    <string name="detail_description">Your description</string>
+
+    <!--  Autofill hit  -->
+    <string name="detail_title_fill">Generic model</string>
+    <string name="detail_description_fill">Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
