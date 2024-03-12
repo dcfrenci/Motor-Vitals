@@ -1,6 +1,6 @@
 <resources>
     <!--  Content description  -->
-    <string name="button">Button</string>
+    <string name="button_description">Button_description</string>
 
     <!--  Bottom navigation menu  -->
     <string name="app_name">motorvitals</string>

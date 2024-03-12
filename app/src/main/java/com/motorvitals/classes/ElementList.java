@@ -1,7 +1,11 @@
 package com.motorvitals.classes;
 
+import android.view.View;
 import android.widget.TextView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -33,11 +37,9 @@ public class ElementList {
     }
 
     public RecyclerView getElementsRecyclerView(RecyclerView recyclerView) {
-        /*recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
-        MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, motorcycles);
+        MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(getElements());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));*/
-
-        return null;
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return recyclerView;
     }
 }

@@ -38,7 +38,7 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
         holder.setListNameText(multipleElementList.get(position).getTitleView(holder.getListNameText()));
 //        holder.setDropDownButton(multipleElementList.get(position).get);
 //        holder.setRecyclerViewElements(multipleElementList.get(position).getElements());
-
+        holder.setRecyclerViewElements(multipleElementList.get(position).getElementsRecyclerView(holder.getRecyclerViewElements()));
 
     }
 
@@ -62,24 +62,24 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
             this.listNameText = listNameText;
         }
 
-        /*public void setDropDownButton(ImageButton dropDownButton) {
+        public void setDropDownButton(ImageButton dropDownButton) {
             this.dropDownButton = dropDownButton;
         }
 
         public void setRecyclerViewElements(RecyclerView recyclerViewElements) {
             this.recyclerViewElements = recyclerViewElements;
-        }*/
+        }
 
         public TextView getListNameText() {
             return listNameText;
         }
 
-        /*public ImageButton getDropDownButton() {
+        public ImageButton getDropDownButton() {
             return dropDownButton;
         }
 
         public RecyclerView getRecyclerViewElements() {
             return recyclerViewElements;
-        }*/
+        }
     }
 }

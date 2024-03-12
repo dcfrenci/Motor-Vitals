@@ -52,7 +52,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginEnd="@dimen/card_title_margin_sx"
                     android:layout_marginTop="@dimen/card_top_margin"
-                    android:contentDescription="@string/button"/>
+                    android:contentDescription="@string/button_description"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/list_element_cards"
@@ -63,7 +63,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/motorcycle_list_to_top"
-                android:visibility="visible"
+                android:visibility="gone"
                 >
 
             <androidx.recyclerview.widget.RecyclerView

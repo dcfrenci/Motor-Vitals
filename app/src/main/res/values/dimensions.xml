@@ -19,7 +19,7 @@
     <dimen name="motorcycle_title_to_top">20dp</dimen>
     <dimen name="motorcycle_title_margin_sx">5dp</dimen>
     <dimen name="motorcycle_text_margin">10dp</dimen>
-    <dimen name="motorcycle_dropdown_height">30dp</dimen>
+    <dimen name="motorcycle_dropdown_height">35dp</dimen>
     <dimen name="motorcycle_dropdown_width">50dp</dimen>
     <dimen name="motorcycle_list_to_top">50dp</dimen>
 </resources>
