@@ -1,16 +1,19 @@
 package com.motorvitals.classes;
 
-import android.content.Context;
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Motorcycle implements Motor{
-    private List<Element> elementList;
+public class Motorcycle implements Motor, Parcelable {
+    private ArrayList<ElementList> elementList;
     private String name;
     private Integer km;
     private String description;
@@ -21,17 +24,17 @@ public class Motorcycle implements Motor{
         this.km = km;
     }
 
-    public Motorcycle(List<Element> elementList, String name, Integer km) {
+    public Motorcycle(ArrayList<ElementList> elementList, String name, Integer km) {
         this.elementList = elementList;
         this.name = name;
         this.km = km;
     }
 
-    public List<Element> getElementList() {
+    public ArrayList<ElementList> getElementList() {
         return elementList;
     }
 
-    public void setElementList(List<Element> elementList) {
+    public void setElementList(ArrayList<ElementList> elementList) {
         this.elementList = elementList;
     }
 
@@ -81,8 +84,52 @@ public class Motorcycle implements Motor{
         //need to swap photo with the new one
         return imageView;
     }
+
     @Override
-    public List<Element> filterWithState(List<Element> list) {
-        return list.stream().filter(Element::getState).collect(Collectors.toList());
+    public List<ElementList> filterWithState(List<ElementList> list) {
+//        return list.stream().filter(ElementList::getState).collect(Collectors.toList());
+        return null;
+    }
+
+//  ---------------------- Implementation Parcelable ----------------------
+    protected Motorcycle(Parcel in) {
+        elementList = in.createTypedArrayList(ElementList.CREATOR);
+        name = in.readString();
+        if (in.readByte() == 0) {
+            km = null;
+        } else {
+            km = in.readInt();
+        }
+        description = in.readString();
+    }
+
+    public static final Creator<Motorcycle> CREATOR = new Creator<Motorcycle>() {
+        @Override
+        public Motorcycle createFromParcel(Parcel in) {
+            return new Motorcycle(in);
+        }
+
+        @Override
+        public Motorcycle[] newArray(int size) {
+            return new Motorcycle[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeTypedList(elementList);
+        dest.writeString(name);
+        if (km == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(km);
+        }
+        dest.writeString(description);
     }
 }

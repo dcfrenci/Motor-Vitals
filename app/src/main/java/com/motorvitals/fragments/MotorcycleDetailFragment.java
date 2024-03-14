@@ -1,18 +1,27 @@
 package com.motorvitals.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.R;
+import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
+import com.motorvitals.adapter.RecyclerViewInterface;
+import com.motorvitals.classes.Motorcycle;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MotorcycleDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MotorcycleDetailFragment extends Fragment {
+public class MotorcycleDetailFragment extends Fragment implements RecyclerViewInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +31,7 @@ public class MotorcycleDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Motorcycle motorcycle;
 
     public MotorcycleDetailFragment() {
         // Required empty public constructor
@@ -57,6 +67,36 @@ public class MotorcycleDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_motorcycle_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_motorcycle_detail, container, false);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            motorcycle = bundle.getParcelable("motorcycle");
+            setUpMotorcycleDetailModels(view);
+        }
+        return view;
+    }
+    private void setUpMotorcycleDetailModels(View view) {
+        ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
+        TextView title = view.findViewById(R.id.motorcycle_title_text_view);
+        TextView description = view.findViewById(R.id.motorcycle_description_text_view);
+
+        title.setText(motorcycle.getName());
+        description.setText(motorcycle.getDescription());
+
+        RecyclerView recyclerView = view.findViewById(R.id.motorcycle_detail_recycler_view);
+        MotorcycleDetailRecyclerViewAdapter adapter = new MotorcycleDetailRecyclerViewAdapter(this, this, motorcycle.getElementList());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onCardClick(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Alert Title")
+                .setMessage("Clicked: ");
+
+        // Show the dialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

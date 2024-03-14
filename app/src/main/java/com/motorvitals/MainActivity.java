@@ -1,23 +1,14 @@
 package com.motorvitals;
 
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.motorvitals.adapter.MotorcycleRecycleViewAdapter;
-import com.motorvitals.classes.Element;
-import com.motorvitals.classes.Motorcycle;
 import com.motorvitals.databinding.ActivityMainBinding;
 import com.motorvitals.fragments.MotorcycleFragment;
 import com.motorvitals.fragments.ProfileFragment;
 import com.motorvitals.fragments.StatusFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding activityMainBinding;
@@ -32,22 +23,16 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new MotorcycleFragment());
 
 
-//        RecyclerView recyclerView = findViewById(R.id.motorcycleRecyclerView);
-//        setUpMotorcycleModels();
-//        MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, motorcycles);
-//
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 
         //------------------------ Listeners ------------------------
         activityMainBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
-            if (item.getItemId() == R.id.motorcycle)
+            if (item.getItemId() == R.id.motorcycle_fragment)
                 replaceFragment(new MotorcycleFragment());
-            if (item.getItemId() == R.id.status)
+            if (item.getItemId() == R.id.status_fragment)
                 replaceFragment(new StatusFragment());
-            if (item.getItemId() == R.id.profile)
+            if (item.getItemId() == R.id.profile_fragment)
                 replaceFragment(new ProfileFragment());
 
             return true;
@@ -58,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param fragment Fragment that will be loaded in the fragment container
      */
-    private void replaceFragment(Fragment fragment) {
+    public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

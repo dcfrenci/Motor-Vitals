@@ -1,14 +1,16 @@
 package com.motorvitals.classes;
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
-public class Element {
+public class Element implements Parcelable {
     private String name;
     private String description;
     private Image photo;
@@ -25,6 +27,8 @@ public class Element {
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
     }
+
+
 
     public String getName() {
         return name;
@@ -114,4 +118,38 @@ public class Element {
         map.put("max", 200);
         return map;
     }
+
+//  ---------------------- Implementation Parcelable ----------------------
+    protected Element(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        price = in.readDouble();
+        byte tmpState = in.readByte();
+        state = tmpState == 0 ? null : tmpState == 1;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeDouble(price);
+        dest.writeByte((byte) (state == null ? 0 : state ? 1 : 2));
+    }
+
+    public static final Creator<Element> CREATOR = new Creator<Element>() {
+        @Override
+        public Element createFromParcel(Parcel in) {
+            return new Element(in);
+        }
+
+        @Override
+        public Element[] newArray(int size) {
+            return new Element[size];
+        }
+    };
 }

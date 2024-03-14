@@ -1,15 +1,15 @@
 package com.motorvitals.classes;
 
-import android.view.View;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.TextView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-public class ElementList {
+public class ElementList implements Parcelable {
     String title;
     ArrayList<Element> elements;
 
@@ -41,5 +41,32 @@ public class ElementList {
         recyclerView.setAdapter(adapter);
         //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return recyclerView;
+    }
+
+//  ---------------------- Implementation Parcelable ----------------------
+    protected ElementList(Parcel in) {
+        title = in.readString();
+        elements = in.createTypedArrayList(Element.CREATOR);
+    }
+
+    public static final Creator<ElementList> CREATOR = new Creator<ElementList>() {
+        @Override
+        public ElementList createFromParcel(Parcel in) {
+            return new ElementList(in);
+        }
+
+        @Override
+        public ElementList[] newArray(int size) {
+            return new ElementList[size];
+        }
+    };
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(title);
     }
 }

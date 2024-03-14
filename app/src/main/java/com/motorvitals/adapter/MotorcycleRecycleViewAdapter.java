@@ -15,9 +15,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<MotorcycleRecycleViewAdapter.MotorcycleViewHolder> {
+    private final RecyclerViewInterface recyclerViewInterface;
     private Fragment fragment;
     private ArrayList<Motorcycle> motorcycles;
-    public MotorcycleRecycleViewAdapter(Fragment fragment, ArrayList<Motorcycle> motorcycles) {
+    public MotorcycleRecycleViewAdapter(RecyclerViewInterface recyclerViewInterface, Fragment fragment, ArrayList<Motorcycle> motorcycles) {
+        this.recyclerViewInterface = recyclerViewInterface;
         this.fragment = fragment;
         this.motorcycles = motorcycles;
     }
@@ -28,7 +30,7 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
         // This is where you inflate the layout (giving a look to our rows)
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.motorclycle_row_recycler_view, viewGroup, false);
-        return new MotorcycleRecycleViewAdapter.MotorcycleViewHolder(view);
+        return new MotorcycleRecycleViewAdapter.MotorcycleViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -50,11 +52,23 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
         private ImageView imageView;
         private TextView textTitle;
         private TextView textDescription;
-        public MotorcycleViewHolder(@NonNull @NotNull View itemView) {
+        public MotorcycleViewHolder(@NonNull @NotNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             imageView = itemView.findViewById(R.id.cardMotorcycleImageView);
             textTitle = itemView.findViewById(R.id.titleTextView);
             textDescription = itemView.findViewById(R.id.descriptionTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (recyclerViewInterface != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onCardClick(position);
+                        }
+                    }
+                }
+            });
         }
 
         public void setImageView(ImageView imageView) {

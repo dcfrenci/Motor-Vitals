@@ -1,16 +1,20 @@
 package com.motorvitals.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.motorvitals.MainActivity;
 import com.motorvitals.R;
 import com.motorvitals.adapter.MotorcycleRecycleViewAdapter;
+import com.motorvitals.adapter.RecyclerViewInterface;
 import com.motorvitals.classes.Element;
+import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
 
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ import java.util.List;
  * Use the {@link MotorcycleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MotorcycleFragment extends Fragment {
+public class MotorcycleFragment extends Fragment implements RecyclerViewInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,7 +75,7 @@ public class MotorcycleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
         // Load the recycler view
         recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
-        MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, motorcycles);
+        MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, this, motorcycles);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
@@ -80,7 +84,19 @@ public class MotorcycleFragment extends Fragment {
 
     private void setUpMotorcycleModels() {
         //load motorcycle from saved data
-        List<Element> elementList = new ArrayList<>();
+        ArrayList<Element> elements = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            String name = "element_" + i;
+            Element element = new Element(name, false);
+            elements.add(element);
+        }
+
+        ArrayList<ElementList> elementList = new ArrayList<>();
+        for (int i = 0; i < 5; i++){
+            String name = "list_" + i;
+            ElementList list = new ElementList(name, elements);
+            elementList.add(list);
+        }
 
         for (int i = 0; i < 15; i++){
             String name = "moto_" + i;
@@ -89,7 +105,17 @@ public class MotorcycleFragment extends Fragment {
             motorcycles.add(moto);
         }
         //set up motorcycle arraylist
+    }
 
-        //android:src="@tools:sample/avatars"
+    @Override
+    public void onCardClick(int position) {
+        MotorcycleDetailFragment fragment = new MotorcycleDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("motorcycle", motorcycles.get(position));
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }
