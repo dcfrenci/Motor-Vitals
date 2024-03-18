@@ -102,6 +102,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack("motorcycle_detail_element");
         fragmentTransaction.commit();
     }
 }

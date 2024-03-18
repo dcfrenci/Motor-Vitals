@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new MotorcycleFragment());
 
 
-
-
-
         //------------------------ Listeners ------------------------
         activityMainBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.motorcycle_fragment)
@@ -38,6 +35,18 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
     }
+
+    /*@Override
+    public void onBackPressed() {
+        if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+            getParentFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("my_fragment").commit();
+    */
+
 
     /**
      *
