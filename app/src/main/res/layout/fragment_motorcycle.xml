@@ -14,5 +14,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/card_to_top"
-            android:layout_marginBottom="@dimen/card_to_top"/>
+            android:layout_marginBottom="0dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

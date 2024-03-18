@@ -1,7 +1,6 @@
 package com.motorvitals.fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,9 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.R;
+import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
 import com.motorvitals.classes.Motorcycle;
@@ -91,12 +93,13 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     @Override
     public void onCardClick(int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Alert Title")
-                .setMessage("Clicked: ");
-
-        // Show the dialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("element", motorcycle.getElementList().get(position));
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }

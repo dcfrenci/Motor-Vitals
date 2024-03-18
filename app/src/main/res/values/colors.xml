@@ -5,7 +5,10 @@
     
     <!-- DARK THEME COLOR https://colorhunt.co/palette/f3efe043424222222222a39f -->
     <color name="dark_background">#191919</color>
-    <color name="dark_less_background">#413F42</color>
+    <color name="dark_less_background">#292929</color>
+    <color name="dark_more_background">#141414</color>
     <color name="dark_accent">#22A39F</color>
-    <color name="dark_text">#F3EFE0</color>
+    <color name="dark_accent_dark">#04697D</color>
+    <color name="dark_text">#DEE3DE</color>
+    <color name="dark_less_text">#828582</color>
 </resources>

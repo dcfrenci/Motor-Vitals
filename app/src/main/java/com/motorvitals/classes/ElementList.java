@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 
@@ -36,11 +38,19 @@ public class ElementList implements Parcelable {
         return textView;
     }
 
-    public RecyclerView getElementsRecyclerView(RecyclerView recyclerView) {
+    public RecyclerView getElementsRecyclerView(RecyclerView recyclerView, Fragment fragment) {
         MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(getElements());
         recyclerView.setAdapter(adapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         return recyclerView;
+
+
+
+
+        /*MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(getElements());
+        recyclerView.setAdapter(adapter);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        return recyclerView;*/
     }
 
 //  ---------------------- Implementation Parcelable ----------------------

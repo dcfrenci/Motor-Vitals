@@ -19,7 +19,7 @@
             android:layout_marginBottom="@dimen/card_to_top"
             app:cardBackgroundColor="@color/dark_less_background"
             app:cardCornerRadius="@dimen/card_corner"
-            app:cardElevation="10dp">
+            app:cardElevation="@dimen/card_elevation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -39,11 +39,10 @@
 
                     android:layout_marginStart="@dimen/card_title_margin_sx"
                     android:layout_marginTop="@dimen/card_top_margin"/>
-            <ImageButton
+            <ImageView
                     android:id="@+id/list_button_image_card"
                     android:src="@drawable/baseline_arrow_drop_down_24"
 
-                    android:background="@color/material_on_background_disabled"
                     app:tint="@color/dark_text"
 
                     android:layout_width="@dimen/motorcycle_dropdown_width"
@@ -55,6 +54,7 @@
                     android:contentDescription="@string/button_description"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/list_container_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"

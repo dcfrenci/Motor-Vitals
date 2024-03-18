@@ -5,5 +5,22 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <!--  Bottom navigation bar  -->
+    <style name="BottomNavigationViewStyle">
+        <item name="android:background">@drawable/shape_round_style</item>
+        <item name="itemIconTint">@drawable/selector_navigation_bar</item>
+        <item name="itemTextColor">@drawable/selector_navigation_bar</item>
+        <item name="itemActiveIndicatorStyle">@style/BottomNavigationViewStyleActive</item>
+    </style>
+    <style name="BottomNavigationViewStyleActive">
+        <item name="background">@color/dark_accent</item>
+    </style>
+
+    <!--  TextView  -->
+    <style name="TextViewStyle">
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="Theme.MotorVitals" parent="Base.Theme.MotorVitals"/>
 </resources>

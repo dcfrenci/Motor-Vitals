@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/dark_background"
+                                                   tools:context=".fragments.MotorcycleDetailElementFragment"
+>
+        <ImageView
+                android:id="@+id/element_image_view"
+                android:src="@drawable/baseline_construction_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintWidth="@dimen/element_image"
+                app:layout_constraintHeight="@dimen/element_image"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/element_top_margin"
+                android:contentDescription="@string/image_description"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/line_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/element_image_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/element_top_margin">
+
+                <TextView
+                        android:id="@+id/textView0"
+                        android:text="@string/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextViewStyle"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/element_left_margin"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/element_left_input_margin">
+
+                        <EditText
+                                android:id="@+id/element_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:hint="@string/title"
+                                android:autofillHints="@string/title"
+                                style="@style/TextViewStyle"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/line_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/line_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="@dimen/element_lines_spacing">
+
+                <TextView
+                        android:id="@+id/textView1"
+                        android:text="@string/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextViewStyle"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/element_left_margin"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/element_left_input_margin">
+
+                        <EditText
+                                android:id="@+id/element_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="text"
+                                android:hint="@string/description"
+                                android:autofillHints="@string/description"
+
+                                style="@style/TextViewStyle"
+
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/line_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/line_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="@dimen/element_lines_spacing">
+
+                <TextView
+                        android:id="@+id/textView2"
+                        android:text="@string/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextViewStyle"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="@dimen/element_left_margin"
+                />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/element_left_input_margin">
+
+                        <EditText
+                                android:id="@+id/element_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/price"
+                                android:autofillHints="@string/price"
+                                android:inputType="number"
+
+                                style="@style/TextViewStyle"
+
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/line_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/line_3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/element_lines_spacing">
+
+                <TextView
+                        android:id="@+id/textView3"
+                        android:text="@string/notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextViewStyle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/element_left_margin"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                <Switch
+                        android:id="@+id/element_show_notification_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/textView3"
+                        android:layout_marginStart="@dimen/element_left_margin"
+                        tools:ignore="UseSwitchCompatOrMaterialXml"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notification_container"
+                app:layout_constraintTop_toBottomOf="@+id/line_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                android:layout_marginTop="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/line_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="@dimen/element_lines_spacing">
+
+                        <TextView
+                                android:id="@+id/textView4"
+                                android:text="@string/days_interval"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                style="@style/TextViewStyle"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_margin"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_input_margin"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent">
+
+                                <EditText
+                                        android:id="@+id/element_min_date"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        tools:ignore="TextFields"
+                                        android:hint="@string/min"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_med_date"/>
+                                <TextView
+                                        android:id="@+id/textView4.1"
+                                        android:text="@string/interval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_min_date"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_med_date"/>
+                                <EditText
+                                        android:id="@+id/element_med_date"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:hint="@string/mid"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        tools:ignore="TextFields"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                                <TextView
+                                        android:id="@+id/textView4.2"
+                                        android:text="@string/interval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_med_date"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_max_date"/>
+                                <EditText
+                                        android:id="@+id/element_max_date"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:hint="@string/max"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        tools:ignore="TextFields"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_med_date"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/line_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_4"
+                        android:layout_marginTop="@dimen/element_lines_spacing">
+
+                        <TextView
+                                android:id="@+id/textView5"
+                                android:text="@string/last_date_maintenance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                style="@style/TextViewStyle"
+
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_margin"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/element_left_interval_margin"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent">
+
+                                <EditText
+                                        android:id="@+id/element_last_date"
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="date"
+                                        android:hint="@string/interval"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"/>
+                                <Button
+                                        android:id="@+id/element_today_date_button"
+                                        android:text="@string/today"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        style="@style/TextViewStyle"
+                                        android:backgroundTint="@color/dark_accent"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_last_date"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/line_6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_5"
+                        android:layout_marginTop="@dimen/element_lines_spacing">
+
+                        <TextView
+                                android:id="@+id/textView6"
+                                android:text="@string/km_interval"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                style="@style/TextViewStyle"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_margin"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_input_margin"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent">
+
+                                <EditText
+                                        android:id="@+id/element_min_km"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        tools:ignore="TextFields"
+                                        android:hint="@string/min"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_med_km"/>
+                                <TextView
+                                        android:id="@+id/textView6.1"
+                                        android:text="@string/interval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_min_km"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_med_km"/>
+                                <EditText
+                                        android:id="@+id/element_med_km"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:hint="@string/mid"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        tools:ignore="TextFields"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                                <TextView
+                                        android:id="@+id/textView6.2"
+                                        android:text="@string/interval"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_med_km"
+                                        app:layout_constraintEnd_toStartOf="@+id/element_max_km"/>
+                                <EditText
+                                        android:id="@+id/element_max_km"
+                                        android:layout_width="@dimen/element_interval_width"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:hint="@string/max"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        tools:ignore="TextFields"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toEndOf="@+id/element_med_km"
+                                        app:layout_constraintEnd_toEndOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/line_7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/line_6"
+                        android:layout_marginTop="@dimen/element_lines_spacing">
+
+                        <TextView
+                                android:id="@+id/textView7"
+                                android:layout_height="wrap_content"
+                                android:layout_width="wrap_content"
+                                android:text="@string/last_km_maintenance"
+                                style="@style/TextViewStyle"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="@dimen/element_left_margin"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/element_left_interval_margin"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent">
+
+                                <EditText
+                                        android:id="@+id/element_last_km"
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="date"
+                                        android:hint="@string/interval"
+                                        android:autofillHints="@string/empty_interval"
+
+                                        style="@style/TextViewStyle"
+
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 <resources>
     <!--  Content description  -->
     <string name="button_description">Button_description</string>
+    <string name="image_description">Image_description</string>
 
     <!--  Bottom navigation menu  -->
     <string name="app_name">motorvitals</string>
@@ -16,6 +17,21 @@
     <string name="detail_title_fill">Generic model</string>
     <string name="detail_description_fill">Description</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--  Element Fragment  -->
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="price">Price</string>
+    <string name="notification">Notification</string>
+    <string name="days_interval">Days interval</string>
+    <string name="last_date_maintenance">Last maintenance (date)</string>
+    <string name="km_interval">Km interval</string>
+    <string name="last_km_maintenance">Last maintenance (Km)</string>
+    <string name="interval">&lt;</string>
+    <string name="empty_interval">0</string>
+    <string name="min">Min</string>
+    <string name="mid">Mid</string>
+    <string name="max">Max</string>
+    <string name="today">Set as today</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

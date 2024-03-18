@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="bottom_navigation_bar">3dp</dimen>
+
     <!--  Card dimension  -->
     <dimen name="card_corner">15dp</dimen>
     <dimen name="card_to_top">7dp</dimen>
-    <dimen name="card_title_margin_sx">10dp</dimen>
+    <dimen name="card_title_margin_sx">13dp</dimen>
     <dimen name="card_title_text">20sp</dimen>
     <dimen name="card_description_margin_sx">20dp</dimen>
     <dimen name="card_description_text">10sp</dimen>
     <dimen name="card_top_margin">5dp</dimen>
     <dimen name="card_image">70dp</dimen>
     <dimen name="card_image_padding">3dp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
 
     <!--  Detail dimension  -->
     <dimen name="motorcycle_image">150dp</dimen>
@@ -22,4 +25,13 @@
     <dimen name="motorcycle_dropdown_height">35dp</dimen>
     <dimen name="motorcycle_dropdown_width">50dp</dimen>
     <dimen name="motorcycle_list_to_top">50dp</dimen>
+
+    <!--  Element dimension  -->
+    <dimen name="element_top_margin">20dp</dimen>
+    <dimen name="element_image">100dp</dimen>
+    <dimen name="element_left_margin">15dp</dimen>
+    <dimen name="element_left_input_margin">100dp</dimen>
+    <dimen name="element_left_interval_margin">180dp</dimen>
+    <dimen name="element_lines_spacing">15dp</dimen>
+    <dimen name="element_interval_width">50dp</dimen>
 </resources>
