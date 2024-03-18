@@ -16,6 +16,7 @@ import com.motorvitals.R;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
+import com.motorvitals.classes.Element;
 import com.motorvitals.classes.Motorcycle;
 
 /**
@@ -92,10 +93,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     }
 
     @Override
-    public void onCardClick(int position) {
+    public void onCardClick(int position, int positionElement) {
         MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("element", motorcycle.getElementList().get(position));
+        Element element = motorcycle.getElementList().get(position).getElement(positionElement);
+        bundle.putParcelable("element", element);
         fragment.setArguments(bundle);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

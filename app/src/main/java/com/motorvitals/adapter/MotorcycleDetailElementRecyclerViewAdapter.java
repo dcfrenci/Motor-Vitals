@@ -14,12 +14,19 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class MotorcycleDetailElementRecyclerViewAdapter extends RecyclerView.Adapter<MotorcycleDetailElementRecyclerViewAdapter.MotorcycleViewHolder> {
-    //private Fragment fragment;
-    private ArrayList<Element> elementArrayList;
+    private final RecyclerViewInterface recyclerViewInterface;
 
-    public MotorcycleDetailElementRecyclerViewAdapter(/*Fragment fragment,*/ ArrayList<Element> elementArrayList) {
-        //this.fragment = fragment;
+    private final ArrayList<Element> elementArrayList;
+    private final int position;
+
+    public MotorcycleDetailElementRecyclerViewAdapter(RecyclerViewInterface recyclerViewInterface, ArrayList<Element> elementArrayList, int position) {
+        this.recyclerViewInterface = recyclerViewInterface;
         this.elementArrayList = elementArrayList;
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @NonNull
@@ -28,7 +35,7 @@ public class MotorcycleDetailElementRecyclerViewAdapter extends RecyclerView.Ada
     public MotorcycleDetailElementRecyclerViewAdapter.MotorcycleViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.motorcycle_detail_element_row_recycler_view, viewGroup, false);
-        return new MotorcycleDetailElementRecyclerViewAdapter.MotorcycleViewHolder(view);
+        return new MotorcycleDetailElementRecyclerViewAdapter.MotorcycleViewHolder(view, recyclerViewInterface, getPosition());
     }
 
     @Override
@@ -46,10 +53,19 @@ public class MotorcycleDetailElementRecyclerViewAdapter extends RecyclerView.Ada
         private ImageView imageView;
         private TextView titleView;
 
-        public MotorcycleViewHolder(@NonNull @NotNull View itemView) {
+        public MotorcycleViewHolder(@NonNull @NotNull View itemView, RecyclerViewInterface recyclerViewInterface, int position) {
             super(itemView);
             imageView = itemView.findViewById(R.id.card_element_image);
             titleView = itemView.findViewById(R.id.card_element_title);
+
+            itemView.setOnClickListener(click -> {
+                if (recyclerViewInterface != null) {
+                    int positionElement = getAdapterPosition();
+                    if (positionElement != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onCardClick(position, positionElement);
+                    }
+                }
+            });
         }
 
         public ImageView getImageViewHolder() {

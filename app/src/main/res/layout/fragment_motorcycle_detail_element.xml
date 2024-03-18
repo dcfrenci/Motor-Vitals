@@ -48,7 +48,7 @@
                         android:layout_marginStart="@dimen/element_left_input_margin">
 
                         <EditText
-                                android:id="@+id/element_description"
+                                android:id="@+id/element_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="text"
@@ -87,7 +87,7 @@
                         android:layout_marginStart="@dimen/element_left_input_margin">
 
                         <EditText
-                                android:id="@+id/element_title"
+                                android:id="@+id/element_description"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="text"
@@ -168,7 +168,8 @@
                         android:id="@+id/element_show_notification_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
+                        android:trackTint="@color/dark_accent"
+                        android:thumbTint="@color/dark_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView3"

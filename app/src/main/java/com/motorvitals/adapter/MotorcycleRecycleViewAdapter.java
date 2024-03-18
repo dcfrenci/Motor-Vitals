@@ -64,7 +64,7 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
                     if (recyclerViewInterface != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onCardClick(position);
+                            recyclerViewInterface.onCardClick(position, 0);
                         }
                     }
                 }

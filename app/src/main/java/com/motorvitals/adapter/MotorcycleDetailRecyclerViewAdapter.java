@@ -31,13 +31,13 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
     public MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.motorcycle_detail_row_recycler_view, viewGroup, false);
-        return new MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder(view, recyclerViewInterface);
+        return new MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder holder, int position) {
         holder.setListNameText(multipleElementList.get(position).getTitleView(holder.getListNameText()));
-        holder.setRecyclerViewElements(multipleElementList.get(position).getElementsRecyclerView(holder.getRecyclerViewElements(), fragment));
+        holder.setRecyclerViewElements(multipleElementList.get(position).getElementsRecyclerView(holder.getRecyclerViewElements(), fragment, holder.getAdapterPosition(), recyclerViewInterface));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
         private final ImageView dropDownImage;
         private RecyclerView recyclerViewElements;
 
-        public MotorcycleViewHolder(@NonNull @NotNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public MotorcycleViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             listNameText = itemView.findViewById(R.id.list_title_card);
             dropDownImage = itemView.findViewById(R.id.list_button_image_card);
@@ -62,14 +62,6 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
                 } else {
                     itemView.findViewById(R.id.list_container_layout).setVisibility(View.GONE);
                     dropDownImage.setRotation(0);
-                }
-            });
-            itemView.setOnClickListener(click -> {
-                if (recyclerViewInterface != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        recyclerViewInterface.onCardClick(position);
-                    }
                 }
             });
         }

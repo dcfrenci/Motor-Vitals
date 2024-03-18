@@ -84,16 +84,18 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
 
     private void setUpMotorcycleModels() {
         //load motorcycle from saved data
-        ArrayList<Element> elements = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            String name = "element_" + i;
-            Element element = new Element(name, false);
-            elements.add(element);
-        }
+
 
         ArrayList<ElementList> elementList = new ArrayList<>();
         for (int i = 0; i < 5; i++){
             String name = "list_" + i;
+            ArrayList<Element> elements = new ArrayList<>();
+            for (int k = 0; k < 8; k++) {
+                String str = "element_" + k;
+                Element element = new Element(str, false);
+                element.setDescription(name);
+                elements.add(element);
+            }
             ElementList list = new ElementList(name, elements);
             elementList.add(list);
         }
@@ -108,7 +110,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     }
 
     @Override
-    public void onCardClick(int position) {
+    public void onCardClick(int position, int positionElement) {
         MotorcycleDetailFragment fragment = new MotorcycleDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("motorcycle", motorcycles.get(position));

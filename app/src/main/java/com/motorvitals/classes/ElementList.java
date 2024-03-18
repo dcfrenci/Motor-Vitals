@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
+import com.motorvitals.adapter.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
@@ -33,24 +34,20 @@ public class ElementList implements Parcelable {
         return elements;
     }
 
+    public Element getElement(int position) {
+        return getElements().get(position);
+    }
+
     public TextView getTitleView(TextView textView) {
         textView.setText(getTitle());
         return textView;
     }
 
-    public RecyclerView getElementsRecyclerView(RecyclerView recyclerView, Fragment fragment) {
-        MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(getElements());
+    public RecyclerView getElementsRecyclerView(RecyclerView recyclerView, Fragment fragment, int position, RecyclerViewInterface recyclerViewInterface) {
+        MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(recyclerViewInterface, getElements(), position);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         return recyclerView;
-
-
-
-
-        /*MotorcycleDetailElementRecyclerViewAdapter adapter = new MotorcycleDetailElementRecyclerViewAdapter(getElements());
-        recyclerView.setAdapter(adapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        return recyclerView;*/
     }
 
 //  ---------------------- Implementation Parcelable ----------------------

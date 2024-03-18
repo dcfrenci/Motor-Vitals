@@ -1,6 +1,12 @@
 package com.motorvitals.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,10 +72,60 @@ public class MotorcycleDetailElementFragment extends Fragment {
             element = bundle.getParcelable("element");
             setUpMotorcycleDetailElementModel(view);
         }
+        Switch showNotification = view.findViewById(R.id.element_show_notification_switch);
+        showNotification.setOnClickListener(click -> {
+            element.setState(!element.getState());
+            showNotification.setChecked(element.getState());
+            if (element.getState()) {
+                view.findViewById(R.id.notification_container).setVisibility(View.VISIBLE);
+            } else {
+                view.findViewById(R.id.notification_container).setVisibility(View.GONE);
+            }
+        });
         return view;
     }
 
     private void setUpMotorcycleDetailElementModel(View view) {
+        TextView title = view.findViewById(R.id.element_title);
+        TextView description = view.findViewById(R.id.element_description);
+        TextView price = view.findViewById(R.id.element_price);
+        Switch notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
+        TextView minDay = view.findViewById(R.id.element_min_date);
+        TextView medDay = view.findViewById(R.id.element_med_date);
+        TextView maxDay = view.findViewById(R.id.element_max_date);
+        TextView lastDay = view.findViewById(R.id.element_last_date);
+        TextView minKm = view.findViewById(R.id.element_min_km);
+        TextView medKm = view.findViewById(R.id.element_med_km);
+        TextView maxKm = view.findViewById(R.id.element_max_km);
+        TextView lastKm = view.findViewById(R.id.element_last_km);
 
+        title.setText(element.getName());
+        description.setText(element.getDescription());
+        price.setText(String.valueOf(element.getPrice()));
+        notificationSwitch.setChecked(element.getState());
+        if (element.getDayInterval().get("min") != null) {
+            minDay.setText(element.getDayInterval().get("min").toString());
+        }
+        if (element.getDayInterval().get("med") != null) {
+            medDay.setText(element.getDayInterval().get("med").toString());
+        }
+        if (element.getDayInterval().get("max") != null) {
+            maxDay.setText(element.getDayInterval().get("max").toString());
+        }
+        if (element.getLastServiceDate() != null) {
+            lastDay.setText(element.getLastServiceDate().toString());
+        }
+        if (element.getKmInterval().get("min") != null) {
+            minKm.setText(element.getKmInterval().get("min").toString());
+        }
+        if (element.getKmInterval().get("med") != null) {
+            medKm.setText(element.getKmInterval().get("med").toString());
+        }
+        if (element.getKmInterval().get("max") != null) {
+            maxKm.setText(element.getKmInterval().get("max").toString());
+        }
+        if (element.getLastServiceKm() != null) {
+            lastKm.setText(element.getLastServiceKm().toString());
+        }
     }
 }
