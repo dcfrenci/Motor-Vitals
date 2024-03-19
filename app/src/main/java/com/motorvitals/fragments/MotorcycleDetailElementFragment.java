@@ -100,7 +100,6 @@ public class MotorcycleDetailElementFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("messaggio", "destroing");
         try {
             onSave();
         } catch (ParseException e) {

@@ -31,8 +31,8 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    /*private static final String mParam1;
-    private static final String mParam2;*/
+    private static String mParam1;
+    private static String mParam2;
     private ArrayList<Motorcycle> motorcycles = new ArrayList<>();
     private RecyclerView recyclerView;
 
@@ -61,10 +61,10 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    /*if (getArguments() != null) {
-        mParam1 = getArguments().getString(ARG_PARAM1);
-        mParam2 = getArguments().getString(ARG_PARAM2);
-    }*/
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
 
         setUpMotorcycleModels();
     }
@@ -115,6 +115,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         Bundle bundle = new Bundle();
         bundle.putParcelable("motorcycle", motorcycles.get(position));
         fragment.setArguments(bundle);
+        fragment.setDataPassingInterface(this, position, position);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -126,6 +127,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     public void passingObject(Object object, int position) {
         if (object instanceof Motorcycle) {
             motorcycles.set(position, (Motorcycle) object);
+            setUpMotorcycleModels();
         }
     }
 }

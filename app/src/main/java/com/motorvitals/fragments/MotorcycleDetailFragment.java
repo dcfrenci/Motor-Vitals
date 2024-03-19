@@ -22,6 +22,8 @@ import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
 
+import java.text.ParseException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MotorcycleDetailFragment#newInstance} factory method to
@@ -38,6 +40,8 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     private String mParam1;
     private String mParam2;
     private View view;
+    private DataPassingInterface dataPassingInterface;
+    private Integer motorcycleIndex;
     private Motorcycle motorcycle;
 
     public MotorcycleDetailFragment() {
@@ -91,7 +95,15 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         }
         return view;
     }
-    private void setUpMotorcycleDetailModels(/*View view*/) {
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        onSave();
+        dataPassingInterface.passingObject(motorcycle, motorcycleIndex);
+    }
+
+    private void setUpMotorcycleDetailModels() {
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
         TextView title = view.findViewById(R.id.motorcycle_title_text_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
@@ -103,6 +115,15 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         MotorcycleDetailRecyclerViewAdapter adapter = new MotorcycleDetailRecyclerViewAdapter(this, this, motorcycle.getElementList());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    public void onSave() {
+        ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
+        TextView title = view.findViewById(R.id.motorcycle_title_text_view);
+        TextView description = view.findViewById(R.id.motorcycle_description_text_view);
+        //TODO motorcycleImage
+        motorcycle.setName(title.getText().toString());
+        motorcycle.setDescription(description.getText().toString());
     }
 
     @Override
@@ -123,11 +144,13 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     @Override
     public void passingObject(Object object, int position) {
         if (object instanceof ElementList) {
-            Log.d("messPrima", motorcycle.getElementList().get(position).getTitle());
             motorcycle.setOneElementList((ElementList) object, position);
-            Log.d("messDopo", motorcycle.getElementList().get(position).getTitle());
-            Log.d("mess", "salvando?");
             setUpMotorcycleDetailModels();
         }
+    }
+
+    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer motorcycleIndex, Integer position) {
+        this.dataPassingInterface = dataPassingInterface;
+        this.motorcycleIndex = motorcycleIndex;
     }
 }

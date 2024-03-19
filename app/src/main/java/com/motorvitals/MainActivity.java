@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new StatusFragment());
             if (item.getItemId() == R.id.profile_fragment)
                 replaceFragment(new ProfileFragment());
-
             return true;
         });
     }
@@ -46,6 +45,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
-
 }
