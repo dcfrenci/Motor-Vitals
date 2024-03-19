@@ -19,7 +19,7 @@ public class Element implements Parcelable {
     private HashMap<String, Integer> dayInterval;
     private Date lastServiceDate;
     private HashMap<String, Integer> kmInterval;
-    private Date lastServiceKm;
+    private Integer lastServiceKm;
 
     public Element(String name, Boolean state) {
         this.name = name;
@@ -94,11 +94,11 @@ public class Element implements Parcelable {
         this.kmInterval = kmInterval;
     }
 
-    public Date getLastServiceKm() {
+    public Integer getLastServiceKm() {
         return lastServiceKm;
     }
 
-    public void setLastServiceKm(Date lastServiceKm) {
+    public void setLastServiceKm(Integer lastServiceKm) {
         this.lastServiceKm = lastServiceKm;
     }
 

@@ -38,6 +38,12 @@ public class Motorcycle implements Motor, Parcelable {
         this.elementList = elementList;
     }
 
+    public void setOneElementList(ElementList elementList, Integer index) {
+        ArrayList<ElementList> arrayList = getElementList();
+        arrayList.set(index, elementList);
+        setElementList(arrayList);
+    }
+
     public String getName() {
         return name;
     }

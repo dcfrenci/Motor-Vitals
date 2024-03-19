@@ -36,18 +36,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*@Override
-    public void onBackPressed() {
-        if (getParentFragmentManager().getBackStackEntryCount() > 0) {
-            getParentFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-    getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).addToBackStack("my_fragment").commit();
-    */
-
-
     /**
      *
      * @param fragment Fragment that will be loaded in the fragment container

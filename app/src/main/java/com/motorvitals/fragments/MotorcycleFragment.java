@@ -25,7 +25,7 @@ import java.util.List;
  * Use the {@link MotorcycleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MotorcycleFragment extends Fragment implements RecyclerViewInterface {
+public class MotorcycleFragment extends Fragment implements RecyclerViewInterface, DataPassingInterface {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -118,7 +118,14 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.addToBackStack("motorcycle_detail");
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void passingObject(Object object, int position) {
+        if (object instanceof Motorcycle) {
+            motorcycles.set(position, (Motorcycle) object);
+        }
     }
 }
