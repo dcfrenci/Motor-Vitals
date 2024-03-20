@@ -17,6 +17,10 @@
     <string name="detail_title_fill">Generic model</string>
     <string name="detail_description_fill">Description</string>
 
+    <!--  Motorcycle Detail Fragment  -->
+    <string name="detail_add_list">Add new list</string>
+    <string name="detail_add_element">Add</string>
+
     <!--  Element Fragment  -->
     <string name="title">Title</string>
     <string name="description">Description</string>

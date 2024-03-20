@@ -30,5 +30,13 @@
         <item name="android:elevation">@dimen/cardview_default_elevation</item>
     </style>
 
+    <!--  Button  -->
+    <style name="ButtonStyle">
+        <item name="android:backgroundTint">@color/dark_accent</item>
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:elevation">10dp</item>
+    </style>
+
     <style name="Theme.MotorVitals" parent="Base.Theme.MotorVitals"/>
 </resources>

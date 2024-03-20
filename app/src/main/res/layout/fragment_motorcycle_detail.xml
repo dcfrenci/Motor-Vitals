@@ -7,81 +7,128 @@
         android:layout_height="match_parent"
         android:background="@color/dark_background"
         tools:context=".fragments.MotorcycleDetailFragment">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_detail_button_motorcycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
 
-    <ImageView
-            android:id="@+id/detail_motorcycle_image_view"
-            android:src="@drawable/baseline_motorcycle_24"
-            android:layout_width="@dimen/motorcycle_image"
-            android:layout_height="@dimen/motorcycle_image"
-            android:padding="@dimen/card_image_padding"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/Motorcycle"/>
+            style="@style/FloatingActionButtonStyle"
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="@+id/detail_motorcycle_image_view"
-            android:layout_height="@dimen/motorcycle_image"
-            app:layout_constraintStart_toEndOf="@+id/detail_motorcycle_image_view"
-            app:layout_constraintBottom_toBottomOf="@+id/detail_motorcycle_image_view"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/constraintLayout">
+            android:contentDescription="@string/button_description"
 
-        <EditText
-                android:id="@+id/motorcycle_title_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:inputType="text"
-                android:textSize="@dimen/motorcycle_title_text"
-                android:textColor="@color/dark_text"
-                android:textColorHint="@color/dark_text"
-                android:hint="@string/detail_title"
-                android:autofillHints="@string/detail_title_fill"
-
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-
-                android:layout_marginTop="@dimen/motorcycle_title_to_top"
-                android:layout_marginStart="@dimen/motorcycle_title_margin_sx"
-                android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
-                android:minHeight="48dp"/>
-        <EditText
-                android:id="@+id/motorcycle_description_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColor="@color/dark_text"
-                android:textColorHint="@color/dark_text"
-                android:textSize="@dimen/motorcycle_text"
-                android:hint="@string/detail_description"
-                app:layout_constraintTop_toBottomOf="@+id/motorcycle_title_text_view"
-                android:layout_marginTop="@dimen/motorcycle_title_margin_sx"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="@dimen/motorcycle_text_margin"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
-                android:autofillHints="@string/detail_description_fill"
-                android:minHeight="48dp"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:tint="@color/dark_text"
+            android:elevation="10dp"
+
+            app:srcCompat="@drawable/baseline_add_24"
+            android:contentDescription="@string/button_description"
+            app:layout_constraintBottom_toBottomOf="@+id/floating_detail_button_motorcycle"
+            app:layout_constraintTop_toTopOf="@+id/floating_detail_button_motorcycle"
+            app:layout_constraintEnd_toEndOf="@+id/floating_detail_button_motorcycle"
+            app:layout_constraintStart_toStartOf="@+id/floating_detail_button_motorcycle"/>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/motorcycle_image">
-
-        <androidx.recyclerview.widget.RecyclerView
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/motorcycle_detail_recycler_view"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content">
+
+            <ImageView
+                    android:id="@+id/detail_motorcycle_image_view"
+                    android:src="@drawable/baseline_motorcycle_24"
+                    android:layout_width="@dimen/motorcycle_image"
+                    android:layout_height="@dimen/motorcycle_image"
+                    android:padding="@dimen/card_image_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/Motorcycle"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="@+id/detail_motorcycle_image_view"
+                    android:layout_height="@dimen/motorcycle_image"
+                    app:layout_constraintStart_toEndOf="@+id/detail_motorcycle_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_motorcycle_image_view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/constraintLayout">
+
+                <EditText
+                        android:id="@+id/motorcycle_title_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:inputType="text"
+                        android:textSize="@dimen/motorcycle_title_text"
+                        android:textColor="@color/dark_text"
+                        android:textColorHint="@color/dark_text"
+                        android:hint="@string/detail_title"
+                        android:autofillHints="@string/detail_title_fill"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:layout_marginTop="@dimen/motorcycle_title_to_top"
+                        android:layout_marginStart="@dimen/motorcycle_title_margin_sx"
+                        android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
+                        android:minHeight="48dp"/>
+                <EditText
+                        android:id="@+id/motorcycle_description_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="@color/dark_text"
+                        android:textColorHint="@color/dark_text"
+                        android:textSize="@dimen/motorcycle_text"
+                        android:hint="@string/detail_description"
+                        app:layout_constraintTop_toBottomOf="@+id/motorcycle_title_text_view"
+                        android:layout_marginTop="@dimen/motorcycle_title_margin_sx"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="@dimen/motorcycle_text_margin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="@dimen/motorcycle_title_margin_sx"
+                        android:autofillHints="@string/detail_description_fill"
+                        android:minHeight="48dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/motorcycle_image">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:id="@+id/constraintLayout2">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/motorcycle_detail_recycler_view"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
