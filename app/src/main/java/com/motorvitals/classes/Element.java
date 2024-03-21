@@ -28,7 +28,12 @@ public class Element implements Parcelable {
         this.kmInterval = basicMap();
     }
 
-
+    public Element() {
+        this.name = "";
+        this.state = false;
+        this.dayInterval = basicMap();
+        this.kmInterval = basicMap();
+    }
 
     public String getName() {
         return name;

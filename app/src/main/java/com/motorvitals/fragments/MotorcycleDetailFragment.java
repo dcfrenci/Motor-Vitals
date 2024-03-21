@@ -73,15 +73,6 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                getParentFragmentManager().popBackStack();
-            }
-        };
-
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override
@@ -91,7 +82,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         Bundle bundle = getArguments();
         if (bundle != null) {
             motorcycle = bundle.getParcelable("motorcycle");
-            setUpMotorcycleDetailModels(/*view*/);
+            setUpMotorcycleDetailModels();
         }
         return view;
     }
@@ -130,10 +121,16 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     public void onCardClick(int position, int positionElement) {
         MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
         Bundle bundle = new Bundle();
-        ElementList element = motorcycle.getElementList().get(position);
-        bundle.putParcelable("elementList", element);
+        ElementList elementList = motorcycle.getElementList().get(position);
+        if (positionElement == RecyclerView.NO_POSITION) {
+            elementList.getElements().add(new Element());
+            motorcycle.setOneElementList(elementList, position);
+            positionElement = elementList.getElements().size() - 1;
+        }
+        bundle.putParcelable("elementList", elementList);
         fragment.setArguments(bundle);
         fragment.setDataPassingInterface(this, position, positionElement);
+
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

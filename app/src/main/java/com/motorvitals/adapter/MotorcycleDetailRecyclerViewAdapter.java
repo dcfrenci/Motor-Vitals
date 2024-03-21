@@ -3,6 +3,7 @@ package com.motorvitals.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -31,7 +32,7 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
     public MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.motorcycle_detail_row_recycler_view, viewGroup, false);
-        return new MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder(view);
+        return new MotorcycleDetailRecyclerViewAdapter.MotorcycleViewHolder(view, recyclerViewInterface);
     }
 
     @Override
@@ -49,11 +50,12 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
         private final ImageView dropDownImage;
         private RecyclerView recyclerViewElements;
 
-        public MotorcycleViewHolder(@NonNull @NotNull View itemView) {
+        public MotorcycleViewHolder(@NonNull @NotNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
             listNameText = itemView.findViewById(R.id.list_title_card);
-            dropDownImage = itemView.findViewById(R.id.list_button_image_card);
             recyclerViewElements = itemView.findViewById(R.id.list_element_cards);
+            dropDownImage = itemView.findViewById(R.id.list_button_image_card);
+            Button addElementButton = itemView.findViewById(R.id.list_add_element_button);
 
             dropDownImage.setOnClickListener(click -> {
                 if (itemView.findViewById(R.id.list_container_layout).getVisibility() == View.GONE) {
@@ -62,6 +64,14 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
                 } else {
                     itemView.findViewById(R.id.list_container_layout).setVisibility(View.GONE);
                     dropDownImage.setRotation(0);
+                }
+            });
+            addElementButton.setOnClickListener(click -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION){
+                        recyclerViewInterface.onCardClick(position, RecyclerView.NO_POSITION);
+                    }
                 }
             });
         }
