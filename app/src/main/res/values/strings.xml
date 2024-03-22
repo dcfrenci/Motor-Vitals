@@ -12,6 +12,7 @@
     <!--  Hint to input  -->
     <string name="detail_title">Your model name</string>
     <string name="detail_description">Your description</string>
+    <string name="detail_list">Your list name</string>
 
     <!--  Autofill hint  -->
     <string name="detail_title_fill">Generic model</string>

@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.motorvitals.R;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
@@ -23,6 +24,7 @@ import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
 
 import java.text.ParseException;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,7 +88,8 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         }
 
         view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
-
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+            View dialogView = LayoutInflater.from(requireContext()).inflate(R.id.motorcycle)
         });
         return view;
     }
