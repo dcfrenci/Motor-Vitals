@@ -19,6 +19,11 @@ public class Motorcycle implements Motor, Parcelable {
     private String description;
     private Image photo;
 
+    public Motorcycle() {
+        this.name = "";
+        this.km = 0;
+        this.elementList = new ArrayList<>();
+    }
     public Motorcycle(String name, Integer km) {
         this.name = name;
         this.km = km;

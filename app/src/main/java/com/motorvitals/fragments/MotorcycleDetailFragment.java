@@ -84,6 +84,10 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
             motorcycle = bundle.getParcelable("motorcycle");
             setUpMotorcycleDetailModels();
         }
+
+        view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
+
+        });
         return view;
     }
 

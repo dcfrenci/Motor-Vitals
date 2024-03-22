@@ -33,8 +33,8 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     private static final String ARG_PARAM2 = "param2";
     private static String mParam1;
     private static String mParam2;
-    private ArrayList<Motorcycle> motorcycles = new ArrayList<>();
-    private RecyclerView recyclerView;
+    private View view;
+    private final ArrayList<Motorcycle> motorcycles = new ArrayList<>();
 
     public MotorcycleFragment() {
         // Required empty public constructor
@@ -72,12 +72,16 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
+        view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
         // Load the recycler view
-        recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
         MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, this, motorcycles);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        view.findViewById(R.id.floating_button_motorcycle).setOnClickListener(click -> {
+            onCardClick(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION);
+        });
         return view;
     }
 
@@ -113,6 +117,10 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     public void onCardClick(int position, int positionElement) {
         MotorcycleDetailFragment fragment = new MotorcycleDetailFragment();
         Bundle bundle = new Bundle();
+        if (position == RecyclerView.NO_POSITION) {
+            motorcycles.add(new Motorcycle());
+            position = motorcycles.size() - 1;
+        }
         bundle.putParcelable("motorcycle", motorcycles.get(position));
         fragment.setArguments(bundle);
         fragment.setDataPassingInterface(this, position, position);
