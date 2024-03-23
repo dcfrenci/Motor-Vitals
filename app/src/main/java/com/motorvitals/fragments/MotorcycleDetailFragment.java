@@ -3,6 +3,7 @@ package com.motorvitals.fragments;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.textfield.TextInputLayout;
 import com.motorvitals.R;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
@@ -88,8 +90,22 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         }
 
         view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
-            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
-            View dialogView = LayoutInflater.from(requireContext()).inflate(R.id.motorcycle)
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(container.getContext());
+            View dialogView = LayoutInflater.from(container.getContext()).inflate(R.layout.motorcycle_detail_list_menu, container, false);
+            bottomSheetDialog.setContentView(dialogView);
+            bottomSheetDialog.show();
+
+            TextView listName = dialogView.findViewById(R.id.list_menu_edit_text);
+            Button addButton = dialogView.findViewById(R.id.list_menu_add_button);
+            addButton.setOnClickListener(addList -> {
+                if (listName.getText().toString().isEmpty()) {
+                    listName.setError("Please type the list name");
+                } else {
+                    ElementList elementList = new ElementList(listName.getText().toString());
+                    passingObject(elementList, RecyclerView.NO_POSITION);
+                    bottomSheetDialog.dismiss();
+                }
+            });
         });
         return view;
     }
@@ -148,7 +164,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     @Override
     public void passingObject(Object object, int position) {
         if (object instanceof ElementList) {
-            motorcycle.setOneElementList((ElementList) object, position);
+            if (position == RecyclerView.NO_POSITION) {
+                motorcycle.addOneElementList((ElementList) object);
+            } else {
+                motorcycle.setOneElementList((ElementList) object, position);
+            }
             setUpMotorcycleDetailModels();
         }
     }
