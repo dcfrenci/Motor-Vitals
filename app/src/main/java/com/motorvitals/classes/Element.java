@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -100,6 +102,9 @@ public class Element implements Parcelable {
     }
 
     public Integer getLastServiceKm() {
+        if (lastServiceKm == null) {
+            return 0;
+        }
         return lastServiceKm;
     }
 
@@ -114,6 +119,18 @@ public class Element implements Parcelable {
 
     public ImageView getImageView(ImageView imageView) {
         return imageView;
+    }
+
+    public TextView getDaysInterval(TextView textView) {
+        String text = "Last service: " + Date.from(getLastServiceDate().toInstant()) + " d";
+        textView.setText(text);
+        return textView;
+    }
+
+    public TextView getKmInterval(TextView textView) {
+        String text = "Last service: " + getLastServiceKm() + "Km";
+        textView.setText(text);
+        return textView;
     }
 
     private HashMap<String, Integer> basicMap() {

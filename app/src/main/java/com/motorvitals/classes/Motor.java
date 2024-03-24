@@ -1,7 +1,8 @@
 package com.motorvitals.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Motor {
-    List<ElementList> filterWithState(List<ElementList> list);
+    ArrayList<ElementList> getElementsWithState(ArrayList<ElementList> list);
 }

@@ -1,70 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:background="@color/dark_background"
-                                                   tools:context=".fragments.StatusFragment">
-    <ScrollView
+                                                   android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/dark_less_background"
+            app:cardCornerRadius="@dimen/card_corner"
+
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginStart="@dimen/card_to_top"
+            android:layout_marginTop="@dimen/card_to_top"
+            android:layout_marginEnd="@dimen/card_to_top">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:id="@+id/constraintLayout4">
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                        android:id="@+id/textView"
-                        android:text="@string/status_motorcycles"
+                        android:id="@+id/status_motorcycle_title"
+                        android:text="@string/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
                         style="@style/TextViewStyle"
 
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="@dimen/status_margin_top"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="@dimen/status_margin_top"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="@dimen/status_margin_sx"/>
-                <ImageView
-                        android:id="@+id/imageView"
-                        android:src="@drawable/baseline_arrow_drop_down_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        app:tint="@color/dark_text"
-
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         android:layout_marginTop="@dimen/status_margin_top"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="@dimen/status_margin_top"
-                        android:layout_marginEnd="@dimen/status_margin_sx"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:contentDescription="@string/image_description"/>
+                        android:layout_marginBottom="@dimen/status_margin_top"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
                 <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/status_recycler_view"
+                        android:id="@+id/status_elem_recycler_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

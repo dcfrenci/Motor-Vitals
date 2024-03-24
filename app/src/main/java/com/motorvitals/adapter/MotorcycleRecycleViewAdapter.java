@@ -58,14 +58,11 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
             textTitle = itemView.findViewById(R.id.titleTextView);
             textDescription = itemView.findViewById(R.id.descriptionTextView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onCardClick(position, 0);
-                        }
+            itemView.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onCardClick(position, 0);
                     }
                 }
             });

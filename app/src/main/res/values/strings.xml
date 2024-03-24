@@ -38,5 +38,9 @@
     <string name="max">Max</string>
     <string name="today">Set as today</string>
 
+    <!--  Status fragment  -->
+    <string name="status_motorcycles">Motorcycles</string>
+    <string name="status_detail">Detail</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

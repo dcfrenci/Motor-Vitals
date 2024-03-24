@@ -34,7 +34,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     private static String mParam1;
     private static String mParam2;
     private View view;
-    private final ArrayList<Motorcycle> motorcycles = new ArrayList<>();
+    private ArrayList<Motorcycle> motorcycles = new ArrayList<>();
 
     public MotorcycleFragment() {
         // Required empty public constructor
@@ -64,9 +64,9 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            motorcycles = getArguments().getParcelableArrayList("motorcycles");
         }
-
-        setUpMotorcycleModels();
+//        setUpMotorcycleModels();
     }
 
     @Override
@@ -74,6 +74,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
         // Load the recycler view
+
         RecyclerView recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
         MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, this, motorcycles);
         recyclerView.setAdapter(adapter);
@@ -86,32 +87,11 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     }
 
 
-    private void setUpMotorcycleModels() {
+    /*private void setUpMotorcycleModels() {
         //load motorcycle from saved data
 
-
-        ArrayList<ElementList> elementList = new ArrayList<>();
-        for (int i = 0; i < 5; i++){
-            String name = "list_" + i;
-            ArrayList<Element> elements = new ArrayList<>();
-            for (int k = 0; k < 8; k++) {
-                String str = "element_" + k;
-                Element element = new Element(str, false);
-                element.setDescription(name);
-                elements.add(element);
-            }
-            ElementList list = new ElementList(name, elements);
-            elementList.add(list);
-        }
-
-        for (int i = 0; i < 15; i++){
-            String name = "moto_" + i;
-            Motorcycle moto = new Motorcycle(elementList, name, 15000);
-            moto.setDescription("Descrizione di " + name);
-            motorcycles.add(moto);
-        }
         //set up motorcycle arraylist
-    }
+    }*/
 
     @Override
     public void onCardClick(int position, int positionElement) {
@@ -135,7 +115,6 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     public void passingObject(Object object, int position) {
         if (object instanceof Motorcycle) {
             motorcycles.set(position, (Motorcycle) object);
-            setUpMotorcycleModels();
         }
     }
 }

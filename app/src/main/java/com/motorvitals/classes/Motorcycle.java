@@ -6,7 +6,10 @@ import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,10 +105,22 @@ public class Motorcycle implements Motor, Parcelable {
         return imageView;
     }
 
+    public RecyclerView getElementsWithStatusRecyclerView(RecyclerView recyclerView, Fragment fragment, Integer motorcyclePosition) {
+        ArrayList<Element> filteredElement = new ArrayList<>();
+        getElementsWithState(getElementList()).forEach(list -> filteredElement.addAll(list.getElements()));
+        StatusElementRecyclerViewAdapter adapter = new StatusElementRecyclerViewAdapter(filteredElement, getElementsWithState(getElementList()), motorcyclePosition);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
+        return recyclerView;
+    }
+
     @Override
-    public List<ElementList> filterWithState(List<ElementList> list) {
-//        return list.stream().filter(ElementList::getState).collect(Collectors.toList());
-        return null;
+    public ArrayList<ElementList> getElementsWithState(ArrayList<ElementList> arrayList) {
+        ArrayList<ElementList> filteredList = new ArrayList<>();
+        for (ElementList list : arrayList) {
+            filteredList.add(new ElementList(list.getTitle(), new ArrayList<>(list.getElements().stream().filter(Element::getState).collect(Collectors.toList()))));
+        }
+        return filteredList;
     }
 
 //  ---------------------- Implementation Parcelable ----------------------

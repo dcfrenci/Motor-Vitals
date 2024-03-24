@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
+import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
