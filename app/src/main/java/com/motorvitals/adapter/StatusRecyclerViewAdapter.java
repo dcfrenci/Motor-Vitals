@@ -3,6 +3,7 @@ package com.motorvitals.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,11 +46,23 @@ public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusRecycl
     public static class StatusViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private RecyclerView recyclerView;
+        private final ImageView dropDownImage;
 
         public StatusViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.status_motorcycle_title);
             recyclerView = itemView.findViewById(R.id.status_elem_recycler_view);
+            dropDownImage = itemView.findViewById(R.id.status_drop_down_image);
+
+            dropDownImage.setOnClickListener(click -> {
+                if (itemView.findViewById(R.id.status_container_layout).getVisibility() == View.GONE) {
+                    itemView.findViewById(R.id.status_container_layout).setVisibility(View.VISIBLE);
+                    dropDownImage.setRotation(180);
+                } else {
+                    itemView.findViewById(R.id.status_container_layout).setVisibility(View.GONE);
+                    dropDownImage.setRotation(0);
+                }
+            });
         }
 
         public void setTitle(TextView title) {

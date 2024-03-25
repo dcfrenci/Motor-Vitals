@@ -7,8 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -28,6 +32,7 @@ public class Element implements Parcelable {
         this.state = state;
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
+        this.lastServiceDate = new Date();
     }
 
     public Element() {
@@ -35,6 +40,7 @@ public class Element implements Parcelable {
         this.state = false;
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
+        this.lastServiceDate = new Date();
     }
 
     public String getName() {
@@ -86,6 +92,9 @@ public class Element implements Parcelable {
     }
 
     public Date getLastServiceDate() {
+        if (lastServiceDate == null) {
+            return new Date();
+        }
         return lastServiceDate;
     }
 
@@ -122,15 +131,24 @@ public class Element implements Parcelable {
     }
 
     public TextView getDaysInterval(TextView textView) {
-        String text = "Last service: " + Date.from(getLastServiceDate().toInstant()) + " d";
+        String text = "Last service: " + getNumberDays() + " d";
         textView.setText(text);
         return textView;
     }
 
+    public int getNumberDays() {
+        Period period = Period.between(getLastServiceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now());
+        return period.getDays();
+    }
+
     public TextView getKmInterval(TextView textView) {
-        String text = "Last service: " + getLastServiceKm() + "Km";
+        String text = "Last service: " + getLastServiceKm() + " Km";
         textView.setText(text);
         return textView;
+    }
+
+    public int getNumberKm() {
+        return getLastServiceKm();
     }
 
     private HashMap<String, Integer> basicMap() {

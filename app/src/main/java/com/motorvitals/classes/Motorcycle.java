@@ -106,21 +106,19 @@ public class Motorcycle implements Motor, Parcelable {
     }
 
     public RecyclerView getElementsWithStatusRecyclerView(RecyclerView recyclerView, Fragment fragment, Integer motorcyclePosition) {
-        ArrayList<Element> filteredElement = new ArrayList<>();
-        getElementsWithState(getElementList()).forEach(list -> filteredElement.addAll(list.getElements()));
-        StatusElementRecyclerViewAdapter adapter = new StatusElementRecyclerViewAdapter(filteredElement, getElementsWithState(getElementList()), motorcyclePosition);
+        ArrayList<Element> filtered = new ArrayList<>();
+        for (ElementList list : getElementList()) {
+            filtered.addAll(getElementsWithState(list));
+        }
+        StatusElementRecyclerViewAdapter adapter = new StatusElementRecyclerViewAdapter(fragment, filtered, getElementList(), motorcyclePosition);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         return recyclerView;
     }
 
     @Override
-    public ArrayList<ElementList> getElementsWithState(ArrayList<ElementList> arrayList) {
-        ArrayList<ElementList> filteredList = new ArrayList<>();
-        for (ElementList list : arrayList) {
-            filteredList.add(new ElementList(list.getTitle(), new ArrayList<>(list.getElements().stream().filter(Element::getState).collect(Collectors.toList()))));
-        }
-        return filteredList;
+    public ArrayList<Element> getElementsWithState(ElementList arrayList) {
+        return arrayList.getElements().stream().filter(Element::getState).collect(Collectors.toCollection(ArrayList::new));
     }
 
 //  ---------------------- Implementation Parcelable ----------------------

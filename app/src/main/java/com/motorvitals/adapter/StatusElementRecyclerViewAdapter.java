@@ -1,11 +1,14 @@
 package com.motorvitals.adapter;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
@@ -13,13 +16,18 @@ import com.motorvitals.classes.ElementList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
+import android.content.res.Resources;
 public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<StatusElementRecyclerViewAdapter.StatusViewHolder> {
+    private final Fragment fragment;
     private final ArrayList<Element> elementStatus;
     private final ArrayList<ElementList> elementLists;
     private final Integer motorcycleIndex;
 
-    public StatusElementRecyclerViewAdapter(ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex) {
+    public StatusElementRecyclerViewAdapter(Fragment fragment, ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex) {
+        this.fragment = fragment;
         this.elementStatus = elementStatus;
         this.elementLists = elementLists;
         this.motorcycleIndex = motorcycleIndex;
@@ -31,14 +39,17 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
     public StatusElementRecyclerViewAdapter.StatusViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.status_element_row_recycler_view, viewGroup, false);
-        return new StatusElementRecyclerViewAdapter.StatusViewHolder(view);
+        return new StatusElementRecyclerViewAdapter.StatusViewHolder(view, fragment);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull StatusElementRecyclerViewAdapter.StatusViewHolder holder, int position) {
         holder.setTitle(elementStatus.get(position).getTextView(holder.getTitle()));
-//        holder.setDayInterval(elementStatus.get(position).getDaysInterval(holder.getDayInterval()));
+        holder.setDayInterval(elementStatus.get(position).getDaysInterval(holder.getDayInterval()));
         holder.setKmInterval(elementStatus.get(position).getKmInterval(holder.getKmInterval()));
+
+        holder.setImageStateColor(holder.getDayImage(), elementStatus.get(position).getDayInterval(), elementStatus.get(position).getNumberDays());
+        holder.setImageStateColor(holder.getKmImage(), elementStatus.get(position).getKmInterval(), elementStatus.get(position).getNumberKm());
     }
 
     @Override
@@ -47,6 +58,7 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
     }
 
     public static class StatusViewHolder extends RecyclerView.ViewHolder {
+        private final Fragment fragment;
         private TextView title;
         private TextView dayInterval;
         private ImageView dayImage;
@@ -54,14 +66,15 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
         private ImageView kmImage;
 
 
-        public StatusViewHolder(@NonNull @NotNull View itemView) {
+        public StatusViewHolder(@NonNull @NotNull View itemView, Fragment fragment) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.status_elem_title);
-            dayInterval = itemView.findViewById(R.id.status_elem_day);
-            dayImage = itemView.findViewById(R.id.status_elem_day_image);
-            kmInterval = itemView.findViewById(R.id.status_elem_km);
-            kmImage = itemView.findViewById(R.id.status_elem_km_image);
+            this.title = itemView.findViewById(R.id.status_elem_title);
+            this.dayInterval = itemView.findViewById(R.id.status_elem_day);
+            this.dayImage = itemView.findViewById(R.id.status_elem_day_image);
+            this.kmInterval = itemView.findViewById(R.id.status_elem_km);
+            this.kmImage = itemView.findViewById(R.id.status_elem_km_image);
+            this.fragment = fragment;
         }
 
         public TextView getTitle() {
@@ -87,5 +100,59 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
         public void setKmInterval(TextView kmInterval) {
             this.kmInterval = kmInterval;
         }
+
+        public ImageView getDayImage() {
+            return dayImage;
+        }
+
+        public void setDayImage(ImageView dayImage) {
+            this.dayImage = dayImage;
+        }
+
+        public ImageView getKmImage() {
+            return kmImage;
+        }
+
+        public void setKmImage(ImageView kmImage) {
+            this.kmImage = kmImage;
+        }
+
+        private void setImageStateColor(ImageView imageView, @NonNull HashMap<String, Integer> interval, int value) {
+            imageView.setBackgroundColor(generateColor(value, interval).toArgb());
+        }
+
+        private Color generateColor(Integer value, @NonNull HashMap<String, Integer> interval) {
+            Resources resources = fragment.getResources();
+            Integer minValue = interval.get("min");
+            Integer medValue = interval.get("med");
+            Integer maxValue = interval.get("max");
+
+            if (value.compareTo(minValue) <= 0)
+                return Color.valueOf(resources.getColor(R.color.state_min, fragment.requireContext().getTheme()));
+            if (value.compareTo(medValue) == 0)
+                return Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
+            if (value.compareTo(maxValue) >= 0)
+                return Color.valueOf(resources.getColor(R.color.state_max, fragment.requireContext().getTheme()));
+
+            if (value.compareTo(minValue) > 0 && value.compareTo(medValue) < 0) {
+                Color x = Color.valueOf(resources.getColor(R.color.state_min, fragment.requireContext().getTheme()));
+                Color y = Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
+                return gradientColor(x, y, value, resources);
+            } else {
+                Color x = Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
+                Color y = Color.valueOf(resources.getColor(R.color.state_max, fragment.requireContext().getTheme()));
+                return gradientColor(x, y, value, resources);
+            }
+        }
+
+        private Color gradientColor(Color x, Color y, int value, Resources resources) {
+            double blending = 0.5;
+            double inverse_blending = 1 - blending;
+            int red = (int) (x.red() * blending + y.red() * inverse_blending);
+            int green = (int) (x.green() * blending + y.green() * inverse_blending);
+            int blue = (int) (x.blue() * blending + y.blue() * inverse_blending);
+            return Color.valueOf(red, green, blue);
+        }
+
     }
 }

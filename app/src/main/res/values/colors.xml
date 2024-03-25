@@ -11,4 +11,9 @@
     <color name="dark_accent_dark">#04697D</color>
     <color name="dark_text">#DEE3DE</color>
     <color name="dark_less_text">#828582</color>
+
+    <!--  State Color  -->
+    <color name="state_min">0xFF0000</color>
+    <color name="state_med">0xFFFF00</color>
+    <color name="state_max">0x00FF00</color>
 </resources>
