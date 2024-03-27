@@ -16,9 +16,16 @@ import com.motorvitals.R;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -94,6 +101,12 @@ public class MotorcycleDetailElementFragment extends Fragment {
             } else {
                 view.findViewById(R.id.notification_container).setVisibility(View.GONE);
             }
+        });
+
+        view.findViewById(R.id.element_today_date_button).setOnClickListener(click -> {
+            String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            EditText dateTextView = view.findViewById(R.id.element_last_date);
+            dateTextView.setText(date);
         });
         return view;
     }

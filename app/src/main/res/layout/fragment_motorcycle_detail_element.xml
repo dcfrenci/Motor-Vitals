@@ -183,7 +183,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="8dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -322,9 +322,8 @@
                                         android:layout_width="80dp"
                                         android:layout_height="wrap_content"
                                         android:inputType="date"
-                                        android:hint="@string/interval"
                                         android:autofillHints="@string/empty_interval"
-
+                                        android:textAlignment="center"
                                         style="@style/TextViewStyle"
 
                                         app:layout_constraintTop_toTopOf="parent"
@@ -478,9 +477,8 @@
                                         android:layout_width="80dp"
                                         android:layout_height="wrap_content"
                                         android:inputType="date"
-                                        android:hint="@string/interval"
                                         android:autofillHints="@string/empty_interval"
-
+                                        android:textAlignment="center"
                                         style="@style/TextViewStyle"
 
                                         app:layout_constraintTop_toTopOf="parent"

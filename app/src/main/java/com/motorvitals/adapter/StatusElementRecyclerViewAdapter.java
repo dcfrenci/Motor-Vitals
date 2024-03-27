@@ -118,7 +118,7 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
         }
 
         private void setImageStateColor(ImageView imageView, @NonNull HashMap<String, Integer> interval, int value) {
-            imageView.setBackgroundColor(generateColor(value, interval).toArgb());
+            imageView.setColorFilter(generateColor(value, interval).toArgb());
         }
 
         private Color generateColor(Integer value, @NonNull HashMap<String, Integer> interval) {

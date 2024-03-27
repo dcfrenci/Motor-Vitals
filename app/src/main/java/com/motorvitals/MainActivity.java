@@ -14,6 +14,7 @@ import com.motorvitals.fragments.ProfileFragment;
 import com.motorvitals.fragments.StatusFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding activityMainBinding;
@@ -77,7 +78,12 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<Element> elements = new ArrayList<>();
             for (int k = 0; k < 8; k++) {
                 String str = "element_" + k;
-                Element element = new Element(str, k % 2 != 0);
+                Element element = new Element(str, false);
+                if (k % 2 != 0) {
+                    element = new Element(str, true);
+                    element.setLastServiceDate(new Date());
+                    element.setLastServiceKm(k * 100);
+                }
                 element.setDescription(name);
                 elements.add(element);
             }
