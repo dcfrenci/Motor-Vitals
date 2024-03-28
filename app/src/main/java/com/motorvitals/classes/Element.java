@@ -26,6 +26,7 @@ public class Element implements Parcelable {
     private Date lastServiceDate;
     private HashMap<String, Integer> kmInterval;
     private Integer lastServiceKm;
+    private Integer currentKm;
 
     public Element(String name, Boolean state) {
         this.name = name;
@@ -81,6 +82,14 @@ public class Element implements Parcelable {
 
     public void setState(Boolean state) {
         this.state = state;
+    }
+
+    public Integer getCurrentKm() {
+        return currentKm;
+    }
+
+    public void setCurrentKm(Integer currentKm) {
+        this.currentKm = currentKm;
     }
 
     public HashMap<String, Integer> getDayInterval() {

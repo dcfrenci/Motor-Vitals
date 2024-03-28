@@ -15,11 +15,6 @@
     <dimen name="card_elevation">10dp</dimen>
 
     <!--  Detail dimension  -->
-    <dimen name="motorcycle_image">150dp</dimen>
-    <dimen name="motorcycle_title_text">20sp</dimen>
-    <dimen name="motorcycle_text">12sp</dimen>
-    <dimen name="motorcycle_image_to_top">15dp</dimen>
-    <dimen name="motorcycle_title_to_top">20dp</dimen>
     <dimen name="motorcycle_title_margin_sx">5dp</dimen>
     <dimen name="motorcycle_text_margin">10dp</dimen>
     <dimen name="motorcycle_dropdown_height">35dp</dimen>
@@ -27,6 +22,12 @@
     <dimen name="motorcycle_list_to_top">50dp</dimen>
     <dimen name="motorcycle_bottom_margin">7dp</dimen>
     <dimen name="motorcycle_list_menu_margin_sx">10dp</dimen>
+
+    <dimen name="motorcycle_image">150dp</dimen>
+    <dimen name="motorcycle_text_margin_width">15dp</dimen>
+    <dimen name="motorcycle_interval_width">100dp</dimen>
+    <dimen name="motorcycle_image_to_top">20dp</dimen>
+    <dimen name="motorcycle_lines_spacing">15dp</dimen>
 
     <!--  Element dimension  -->
     <dimen name="element_top_margin">20dp</dimen>

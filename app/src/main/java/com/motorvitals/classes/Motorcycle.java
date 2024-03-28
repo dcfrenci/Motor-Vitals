@@ -35,7 +35,7 @@ public class Motorcycle implements Motor, Parcelable {
     public Motorcycle(ArrayList<ElementList> elementList, String name, Integer km) {
         this.elementList = elementList;
         this.name = name;
-        this.km = km;
+        setKm(km);
     }
 
     public ArrayList<ElementList> getElementList() {
@@ -72,6 +72,7 @@ public class Motorcycle implements Motor, Parcelable {
 
     public void setKm(Integer km) {
         this.km = km;
+        getElementList().forEach(list -> list.getElements().forEach(elem -> elem.setCurrentKm(km)));
     }
 
     public String getDescription() {

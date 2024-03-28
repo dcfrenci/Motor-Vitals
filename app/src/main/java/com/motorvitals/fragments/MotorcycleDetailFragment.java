@@ -1,12 +1,9 @@
 package com.motorvitals.fragments;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +13,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.textfield.TextInputLayout;
 import com.motorvitals.R;
-import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.MotorcycleDetailRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
-
-import java.text.ParseException;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,7 +111,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     private void setUpMotorcycleDetailModels() {
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
-        TextView title = view.findViewById(R.id.motorcycle_title_text_view);
+        TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
 
         title.setText(motorcycle.getName());
@@ -133,7 +125,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     public void onSave() {
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
-        TextView title = view.findViewById(R.id.motorcycle_title_text_view);
+        TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
         //TODO motorcycleImage
         motorcycle.setName(title.getText().toString());

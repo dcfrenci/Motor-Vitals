@@ -10,8 +10,6 @@
     <string name="Profile">Profile</string>
 
     <!--  Hint to input  -->
-    <string name="detail_title">Your model name</string>
-    <string name="detail_description">Your description</string>
     <string name="detail_list">Your list name</string>
 
     <!--  Autofill hint  -->
@@ -19,6 +17,8 @@
     <string name="detail_description_fill">Description</string>
 
     <!--  Motorcycle Detail Fragment  -->
+    <string name="detail_title">Title</string>
+    <string name="detail_description">Description</string>
     <string name="detail_add_list">Add new list</string>
     <string name="detail_add_element">Add</string>
 

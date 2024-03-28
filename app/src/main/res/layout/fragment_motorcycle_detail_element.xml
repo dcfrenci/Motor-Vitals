@@ -10,6 +10,7 @@
         <ImageView
                 android:id="@+id/element_image_view"
                 android:src="@drawable/baseline_construction_24"
+                android:background="@drawable/shape_circle_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth="@dimen/element_image"
@@ -183,7 +184,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="8dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
