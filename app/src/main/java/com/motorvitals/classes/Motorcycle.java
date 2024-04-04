@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Motorcycle implements Motor, Parcelable {
-    private ArrayList<ElementList> elementList;
     private String name;
     private Integer km;
     private String description;
     private Image photo;
+    private ArrayList<ElementList> elementList;
 
     public Motorcycle() {
         this.name = "";
@@ -163,4 +163,17 @@ public class Motorcycle implements Motor, Parcelable {
         }
         dest.writeString(description);
     }
+
+//  ---------------------- Implementation Jackson ----------------------
+
+    /*@Override
+    public String toString() {
+        return "Motorcycle{" +
+                "elementList=" + elementList +
+                ", name='" + name + '\'' +
+                ", km=" + km +
+                ", description='" + description + '\'' +
+                ", photo=" + photo +
+                '}';
+    }*/
 }

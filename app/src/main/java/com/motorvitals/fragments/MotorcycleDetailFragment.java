@@ -113,9 +113,12 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
         TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
+        TextView km = view.findViewById(R.id.motorcycle_km_text_view);
 
         title.setText(motorcycle.getName());
         description.setText(motorcycle.getDescription());
+        String kmString = motorcycle.getKm().toString();
+        km.setText(kmString);
 
         RecyclerView recyclerView = view.findViewById(R.id.motorcycle_detail_recycler_view);
         MotorcycleDetailRecyclerViewAdapter adapter = new MotorcycleDetailRecyclerViewAdapter(this, this, motorcycle.getElementList());
@@ -127,9 +130,12 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
         TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
+        TextView km = view.findViewById(R.id.motorcycle_km_text_view);
+
         //TODO motorcycleImage
         motorcycle.setName(title.getText().toString());
         motorcycle.setDescription(description.getText().toString());
+        motorcycle.setKm(Integer.valueOf(km.getText().toString()));
     }
 
     @Override

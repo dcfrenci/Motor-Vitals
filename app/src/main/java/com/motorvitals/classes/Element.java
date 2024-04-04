@@ -201,4 +201,22 @@ public class Element implements Parcelable {
             return new Element[size];
         }
     };
+
+//  ---------------------- Implementation Jackson ----------------------
+
+    /*@Override
+    public String toString() {
+        return "Element{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", photo=" + photo +
+                ", price=" + price +
+                ", state=" + state +
+                ", dayInterval=" + dayInterval +
+                ", lastServiceDate=" + lastServiceDate +
+                ", kmInterval=" + kmInterval +
+                ", lastServiceKm=" + lastServiceKm +
+                ", currentKm=" + currentKm +
+                '}';
+    }*/
 }

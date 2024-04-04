@@ -1,10 +1,15 @@
 package com.motorvitals;
 
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
@@ -12,8 +17,12 @@ import com.motorvitals.databinding.ActivityMainBinding;
 import com.motorvitals.fragments.MotorcycleFragment;
 import com.motorvitals.fragments.ProfileFragment;
 import com.motorvitals.fragments.StatusFragment;
+import net.bytebuddy.jar.asm.TypeReference;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        //setContentView(R.layout.activity_main);
         setContentView(activityMainBinding.getRoot());
         loadData();
         //set fragment when the app is opened
@@ -41,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ProfileFragment());
             return true;
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveData();
     }
 
     /**
@@ -71,8 +85,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
         motorcycles = new ArrayList<>();
+        File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+        if (file.exists() && file.canRead()) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+//                motorcycles.add(objectMapper.readValue(file, Motorcycle.class));
+                ObjectReader objectReader = objectMapper.readerForArrayOf(Motorcycle.class);
+                Motorcycle [] array = objectReader.readValue(file);
+                motorcycles.addAll(Arrays.asList(array));
+                Log.d("mess now", Arrays.toString(array));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         //TODO -> load from backup
-        ArrayList<ElementList> elementList = new ArrayList<>();
+        /*ArrayList<ElementList> elementList = new ArrayList<>();
         for (int i = 0; i < 5; i++){
             String name = "list_" + i;
             ArrayList<Element> elements = new ArrayList<>();
@@ -91,11 +118,29 @@ public class MainActivity extends AppCompatActivity {
             elementList.add(list);
         }
 
-        for (int i = 0; i < 15; i++){
+        for (int i = 0; i < 2; i++){
             String name = "moto_" + i;
             Motorcycle moto = new Motorcycle(elementList, name, 15000);
             moto.setDescription("Descrizione di " + name);
             motorcycles.add(moto);
+        }*/
+    }
+
+    private void saveData() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, motorcycles);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                Log.d("mess", line);
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

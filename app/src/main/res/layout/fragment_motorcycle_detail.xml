@@ -148,6 +148,48 @@
                                 android:layout_marginEnd="@dimen/motorcycle_text_margin_width"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="@dimen/motorcycle_lines_spacing">
+
+                    <TextView
+                            android:text="@string/detail_km"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            style="@style/TextViewStyle"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="@dimen/motorcycle_text_margin_width"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout11"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="@dimen/motorcycle_interval_width">
+
+                        <EditText
+                                android:id="@+id/motorcycle_km_text_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:hint="@string/detail_km"
+                                android:autofillHints="@string/detail_description"
+                                style="@style/TextViewStyle"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginEnd="@dimen/motorcycle_text_margin_width"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
