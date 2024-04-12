@@ -66,7 +66,6 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
             mParam2 = getArguments().getString(ARG_PARAM2);
             motorcycles = getArguments().getParcelableArrayList("motorcycles");
         }
-//        setUpMotorcycleModels();
     }
 
     @Override
@@ -83,15 +82,13 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         view.findViewById(R.id.floating_button_motorcycle).setOnClickListener(click -> {
             onCardClick(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION);
         });
+
+        view.findViewById(R.id.motorcycleRecyclerView).setOnLongClickListener(click -> {
+            view.findViewById(R.id.cardMotorcycleCancel).setVisibility(View.VISIBLE);
+            return true;
+        });
         return view;
     }
-
-
-    /*private void setUpMotorcycleModels() {
-        //load motorcycle from saved data
-
-        //set up motorcycle arraylist
-    }*/
 
     @Override
     public void onCardClick(int position, int positionElement) {

@@ -174,6 +174,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
         description.setText(element.getDescription());
         price.setText(String.valueOf(element.getPrice()));
         notificationSwitch.setChecked(element.getState());
+        if (element.getState()) {
+            view.findViewById(R.id.notification_container).setVisibility(View.VISIBLE);
+        }
         if (element.getDayInterval().get("min") != null) {
             minDay.setText(element.getDayInterval().get("min").toString());
         }

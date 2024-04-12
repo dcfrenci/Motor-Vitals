@@ -34,6 +34,7 @@ public class Element implements Parcelable {
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
         this.lastServiceDate = new Date();
+        this.currentKm = 0;
     }
 
     public Element() {
@@ -42,6 +43,7 @@ public class Element implements Parcelable {
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
         this.lastServiceDate = new Date();
+        this.currentKm = 0;
     }
 
     public String getName() {

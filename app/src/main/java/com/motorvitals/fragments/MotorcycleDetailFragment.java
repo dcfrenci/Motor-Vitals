@@ -144,7 +144,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         Bundle bundle = new Bundle();
         ElementList elementList = motorcycle.getElementList().get(position);
         if (positionElement == RecyclerView.NO_POSITION) {
-            elementList.getElements().add(new Element());
+            Element newElement = new Element();
+            newElement.setCurrentKm(motorcycle.getKm());
+            elementList.getElements().add(newElement);
             motorcycle.setOneElementList(elementList, position);
             positionElement = elementList.getElements().size() - 1;
         }
