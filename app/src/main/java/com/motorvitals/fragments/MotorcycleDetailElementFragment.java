@@ -1,32 +1,22 @@
 package com.motorvitals.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.*;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,17 +26,17 @@ import java.util.Objects;
 public class MotorcycleDetailElementFragment extends Fragment {
 
     // the fragment initialization parameters
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
+    private static final String ELEMENT = "element";
+    private static final String LIST_INDEX = "listIndex";
+    private static final String ELEMENT_INDEX = "elementIndex";
+    private static final String EXISTING = "existing";
     private View view;
+    private DataPassingInterface dataPassingInterface;
     private ElementList elementList;
     private Element element;
-    private DataPassingInterface dataPassingInterface;
     private Integer elementListIndex;
     private Integer elementIndex;
-    private Boolean elementNew;
+    private Boolean existing;
 
     public MotorcycleDetailElementFragment() {
         // Required empty public constructor
@@ -56,16 +46,19 @@ public class MotorcycleDetailElementFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param element Element
+     * @param elementListIndex Index of the list containing the element.
+     * @param elementIndex Index of the element in the list.
      * @return A new instance of fragment MotorcycleDetailElementFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MotorcycleDetailElementFragment newInstance(String param1, String param2) {
+    public static MotorcycleDetailElementFragment newInstance(Element element, Integer elementListIndex, Integer elementIndex, Boolean existing) {
         MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ELEMENT, element);
+        args.putInt(LIST_INDEX, elementListIndex);
+        args.putInt(ELEMENT_INDEX, elementIndex);
+        args.putBoolean(EXISTING, existing);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +67,10 @@ public class MotorcycleDetailElementFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            element = getArguments().getParcelable(ELEMENT);
+            elementListIndex = getArguments().getInt(LIST_INDEX);
+            elementIndex = getArguments().getInt(ELEMENT_INDEX);
+            existing = getArguments().getBoolean(EXISTING);
         }
     }
 
@@ -112,7 +107,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         });
 
         view.findViewById(R.id.element_check_save).setOnClickListener(click -> {
-            elementNew = false;
+            existing = false;
             onDestroy();
             getParentFragmentManager().popBackStack();
         });
@@ -121,7 +116,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (elementNew) {
+        if (existing) {
             return;
         }
         try {
@@ -213,7 +208,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         if (element.getLastServiceKm() != null) {
             lastKm.setText(Integer.toString(element.getCurrentKm() - element.getLastServiceKm()));
         }
-        if (elementNew) {
+        if (existing) {
             saveButton.setVisibility(View.VISIBLE);
         }
     }
@@ -222,6 +217,6 @@ public class MotorcycleDetailElementFragment extends Fragment {
         this.dataPassingInterface = dataPassingInterface;
         this.elementListIndex = elementListIndex;
         this.elementIndex = elementIndex;
-        this.elementNew = elementNew;
+        this.existing = elementNew;
     }
 }

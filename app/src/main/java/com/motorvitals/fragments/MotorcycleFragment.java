@@ -94,13 +94,15 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
     public void onCardClick(int position, int positionElement) {
         MotorcycleDetailFragment fragment = new MotorcycleDetailFragment();
         Bundle bundle = new Bundle();
+        boolean motorcycleNew = false;
         if (position == RecyclerView.NO_POSITION) {
             motorcycles.add(new Motorcycle());
             position = motorcycles.size() - 1;
+            motorcycleNew = true;
         }
         bundle.putParcelable("motorcycle", motorcycles.get(position));
         fragment.setArguments(bundle);
-        fragment.setDataPassingInterface(this, position, position);
+        fragment.setDataPassingInterface(this, position, position, motorcycleNew);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

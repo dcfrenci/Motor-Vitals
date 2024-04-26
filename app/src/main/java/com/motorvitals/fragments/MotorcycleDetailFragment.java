@@ -39,6 +39,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     private DataPassingInterface dataPassingInterface;
     private Integer motorcycleIndex;
     private Motorcycle motorcycle;
+    private Boolean motorcycleNew;
 
     public MotorcycleDetailFragment() {
         // Required empty public constructor
@@ -99,12 +100,27 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
                 }
             });
         });
+
+        view.findViewById(R.id.detail_motorcycle_back_button).setOnClickListener(click -> {
+            onDestroy();
+            getParentFragmentManager().popBackStack();
+        });
+
+        view.findViewById(R.id.detail_motorcycle_check_save).setOnClickListener(click -> {
+            motorcycleNew = false;
+            view.findViewById(R.id.detail_motorcycle_check_save).setVisibility(View.GONE);
+            view.findViewById(R.id.floating_detail_button_motorcycle).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.floating_detail_image_motorcycle).setVisibility(View.VISIBLE);
+        });
         return view;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (motorcycleNew) {
+            return;
+        }
         onSave();
         dataPassingInterface.passingObject(motorcycle, motorcycleIndex);
     }
@@ -119,6 +135,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         description.setText(motorcycle.getDescription());
         String kmString = motorcycle.getKm().toString();
         km.setText(kmString);
+        if (motorcycleNew) {
+            view.findViewById(R.id.detail_motorcycle_check_save).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.floating_detail_button_motorcycle).setVisibility(View.GONE);
+            view.findViewById(R.id.floating_detail_image_motorcycle).setVisibility(View.GONE);
+        }
 
         RecyclerView recyclerView = view.findViewById(R.id.motorcycle_detail_recycler_view);
         MotorcycleDetailRecyclerViewAdapter adapter = new MotorcycleDetailRecyclerViewAdapter(this, this, motorcycle.getElementList());
@@ -175,8 +196,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         }
     }
 
-    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer motorcycleIndex, Integer position) {
+    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer motorcycleIndex, Integer position, Boolean motorcycleNew) {
         this.dataPassingInterface = dataPassingInterface;
         this.motorcycleIndex = motorcycleIndex;
+        this.motorcycleNew = motorcycleNew;
     }
 }

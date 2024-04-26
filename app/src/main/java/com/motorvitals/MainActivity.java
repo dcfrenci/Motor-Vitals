@@ -18,10 +18,7 @@ import com.motorvitals.fragments.StatusFragment;
 import net.bytebuddy.jar.asm.TypeReference;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding activityMainBinding;
@@ -83,45 +80,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
         motorcycles = new ArrayList<>();
-//        if (true) return;
-        File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+        /*File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
         if (file.exists() && file.canRead()) {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
-                /*ObjectReader objectReader = objectMapper.readerForArrayOf(Motorcycle.class);
-                Motorcycle [] array = objectReader.readValue(file);
-                motorcycles.addAll(Arrays.asList(array));*/
                 motorcycles = new ArrayList<>(Arrays.asList(objectMapper.readValue(file, Motorcycle[].class)));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
-        //TODO -> load from backup
-        /*ArrayList<ElementList> elementList = new ArrayList<>();
-        for (int i = 0; i < 5; i++){
-            String name = "list_" + i;
-            ArrayList<Element> elements = new ArrayList<>();
-            for (int k = 0; k < 8; k++) {
-                String str = "element_" + k;
-                Element element = new Element(str, false);
-                if (k % 2 != 0) {
-                    element = new Element(str, true);
-                    element.setLastServiceDate(new Date());
-                    element.setLastServiceKm(k * 100);
-                }
-                element.setDescription(name);
-                elements.add(element);
-            }
-            ElementList list = new ElementList(name, elements);
-            elementList.add(list);
-        }
-
-        for (int i = 0; i < 2; i++){
-            String name = "moto_" + i;
-            Motorcycle moto = new Motorcycle(elementList, name, 15000);
-            moto.setDescription("Descrizione di " + name);
-            motorcycles.add(moto);
         }*/
+
+        for (int i = 0; i < 2; i++) {
+            Motorcycle moto1 = new Motorcycle();
+            moto1.setName("moto" + i);
+            moto1.setDescription("description moto" + i);
+            moto1.setKm(15000);
+            ArrayList<ElementList> elementLists = new ArrayList<>();
+            for (int t = 0; t < 3; t++) {
+                ElementList elementList = new ElementList("list" + t);
+                for (int k = 0; k < 3; k++) {
+                    Element element = new Element();
+                    element.setName("element" + t + k);
+                    element.setDescription("description element" + t + k);
+                    if (k % 2 == 0) {
+                        element.setState(true);
+                    }
+                    elementList.getElements().add(element);
+                }
+                elementLists.add(elementList);
+            }
+            moto1.setElementList(elementLists);
+            motorcycles.add(moto1);
+        }
     }
 
     private void saveData() {
