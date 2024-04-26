@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.*;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
@@ -85,15 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadData() {
         motorcycles = new ArrayList<>();
+//        if (true) return;
         File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
         if (file.exists() && file.canRead()) {
-            ObjectMapper objectMapper = new ObjectMapper();
             try {
-//                motorcycles.add(objectMapper.readValue(file, Motorcycle.class));
-                ObjectReader objectReader = objectMapper.readerForArrayOf(Motorcycle.class);
+                ObjectMapper objectMapper = new ObjectMapper();
+                /*ObjectReader objectReader = objectMapper.readerForArrayOf(Motorcycle.class);
                 Motorcycle [] array = objectReader.readValue(file);
-                motorcycles.addAll(Arrays.asList(array));
-                Log.d("mess now", Arrays.toString(array));
+                motorcycles.addAll(Arrays.asList(array));*/
+                motorcycles = new ArrayList<>(Arrays.asList(objectMapper.readValue(file, Motorcycle[].class)));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -128,17 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveData() {
         ObjectMapper objectMapper = new ObjectMapper();
+        File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
         try {
-            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
-
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, motorcycles);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                Log.d("mess", line);
+            ObjectWriter objectWriter = objectMapper.writerFor(Motorcycle.class);
+            SequenceWriter sequenceWriter = objectWriter.writeValuesAsArray(file);
+            for (Motorcycle motorcycle : motorcycles) {
+                sequenceWriter.write(motorcycle);
             }
-
-
+            sequenceWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

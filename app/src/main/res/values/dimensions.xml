@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="bottom_navigation_bar">3dp</dimen>
+    <!--  Top constraint fragment  -->
+    <dimen name="fragment_margin">10dp</dimen>
+    <dimen name="fragment_image_dimension">35dp</dimen>
+    <dimen name="fragment_height">5dp</dimen>
 
     <!--  Card dimension  -->
     <dimen name="card_corner">15dp</dimen>

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
 import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
@@ -22,6 +23,7 @@ public class ElementList implements Parcelable {
         this.elements = new ArrayList<>();
     }
 
+    @JsonCreator
     public ElementList(String title, ArrayList<Element> elements) {
         this.title = title;
         this.elements = elements;
@@ -80,6 +82,7 @@ public class ElementList implements Parcelable {
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(title);
+        dest.writeTypedList(elements);
     }
 
 //  ---------------------- Implementation Jackson ----------------------

@@ -143,16 +143,18 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
         Bundle bundle = new Bundle();
         ElementList elementList = motorcycle.getElementList().get(position);
+        boolean elementNew = false;
         if (positionElement == RecyclerView.NO_POSITION) {
             Element newElement = new Element();
             newElement.setCurrentKm(motorcycle.getKm());
             elementList.getElements().add(newElement);
             motorcycle.setOneElementList(elementList, position);
             positionElement = elementList.getElements().size() - 1;
+            elementNew = true;
         }
         bundle.putParcelable("elementList", elementList);
         fragment.setArguments(bundle);
-        fragment.setDataPassingInterface(this, position, positionElement);
+        fragment.setDataPassingInterface(this, position, positionElement, elementNew);
 
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

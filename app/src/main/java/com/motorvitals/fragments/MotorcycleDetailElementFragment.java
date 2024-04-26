@@ -3,15 +3,13 @@ package com.motorvitals.fragments;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
@@ -28,6 +26,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,12 +35,9 @@ import java.util.Locale;
  */
 public class MotorcycleDetailElementFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private View view;
@@ -50,6 +46,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
     private DataPassingInterface dataPassingInterface;
     private Integer elementListIndex;
     private Integer elementIndex;
+    private Boolean elementNew;
 
     public MotorcycleDetailElementFragment() {
         // Required empty public constructor
@@ -108,11 +105,25 @@ public class MotorcycleDetailElementFragment extends Fragment {
             EditText dateTextView = view.findViewById(R.id.element_last_date);
             dateTextView.setText(date);
         });
+
+        view.findViewById(R.id.element_back_button).setOnClickListener(click -> {
+            onDestroy();
+            getParentFragmentManager().popBackStack();
+        });
+
+        view.findViewById(R.id.element_check_save).setOnClickListener(click -> {
+            elementNew = false;
+            onDestroy();
+            getParentFragmentManager().popBackStack();
+        });
         return view;
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (elementNew) {
+            return;
+        }
         try {
             onSave();
         } catch (ParseException e) {
@@ -169,6 +180,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         TextView medKm = view.findViewById(R.id.element_med_km);
         TextView maxKm = view.findViewById(R.id.element_max_km);
         TextView lastKm = view.findViewById(R.id.element_last_km);
+        ImageView saveButton = view.findViewById(R.id.element_check_save);
 
         title.setText(element.getName());
         description.setText(element.getDescription());
@@ -201,11 +213,15 @@ public class MotorcycleDetailElementFragment extends Fragment {
         if (element.getLastServiceKm() != null) {
             lastKm.setText(Integer.toString(element.getCurrentKm() - element.getLastServiceKm()));
         }
+        if (elementNew) {
+            saveButton.setVisibility(View.VISIBLE);
+        }
     }
 
-    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer elementListIndex, Integer elementIndex) {
+    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer elementListIndex, Integer elementIndex, Boolean elementNew) {
         this.dataPassingInterface = dataPassingInterface;
         this.elementListIndex = elementListIndex;
         this.elementIndex = elementIndex;
+        this.elementNew = elementNew;
     }
 }
