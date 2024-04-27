@@ -31,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(activityMainBinding.getRoot());
         loadData();
         //set fragment when the app is opened
-        replaceFragment(new MotorcycleFragment(), motorcycles);
+        replaceFragment(MotorcycleFragment.newInstance(motorcycles));
 
 
         //------------------------ Listeners ------------------------
         activityMainBinding.bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.motorcycle_fragment)
-                replaceFragment(new MotorcycleFragment(), motorcycles);
+                replaceFragment(MotorcycleFragment.newInstance(motorcycles));
             if (item.getItemId() == R.id.status_fragment)
                 replaceFragment(new StatusFragment(), motorcycles);
             if (item.getItemId() == R.id.profile_fragment)

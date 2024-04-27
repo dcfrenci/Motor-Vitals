@@ -209,17 +209,16 @@
                         android:layout_marginStart="@dimen/element_left_margin"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/element_show_notification_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:trackTint="@color/dark_accent"
-                        android:thumbTint="@color/dark_text"
+                        app:trackTint="@color/dark_accent"
+                        app:thumbTint="@color/dark_text"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textView3"
-                        android:layout_marginStart="@dimen/element_left_margin"
-                        tools:ignore="UseSwitchCompatOrMaterialXml"/>
+                        android:layout_marginStart="@dimen/element_left_margin"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notification_container"

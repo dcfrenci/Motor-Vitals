@@ -66,6 +66,21 @@ public class MotorcycleDetailElementRecyclerViewAdapter extends RecyclerView.Ada
                     }
                 }
             });
+
+            itemView.setOnLongClickListener(longClick -> {
+                if (itemView.findViewById(R.id.card_element_delete).getVisibility() == View.GONE) {
+                    itemView.findViewById(R.id.card_element_delete).setVisibility(View.VISIBLE);
+                } else {
+                    itemView.findViewById(R.id.card_element_delete).setVisibility(View.GONE);
+                }
+                return true;
+            });
+
+            itemView.findViewById(R.id.card_element_delete).setOnClickListener(click -> {
+                if (recyclerViewInterface != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    recyclerViewInterface.onCardDelete(position, getAdapterPosition());
+                }
+            });
         }
 
         public ImageView getImageViewHolder() {

@@ -27,19 +27,15 @@ import com.motorvitals.classes.Motorcycle;
  */
 public class MotorcycleDetailFragment extends Fragment implements RecyclerViewInterface, DataPassingInterface {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // the fragment initialization parameters
+    private static final String MOTORCYCLE = "motorcycle";
+    private static final String MOTORCYCLE_INDEX = "motorcycleIndex";
+    private static final String MOTORCYCLE_EXISTING = "motorcycleExisting";
     private View view;
     private DataPassingInterface dataPassingInterface;
-    private Integer motorcycleIndex;
     private Motorcycle motorcycle;
-    private Boolean motorcycleNew;
+    private Integer motorcycleIndex;
+    private Boolean motorcycleExisting;
 
     public MotorcycleDetailFragment() {
         // Required empty public constructor
@@ -49,16 +45,17 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param motorcycle Motorcycle.
+     * @param motorcycleIndex Index of the motorcycle.
+     * @param motorcycleExisting True if Motorcycle is new.
      * @return A new instance of fragment MotorcycleDetailFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static MotorcycleDetailFragment newInstance(String param1, String param2) {
+    public static MotorcycleDetailFragment newInstance(Motorcycle motorcycle, Integer motorcycleIndex, Boolean motorcycleExisting) {
         MotorcycleDetailFragment fragment = new MotorcycleDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(MOTORCYCLE, motorcycle);
+        args.putInt(MOTORCYCLE_INDEX, motorcycleIndex);
+        args.putBoolean(MOTORCYCLE_EXISTING, motorcycleExisting);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,8 +64,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            motorcycle = getArguments().getParcelable(MOTORCYCLE);
+            motorcycleIndex = getArguments().getInt(MOTORCYCLE_INDEX);
+            motorcycleExisting = getArguments().getBoolean(MOTORCYCLE_EXISTING);
         }
     }
 
@@ -76,11 +74,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle_detail, container, false);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            motorcycle = bundle.getParcelable("motorcycle");
-            setUpMotorcycleDetailModels();
-        }
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            motorcycle = bundle.getParcelable("motorcycle");
+//        }
+        setUpMotorcycleDetailModels();
 
         view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(container.getContext());
@@ -90,24 +88,25 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
             TextView listName = dialogView.findViewById(R.id.list_menu_edit_text);
             Button addButton = dialogView.findViewById(R.id.list_menu_add_button);
+
             addButton.setOnClickListener(addList -> {
                 if (listName.getText().toString().isEmpty()) {
                     listName.setError("Please type the list name");
                 } else {
+                    onSave();
                     ElementList elementList = new ElementList(listName.getText().toString());
-                    passingObject(elementList, RecyclerView.NO_POSITION);
+                    passingObject(elementList, RecyclerView.NO_POSITION, RecyclerView.NO_POSITION);
                     bottomSheetDialog.dismiss();
                 }
             });
         });
 
         view.findViewById(R.id.detail_motorcycle_back_button).setOnClickListener(click -> {
-            onDestroy();
             getParentFragmentManager().popBackStack();
         });
 
         view.findViewById(R.id.detail_motorcycle_check_save).setOnClickListener(click -> {
-            motorcycleNew = false;
+            motorcycleExisting = false;
             view.findViewById(R.id.detail_motorcycle_check_save).setVisibility(View.GONE);
             view.findViewById(R.id.floating_detail_button_motorcycle).setVisibility(View.VISIBLE);
             view.findViewById(R.id.floating_detail_image_motorcycle).setVisibility(View.VISIBLE);
@@ -118,11 +117,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (motorcycleNew) {
+        if (motorcycleExisting) {
             return;
         }
         onSave();
-        dataPassingInterface.passingObject(motorcycle, motorcycleIndex);
+        dataPassingInterface.passingObject(motorcycle, RecyclerView.NO_POSITION, motorcycleIndex);
     }
 
     private void setUpMotorcycleDetailModels() {
@@ -135,7 +134,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         description.setText(motorcycle.getDescription());
         String kmString = motorcycle.getKm().toString();
         km.setText(kmString);
-        if (motorcycleNew) {
+        if (motorcycleExisting) {
             view.findViewById(R.id.detail_motorcycle_check_save).setVisibility(View.VISIBLE);
             view.findViewById(R.id.floating_detail_button_motorcycle).setVisibility(View.GONE);
             view.findViewById(R.id.floating_detail_image_motorcycle).setVisibility(View.GONE);
@@ -161,21 +160,10 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     @Override
     public void onCardClick(int position, int positionElement) {
-        MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
-        Bundle bundle = new Bundle();
-        ElementList elementList = motorcycle.getElementList().get(position);
-        boolean elementNew = false;
-        if (positionElement == RecyclerView.NO_POSITION) {
-            Element newElement = new Element();
-            newElement.setCurrentKm(motorcycle.getKm());
-            elementList.getElements().add(newElement);
-            motorcycle.setOneElementList(elementList, position);
-            positionElement = elementList.getElements().size() - 1;
-            elementNew = true;
-        }
-        bundle.putParcelable("elementList", elementList);
-        fragment.setArguments(bundle);
-        fragment.setDataPassingInterface(this, position, positionElement, elementNew);
+        Element element = positionElement == RecyclerView.NO_POSITION ? new Element() : motorcycle.getElementList().get(position).getElement(positionElement);
+        Boolean existing = positionElement == RecyclerView.NO_POSITION;
+        MotorcycleDetailElementFragment fragment = MotorcycleDetailElementFragment.newInstance(element, position, positionElement, existing);
+        fragment.setDataPassingInterface(this);
 
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -185,20 +173,35 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     }
 
     @Override
-    public void passingObject(Object object, int position) {
-        if (object instanceof ElementList) {
-            if (position == RecyclerView.NO_POSITION) {
-                motorcycle.addOneElementList((ElementList) object);
-            } else {
-                motorcycle.setOneElementList((ElementList) object, position);
+    public void onCardDelete(int listIndex, int index) {
+        if (listIndex <= motorcycle.getElementList().size()) {
+            if (index <= motorcycle.getElementList().get(listIndex).getElements().size()) {
+                motorcycle.getElementList().get(listIndex).getElements().remove(index);
+                setUpMotorcycleDetailModels();
             }
-            setUpMotorcycleDetailModels();
         }
     }
 
-    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer motorcycleIndex, Integer position, Boolean motorcycleNew) {
+    @Override
+    public void passingObject(Object object, int listIndex, int index) {
+        if (object instanceof Element) {
+            if (index == RecyclerView.NO_POSITION) {
+                //New element
+                motorcycle.getElementList().get(listIndex).getElements().add((Element) object);
+            } else {
+                //Update element
+                motorcycle.getElementList().get(listIndex).getElements().set(index, (Element) object);
+            }
+        }
+        if (object instanceof ElementList) {
+            if (index == RecyclerView.NO_POSITION) {
+                //New ElementList
+                motorcycle.getElementList().add((ElementList) object);
+            }
+        }
+    }
+
+    public void setDataPassingInterface(DataPassingInterface dataPassingInterface) {
         this.dataPassingInterface = dataPassingInterface;
-        this.motorcycleIndex = motorcycleIndex;
-        this.motorcycleNew = motorcycleNew;
     }
 }

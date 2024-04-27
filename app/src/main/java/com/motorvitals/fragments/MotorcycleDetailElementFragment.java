@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
-import com.motorvitals.classes.ElementList;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,7 +32,6 @@ public class MotorcycleDetailElementFragment extends Fragment {
     private static final String EXISTING = "existing";
     private View view;
     private DataPassingInterface dataPassingInterface;
-    private ElementList elementList;
     private Element element;
     private Integer elementListIndex;
     private Integer elementIndex;
@@ -49,9 +48,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
      * @param element Element
      * @param elementListIndex Index of the list containing the element.
      * @param elementIndex Index of the element in the list.
+     * @param existing True if Element is new.
      * @return A new instance of fragment MotorcycleDetailElementFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MotorcycleDetailElementFragment newInstance(Element element, Integer elementListIndex, Integer elementIndex, Boolean existing) {
         MotorcycleDetailElementFragment fragment = new MotorcycleDetailElementFragment();
         Bundle args = new Bundle();
@@ -73,18 +72,13 @@ public class MotorcycleDetailElementFragment extends Fragment {
             existing = getArguments().getBoolean(EXISTING);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle_detail_element, container, false);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            elementList = bundle.getParcelable("elementList");
-            element = elementList.getElement(elementIndex);
-            setUpMotorcycleDetailElementModel();
-        }
-        Switch showNotification = view.findViewById(R.id.element_show_notification_switch);
+        setUpMotorcycleDetailElementModel();
+
+        SwitchMaterial showNotification = view.findViewById(R.id.element_show_notification_switch);
         showNotification.setOnClickListener(click -> {
             element.setState(!element.getState());
             showNotification.setChecked(element.getState());
@@ -102,13 +96,11 @@ public class MotorcycleDetailElementFragment extends Fragment {
         });
 
         view.findViewById(R.id.element_back_button).setOnClickListener(click -> {
-            onDestroy();
             getParentFragmentManager().popBackStack();
         });
 
         view.findViewById(R.id.element_check_save).setOnClickListener(click -> {
             existing = false;
-            onDestroy();
             getParentFragmentManager().popBackStack();
         });
         return view;
@@ -124,15 +116,13 @@ public class MotorcycleDetailElementFragment extends Fragment {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        elementList.setElement(elementIndex, element);
-        dataPassingInterface.passingObject(elementList, elementListIndex);
+        dataPassingInterface.passingObject(element, elementListIndex, elementIndex);
     }
 
     private void onSave() throws ParseException {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
         TextView price = view.findViewById(R.id.element_price);
-        Switch notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
         TextView minDay = view.findViewById(R.id.element_min_date);
         TextView medDay = view.findViewById(R.id.element_med_date);
         TextView maxDay = view.findViewById(R.id.element_max_date);
@@ -141,6 +131,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         TextView medKm = view.findViewById(R.id.element_med_km);
         TextView maxKm = view.findViewById(R.id.element_max_km);
         TextView lastKm = view.findViewById(R.id.element_last_km);
+        SwitchMaterial notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
 
         element.setName(title.getText().toString());
         element.setDescription(description.getText().toString());
@@ -166,7 +157,6 @@ public class MotorcycleDetailElementFragment extends Fragment {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
         TextView price = view.findViewById(R.id.element_price);
-        Switch notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
         TextView minDay = view.findViewById(R.id.element_min_date);
         TextView medDay = view.findViewById(R.id.element_med_date);
         TextView maxDay = view.findViewById(R.id.element_max_date);
@@ -176,6 +166,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         TextView maxKm = view.findViewById(R.id.element_max_km);
         TextView lastKm = view.findViewById(R.id.element_last_km);
         ImageView saveButton = view.findViewById(R.id.element_check_save);
+        SwitchMaterial notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
 
         title.setText(element.getName());
         description.setText(element.getDescription());
@@ -185,38 +176,35 @@ public class MotorcycleDetailElementFragment extends Fragment {
             view.findViewById(R.id.notification_container).setVisibility(View.VISIBLE);
         }
         if (element.getDayInterval().get("min") != null) {
-            minDay.setText(element.getDayInterval().get("min").toString());
+            minDay.setText(String.format(Locale.getDefault(), "%d", element.getDayInterval().get("min")));
         }
         if (element.getDayInterval().get("med") != null) {
-            medDay.setText(element.getDayInterval().get("med").toString());
+            medDay.setText(String.format(Locale.getDefault(), "%d", element.getDayInterval().get("med")));
         }
         if (element.getDayInterval().get("max") != null) {
-            maxDay.setText(element.getDayInterval().get("max").toString());
+            maxDay.setText(String.format(Locale.getDefault(), "%d", element.getDayInterval().get("max")));
         }
         if (element.getLastServiceDate() != null) {
             lastDay.setText(LocalDate.from(element.getLastServiceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         }
         if (element.getKmInterval().get("min") != null) {
-            minKm.setText(element.getKmInterval().get("min").toString());
+            minKm.setText(String.format(Locale.getDefault(), "%d", element.getKmInterval().get("min")));
         }
         if (element.getKmInterval().get("med") != null) {
-            medKm.setText(element.getKmInterval().get("med").toString());
+            medKm.setText(String.format(Locale.getDefault(), "%d", element.getKmInterval().get("med")));
         }
         if (element.getKmInterval().get("max") != null) {
-            maxKm.setText(element.getKmInterval().get("max").toString());
+            maxKm.setText(String.format(Locale.getDefault(), "%d", element.getKmInterval().get("max")));
         }
         if (element.getLastServiceKm() != null) {
-            lastKm.setText(Integer.toString(element.getCurrentKm() - element.getLastServiceKm()));
+            lastKm.setText(String.format(Locale.getDefault(), "%d", element.getCurrentKm() - element.getLastServiceKm()));
         }
         if (existing) {
             saveButton.setVisibility(View.VISIBLE);
         }
     }
 
-    public void setDataPassingInterface(DataPassingInterface dataPassingInterface, Integer elementListIndex, Integer elementIndex, Boolean elementNew) {
+    public void setDataPassingInterface(DataPassingInterface dataPassingInterface) {
         this.dataPassingInterface = dataPassingInterface;
-        this.elementListIndex = elementListIndex;
-        this.elementIndex = elementIndex;
-        this.existing = elementNew;
     }
 }

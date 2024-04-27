@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
-import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
 
 import java.util.ArrayList;
 

@@ -57,7 +57,6 @@ public class Motorcycle implements Motor, Parcelable {
         arrayList.add(elementList);
         setElementList(arrayList);
     }
-
     public String getName() {
         return name;
     }

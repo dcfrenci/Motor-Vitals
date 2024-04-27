@@ -58,12 +58,27 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
             textTitle = itemView.findViewById(R.id.titleTextView);
             textDescription = itemView.findViewById(R.id.descriptionTextView);
 
-            itemView.setOnClickListener(v -> {
+            itemView.setOnClickListener(click -> {
                 if (recyclerViewInterface != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         recyclerViewInterface.onCardClick(position, 0);
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(longClick -> {
+                if (itemView.findViewById(R.id.cardMotorcycleCancel).getVisibility() == View.GONE) {
+                    itemView.findViewById(R.id.cardMotorcycleCancel).setVisibility(View.VISIBLE);
+                } else {
+                    itemView.findViewById(R.id.cardMotorcycleCancel).setVisibility(View.GONE);
+                }
+                return true;
+            });
+
+            itemView.findViewById(R.id.cardMotorcycleCancel).setOnClickListener(click -> {
+                if (recyclerViewInterface != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    recyclerViewInterface.onCardDelete(RecyclerView.NO_POSITION, getAdapterPosition());
                 }
             });
         }
