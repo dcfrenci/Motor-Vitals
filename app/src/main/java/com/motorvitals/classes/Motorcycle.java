@@ -105,6 +105,18 @@ public class Motorcycle implements Motor, Parcelable {
         return imageView;
     }
 
+    public boolean hasElementsWithStatus() {
+        if (getElementList().isEmpty()) {
+            return false;
+        }
+        for (ElementList elementList : getElementList()){
+            if (elementList.getElements().stream().noneMatch(Element::getState)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public RecyclerView getElementsWithStatusRecyclerView(RecyclerView recyclerView, Fragment fragment, Integer motorcyclePosition) {
         ArrayList<Element> filtered = new ArrayList<>();
         for (ElementList list : getElementList()) {

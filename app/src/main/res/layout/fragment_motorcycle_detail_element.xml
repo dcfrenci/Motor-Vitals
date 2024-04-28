@@ -268,6 +268,7 @@
                                         tools:ignore="TextFields"
                                         android:hint="@string/min"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 
@@ -294,6 +295,7 @@
                                         android:inputType="number"
                                         android:hint="@string/mid"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 
@@ -321,6 +323,7 @@
                                         android:inputType="number"
                                         android:hint="@string/max"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 
@@ -425,6 +428,7 @@
                                         tools:ignore="TextFields"
                                         android:hint="@string/min"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 
@@ -451,6 +455,7 @@
                                         android:inputType="number"
                                         android:hint="@string/mid"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 
@@ -478,6 +483,7 @@
                                         android:inputType="number"
                                         android:hint="@string/max"
                                         android:autofillHints="@string/empty_interval"
+                                        android:textAlignment="center"
 
                                         style="@style/TextViewStyle"
 

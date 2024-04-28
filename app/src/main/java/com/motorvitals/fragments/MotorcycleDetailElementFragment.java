@@ -136,7 +136,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         element.setName(title.getText().toString());
         element.setDescription(description.getText().toString());
         element.setPrice(Double.parseDouble(price.getText().toString()));
-        if (element.getState() != notificationSwitch.isChecked()) {
+        if (notificationSwitch.isChecked()) {
             element.setState(notificationSwitch.isChecked());
             HashMap<String, Integer> map = new HashMap<>();
             map.put("min", Integer.valueOf(minDay.getText().toString()));

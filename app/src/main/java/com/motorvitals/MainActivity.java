@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.motorcycle_fragment)
                 replaceFragment(MotorcycleFragment.newInstance(motorcycles));
             if (item.getItemId() == R.id.status_fragment)
-                replaceFragment(new StatusFragment(), motorcycles);
+                replaceFragment(StatusFragment.newInstance(motorcycles));
             if (item.getItemId() == R.id.profile_fragment)
                 replaceFragment(new ProfileFragment());
             return true;

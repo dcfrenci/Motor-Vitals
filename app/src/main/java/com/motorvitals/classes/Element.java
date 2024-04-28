@@ -99,7 +99,9 @@ public class Element implements Parcelable {
     }
 
     public void setDayInterval(HashMap<String, Integer> dayInterval) {
-        this.dayInterval = dayInterval;
+        this.dayInterval.put("min", dayInterval.get("min"));
+        this.dayInterval.put("med", dayInterval.get("med"));
+        this.dayInterval.put("max", dayInterval.get("max"));
     }
 
     public Date getLastServiceDate() {
@@ -118,7 +120,9 @@ public class Element implements Parcelable {
     }
 
     public void setKmInterval(HashMap<String, Integer> kmInterval) {
-        this.kmInterval = kmInterval;
+        this.kmInterval.put("min", kmInterval.get("min"));
+        this.kmInterval.put("med", kmInterval.get("med"));
+        this.kmInterval.put("max", kmInterval.get("max"));
     }
 
     public Integer getLastServiceKm() {
