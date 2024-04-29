@@ -8,11 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.motorvitals.adapter.MotorcycleDetailElementRecyclerViewAdapter;
 import com.motorvitals.adapter.RecyclerViewInterface;
+import com.motorvitals.jackson.*;
 
 import java.util.ArrayList;
 
+@JsonSerialize(using = ElementListSerializer.class)
+@JsonDeserialize(using = ElementListDeserializer.class)
 public class ElementList implements Parcelable {
     String title;
     ArrayList<Element> elements;

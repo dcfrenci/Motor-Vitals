@@ -1,21 +1,17 @@
 package com.motorvitals;
 
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.motorvitals.classes.Element;
-import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
 import com.motorvitals.databinding.ActivityMainBinding;
 import com.motorvitals.fragments.MotorcycleFragment;
 import com.motorvitals.fragments.ProfileFragment;
 import com.motorvitals.fragments.StatusFragment;
-import net.bytebuddy.jar.asm.TypeReference;
 
 import java.io.*;
 import java.util.*;
@@ -63,33 +59,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    /**
-     *
-     * @param fragment Fragment that will be loaded
-     * @param motorcycles ArrayList that will be sent into the bundle
-     */
-    public void replaceFragment(Fragment fragment, ArrayList<Motorcycle> motorcycles) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("motorcycles", motorcycles);
-        fragment.setArguments(bundle);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
-    }
-
     private void loadData() {
+/*
+        //Populate motorcycles array-list
         motorcycles = new ArrayList<>();
-        /*File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
-        if (file.exists() && file.canRead()) {
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                motorcycles = new ArrayList<>(Arrays.asList(objectMapper.readValue(file, Motorcycle[].class)));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }*/
-
         for (int i = 0; i < 2; i++) {
             Motorcycle moto1 = new Motorcycle();
             moto1.setName("moto" + i);
@@ -112,20 +85,24 @@ public class MainActivity extends AppCompatActivity {
             moto1.setElementList(elementLists);
             motorcycles.add(moto1);
         }
+*/
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+            motorcycles = mapper.readValue(file, new TypeReference<ArrayList<Motorcycle>>(){});
+        } catch (IOException e) {
+            System.err.println("Error while loading the ArrayList of motorcycle number: " + e.getMessage());
+            motorcycles = new ArrayList<>();
+        }
     }
 
     private void saveData() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            ObjectWriter objectWriter = objectMapper.writerFor(Motorcycle.class);
-            SequenceWriter sequenceWriter = objectWriter.writeValuesAsArray(file);
-            for (Motorcycle motorcycle : motorcycles) {
-                sequenceWriter.write(motorcycle);
-            }
-            sequenceWriter.close();
+            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+            mapper.writeValue(file, motorcycles);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Error while saving the ArrayList of motorcycle number: " + e.getMessage());
         }
     }
 }

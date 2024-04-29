@@ -9,12 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
+import com.motorvitals.jackson.MotorcycleDeserializer;
+import com.motorvitals.jackson.MotorcycleSerializer;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
+@JsonSerialize(using = MotorcycleSerializer.class)
+@JsonDeserialize(using = MotorcycleDeserializer.class)
 public class Motorcycle implements Motor, Parcelable {
     private String name;
     private Integer km;
@@ -32,9 +37,10 @@ public class Motorcycle implements Motor, Parcelable {
         this.km = km;
     }
 
-    public Motorcycle(ArrayList<ElementList> elementList, String name, Integer km) {
+    public Motorcycle(ArrayList<ElementList> elementList, String name, String description, Integer km) {
         this.elementList = elementList;
         this.name = name;
+        this.description = description;
         setKm(km);
     }
 

@@ -6,16 +6,19 @@ import android.os.Parcelable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.motorvitals.jackson.ElementDeserializer;
+import com.motorvitals.jackson.ElementSerializer;
+import com.motorvitals.jackson.MotorcycleDeserializer;
+import com.motorvitals.jackson.MotorcycleSerializer;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 
+@JsonSerialize(using = ElementSerializer.class)
+@JsonDeserialize(using = ElementDeserializer.class)
 public class Element implements Parcelable {
     private String name;
     private String description;
@@ -23,7 +26,7 @@ public class Element implements Parcelable {
     private double price;
     private Boolean state;
     private HashMap<String, Integer> dayInterval;
-    private Date lastServiceDate;
+    private LocalDate lastServiceDate;
     private HashMap<String, Integer> kmInterval;
     private Integer lastServiceKm;
     private Integer currentKm;
@@ -33,7 +36,7 @@ public class Element implements Parcelable {
         this.state = state;
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
-        this.lastServiceDate = new Date();
+        this.lastServiceDate = LocalDate.now();
         this.currentKm = 0;
     }
 
@@ -42,7 +45,7 @@ public class Element implements Parcelable {
         this.state = false;
         this.dayInterval = basicMap();
         this.kmInterval = basicMap();
-        this.lastServiceDate = new Date();
+        this.lastServiceDate = LocalDate.now();
         this.currentKm = 0;
     }
 
@@ -104,14 +107,14 @@ public class Element implements Parcelable {
         this.dayInterval.put("max", dayInterval.get("max"));
     }
 
-    public Date getLastServiceDate() {
+    public LocalDate getLastServiceDate() {
         if (lastServiceDate == null) {
-            return new Date();
+            return LocalDate.now();
         }
         return lastServiceDate;
     }
 
-    public void setLastServiceDate(Date lastServiceDate) {
+    public void setLastServiceDate(LocalDate lastServiceDate) {
         this.lastServiceDate = lastServiceDate;
     }
 
@@ -152,7 +155,7 @@ public class Element implements Parcelable {
     }
 
     public int getNumberDays() {
-        Period period = Period.between(getLastServiceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), LocalDate.now());
+        Period period = Period.between(getLastServiceDate(), LocalDate.now());
         return period.getDays();
     }
 
@@ -207,22 +210,4 @@ public class Element implements Parcelable {
             return new Element[size];
         }
     };
-
-//  ---------------------- Implementation Jackson ----------------------
-
-    /*@Override
-    public String toString() {
-        return "Element{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", photo=" + photo +
-                ", price=" + price +
-                ", state=" + state +
-                ", dayInterval=" + dayInterval +
-                ", lastServiceDate=" + lastServiceDate +
-                ", kmInterval=" + kmInterval +
-                ", lastServiceKm=" + lastServiceKm +
-                ", currentKm=" + currentKm +
-                '}';
-    }*/
 }

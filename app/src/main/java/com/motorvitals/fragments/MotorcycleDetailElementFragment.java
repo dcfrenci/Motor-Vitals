@@ -143,8 +143,8 @@ public class MotorcycleDetailElementFragment extends Fragment {
             map.put("med", Integer.valueOf(medDay.getText().toString()));
             map.put("max", Integer.valueOf(maxDay.getText().toString()));
             element.setDayInterval(map);
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALIAN);
-            element.setLastServiceDate(formatter.parse(lastDay.getText().toString()));
+            LocalDate formatter = LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            element.setLastServiceDate(formatter);
             map.put("min", Integer.valueOf(minKm.getText().toString()));
             map.put("med", Integer.valueOf(medKm.getText().toString()));
             map.put("max", Integer.valueOf(maxKm.getText().toString()));
@@ -185,7 +185,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
             maxDay.setText(String.format(Locale.getDefault(), "%d", element.getDayInterval().get("max")));
         }
         if (element.getLastServiceDate() != null) {
-            lastDay.setText(LocalDate.from(element.getLastServiceDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            lastDay.setText(element.getLastServiceDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         }
         if (element.getKmInterval().get("min") != null) {
             minKm.setText(String.format(Locale.getDefault(), "%d", element.getKmInterval().get("min")));
