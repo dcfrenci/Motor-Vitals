@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -135,7 +136,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
 
         element.setName(title.getText().toString());
         element.setDescription(description.getText().toString());
-        element.setPrice(Double.parseDouble(price.getText().toString()));
+        element.setPrice(Double.parseDouble(Objects.equals(price.getText().toString(), "") ? "0" : price.getText().toString()));
         if (notificationSwitch.isChecked()) {
             element.setState(notificationSwitch.isChecked());
             HashMap<String, Integer> map = new HashMap<>();
@@ -170,7 +171,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
 
         title.setText(element.getName());
         description.setText(element.getDescription());
-        price.setText(String.valueOf(element.getPrice()));
+        price.setText(element.getPrice() == 0 ? "" : String.valueOf(element.getPrice()));
         notificationSwitch.setChecked(element.getState());
         if (element.getState()) {
             view.findViewById(R.id.notification_container).setVisibility(View.VISIBLE);

@@ -74,10 +74,6 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle_detail, container, false);
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            motorcycle = bundle.getParcelable("motorcycle");
-//        }
         setUpMotorcycleDetailModels();
 
         view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
@@ -132,8 +128,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
         title.setText(motorcycle.getName());
         description.setText(motorcycle.getDescription());
-        String kmString = motorcycle.getKm().toString();
-        km.setText(kmString);
+        km.setText(motorcycle.getKm() == 0 ? "" : motorcycle.getKm().toString());
         if (motorcycleExisting) {
             view.findViewById(R.id.detail_motorcycle_check_save).setVisibility(View.VISIBLE);
             view.findViewById(R.id.floating_detail_button_motorcycle).setVisibility(View.GONE);
@@ -155,7 +150,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         //TODO motorcycleImage
         motorcycle.setName(title.getText().toString());
         motorcycle.setDescription(description.getText().toString());
-        motorcycle.setKm(Integer.valueOf(km.getText().toString()));
+        motorcycle.setKm(Integer.valueOf(km.getText().toString().isEmpty() ? "0" : km.getText().toString()));
     }
 
     @Override
@@ -197,6 +192,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
             if (index == RecyclerView.NO_POSITION) {
                 //New ElementList
                 motorcycle.getElementList().add((ElementList) object);
+                setUpMotorcycleDetailModels();
             }
         }
     }
