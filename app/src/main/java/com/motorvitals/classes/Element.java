@@ -40,6 +40,15 @@ public class Element implements Parcelable {
         this.currentKm = 0;
     }
 
+    public Element(Integer currentKm) {
+        this.name = "";
+        this.state = false;
+        this.dayInterval = basicMap();
+        this.kmInterval = basicMap();
+        this.lastServiceDate = LocalDate.now();
+        this.currentKm = currentKm;
+    }
+
     public Element() {
         this.name = "";
         this.state = false;

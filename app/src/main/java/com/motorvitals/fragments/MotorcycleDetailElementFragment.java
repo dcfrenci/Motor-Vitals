@@ -1,6 +1,8 @@
 package com.motorvitals.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.*;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -97,7 +99,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
         });
 
         view.findViewById(R.id.element_back_button).setOnClickListener(click -> {
-            getParentFragmentManager().popBackStack();
+            if (checkIfSave()) {
+                getParentFragmentManager().popBackStack();
+            }
         });
 
         view.findViewById(R.id.element_check_save).setOnClickListener(click -> {
@@ -108,19 +112,22 @@ public class MotorcycleDetailElementFragment extends Fragment {
     }
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (existing) {
             return;
         }
         try {
             onSave();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e){
+            if (e.equals(new IllegalArgumentException("Incorrect value. Couldn't save.")))
+                return;
+            else
+                throw new RuntimeException(e);
         }
+        super.onDestroy();
         dataPassingInterface.passingObject(element, elementListIndex, elementIndex);
     }
 
-    private void onSave() throws ParseException {
+    private void onSave() throws ParseException, IllegalArgumentException {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
         TextView price = view.findViewById(R.id.element_price);
@@ -134,6 +141,10 @@ public class MotorcycleDetailElementFragment extends Fragment {
         TextView lastKm = view.findViewById(R.id.element_last_km);
         SwitchMaterial notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
 
+        //Check before saving
+        if (!checkIfSave())
+            return;
+
         element.setName(title.getText().toString());
         element.setDescription(description.getText().toString());
         element.setPrice(Double.parseDouble(Objects.equals(price.getText().toString(), "") ? "0" : price.getText().toString()));
@@ -144,14 +155,23 @@ public class MotorcycleDetailElementFragment extends Fragment {
             map.put("med", Integer.valueOf(medDay.getText().toString()));
             map.put("max", Integer.valueOf(maxDay.getText().toString()));
             element.setDayInterval(map);
-            LocalDate formatter = LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-            element.setLastServiceDate(formatter);
+            element.setLastServiceDate(LocalDate.parse(lastDay.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             map.put("min", Integer.valueOf(minKm.getText().toString()));
             map.put("med", Integer.valueOf(medKm.getText().toString()));
             map.put("max", Integer.valueOf(maxKm.getText().toString()));
             element.setKmInterval(map);
             element.setLastServiceKm(Integer.parseInt(lastKm.getText().toString()));
         }
+    }
+
+    private boolean checkIfSave() {
+        TextView lastKm = view.findViewById(R.id.element_last_km);
+        if (Integer.parseInt(lastKm.getText().toString()) > element.getCurrentKm()) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).setTitle("Warning").setMessage("The value set as last Km (" + Integer.parseInt(lastKm.getText().toString()) + ") is more than the actual Km of the vehicle (" + element.getCurrentKm() + ").").create();
+            alertDialog.show();
+            return false;
+        }
+        return true;
     }
 
     private void setUpMotorcycleDetailElementModel() {

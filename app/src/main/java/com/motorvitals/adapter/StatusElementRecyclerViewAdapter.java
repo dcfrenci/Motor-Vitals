@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
+import com.motorvitals.classes.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
     private final ArrayList<Element> elementStatus;
     private final ArrayList<ElementList> elementLists;
     private final Integer motorcycleIndex;
+    // TODO - Make the user not static and using the correct color selected in the profile fragment
+    private static final User user = new User("Generic");
 
     public StatusElementRecyclerViewAdapter(Fragment fragment, ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex) {
         this.fragment = fragment;
@@ -122,30 +125,28 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
         }
 
         private Color generateColor(Integer value, @NonNull HashMap<String, Integer> interval) {
-            Resources resources = fragment.getResources();
             Integer minValue = interval.get("min");
             Integer medValue = interval.get("med");
             Integer maxValue = interval.get("max");
+            Color minColor = user.getColor("min");
+            Color medColor = user.getColor("med");
+            Color maxColor = user.getColor("max");
 
             if (value.compareTo(minValue) <= 0)
-                return Color.valueOf(resources.getColor(R.color.state_min, fragment.requireContext().getTheme()));
+                return minColor;
             if (value.compareTo(medValue) == 0)
-                return Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
+                return medColor;
             if (value.compareTo(maxValue) >= 0)
-                return Color.valueOf(resources.getColor(R.color.state_max, fragment.requireContext().getTheme()));
+                return maxColor;
 
             if (value.compareTo(minValue) > 0 && value.compareTo(medValue) < 0) {
-                Color x = Color.valueOf(resources.getColor(R.color.state_min, fragment.requireContext().getTheme()));
-                Color y = Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
-                return gradientColor(x, y, value, resources);
+                return gradientColor(minColor, medColor);
             } else {
-                Color x = Color.valueOf(resources.getColor(R.color.state_med, fragment.requireContext().getTheme()));
-                Color y = Color.valueOf(resources.getColor(R.color.state_max, fragment.requireContext().getTheme()));
-                return gradientColor(x, y, value, resources);
+                return gradientColor(medColor, maxColor);
             }
         }
 
-        private Color gradientColor(Color x, Color y, int value, Resources resources) {
+        private Color gradientColor(Color x, Color y/*, int value, Resources resources*/) {
             double blending = 0.5;
             double inverse_blending = 1 - blending;
             int red = (int) (x.red() * blending + y.red() * inverse_blending);

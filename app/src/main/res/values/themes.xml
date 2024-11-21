@@ -1,8 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MotorVitals" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/dark_more_background</item>
     </style>
 
     <!--  Bottom navigation bar  -->
@@ -20,7 +19,13 @@
     <style name="TextViewStyle">
         <item name="android:textColor">@color/dark_text</item>
         <item name="android:textSize">13sp</item>
+    </style>
 
+    <!--  StatusCard  -->
+    <style name="StatusStyle">
+        <item name="android:textFontWeight">700</item>
+        <item name="android:textColor">@color/dark_text</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <!--  Floating add button  -->

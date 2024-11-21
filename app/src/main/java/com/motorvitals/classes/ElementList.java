@@ -89,13 +89,4 @@ public class ElementList implements Parcelable {
         dest.writeTypedList(elements);
     }
 
-//  ---------------------- Implementation Jackson ----------------------
-
-    /*@Override
-    public String toString() {
-        return "ElementList{" +
-                "title='" + title + '\'' +
-                ", elements=" + elements +
-                '}';
-    }*/
 }

@@ -29,7 +29,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        style="@style/TextViewStyle"
+                        style="@style/StatusStyle"
 
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="@dimen/status_elem_card_margin_width"

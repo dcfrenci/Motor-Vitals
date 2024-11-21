@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class MotorcycleFragment extends Fragment implements RecyclerViewInterface, DataPassingInterface {
-
     // the fragment initialization parameters
     private static final String MOTORCYCLES = "motorcycles";
     private View view;

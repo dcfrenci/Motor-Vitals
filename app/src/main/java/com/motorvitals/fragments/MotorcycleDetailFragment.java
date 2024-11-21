@@ -155,7 +155,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     @Override
     public void onCardClick(int position, int positionElement) {
-        Element element = positionElement == RecyclerView.NO_POSITION ? new Element() : motorcycle.getElementList().get(position).getElement(positionElement);
+        Element element = positionElement == RecyclerView.NO_POSITION ? new Element(motorcycle.getKm()) : motorcycle.getElementList().get(position).getElement(positionElement);
         Boolean existing = positionElement == RecyclerView.NO_POSITION;
         MotorcycleDetailElementFragment fragment = MotorcycleDetailElementFragment.newInstance(element, position, positionElement, existing);
         fragment.setDataPassingInterface(this);

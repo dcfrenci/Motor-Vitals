@@ -5,9 +5,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.motorvitals.classes.Motorcycle;
+import com.motorvitals.classes.NotificationWorker;
 import com.motorvitals.databinding.ActivityMainBinding;
 import com.motorvitals.fragments.MotorcycleFragment;
 import com.motorvitals.fragments.ProfileFragment;
@@ -15,6 +18,7 @@ import com.motorvitals.fragments.StatusFragment;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding activityMainBinding;
@@ -25,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
+
         loadData();
+        notificationSystem();
         //set fragment when the app is opened
         replaceFragment(MotorcycleFragment.newInstance(motorcycles));
 
@@ -60,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-/*
+        /*
         //Populate motorcycles array-list
         motorcycles = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
@@ -104,5 +110,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             System.err.println("Error while saving the ArrayList of motorcycle number: " + e.getMessage());
         }
+    }
+
+    private void notificationSystem() {
+        WorkManager.getInstance(getApplicationContext()).cancelAllWork();
+        PeriodicWorkRequest notificationRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
+        WorkManager.getInstance(getApplicationContext()).enqueue(notificationRequest);
     }
 }
