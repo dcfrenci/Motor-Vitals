@@ -1,7 +1,12 @@
 package com.motorvitals;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,6 +24,7 @@ import com.motorvitals.fragments.StatusFragment;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding activityMainBinding;
@@ -91,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             moto1.setElementList(elementLists);
             motorcycles.add(moto1);
         }
-*/
+        */
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
@@ -103,6 +109,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveData() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                        101
+                );
+            }
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        101
+                );
+            }
+        }
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
@@ -114,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void notificationSystem() {
         WorkManager.getInstance(getApplicationContext()).cancelAllWork();
-        PeriodicWorkRequest notificationRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 15, TimeUnit.MINUTES).build();
+        PeriodicWorkRequest notificationRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS).build();
         WorkManager.getInstance(getApplicationContext()).enqueue(notificationRequest);
     }
 }

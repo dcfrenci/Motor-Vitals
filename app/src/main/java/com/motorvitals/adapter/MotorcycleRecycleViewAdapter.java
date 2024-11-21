@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<MotorcycleRecycleViewAdapter.MotorcycleViewHolder> {
     private final RecyclerViewInterface recyclerViewInterface;
     private Fragment fragment;
-    private ArrayList<Motorcycle> motorcycles;
+    private final ArrayList<Motorcycle> motorcycles;
     public MotorcycleRecycleViewAdapter(RecyclerViewInterface recyclerViewInterface, Fragment fragment, ArrayList<Motorcycle> motorcycles) {
         this.recyclerViewInterface = recyclerViewInterface;
         this.fragment = fragment;

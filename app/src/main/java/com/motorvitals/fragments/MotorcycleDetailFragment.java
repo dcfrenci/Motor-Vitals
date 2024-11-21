@@ -1,9 +1,16 @@
 package com.motorvitals.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +43,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     private Motorcycle motorcycle;
     private Integer motorcycleIndex;
     private Boolean motorcycleExisting;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     public MotorcycleDetailFragment() {
         // Required empty public constructor
@@ -75,6 +83,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle_detail, container, false);
         setUpMotorcycleDetailModels();
+        initImagePickerLauncher();
 
         view.findViewById(R.id.floating_detail_button_motorcycle).setOnClickListener(click -> {
             BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(container.getContext());
@@ -97,6 +106,10 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
             });
         });
 
+        view.findViewById(R.id.detail_motorcycle_image_view).setOnClickListener(click -> {
+            openImagePicker();
+        });
+
         view.findViewById(R.id.detail_motorcycle_back_button).setOnClickListener(click -> {
             getParentFragmentManager().popBackStack();
         });
@@ -110,14 +123,47 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (motorcycleExisting) {
-            return;
+    private void initImagePickerLauncher() {
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri selectedImageUri = result.getData().getData();
+                        if (selectedImageUri != null) {
+                            ImageView imageView = view.findViewById(R.id.detail_motorcycle_image_view);
+                            imageView.setImageURI(selectedImageUri);
+                            motorcycle.setPhoto(getRealPathFromURI(selectedImageUri));
+                        }
+                    }
+                }
+        );
+    }
+
+    private String getRealPathFromURI(Uri uri) {
+        String path = null;
+        // Se l'URI è un URI di tipo "content://"
+        if (uri.getScheme().equals("content")) {
+            // Controlla se il contenuto è nel MediaStore (galleria immagini)
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                path = cursor.getString(columnIndex);
+                cursor.close();
+            }
         }
-        onSave();
-        dataPassingInterface.passingObject(motorcycle, RecyclerView.NO_POSITION, motorcycleIndex);
+        // Se l'URI è un URI di tipo "file://"
+        else if (uri.getScheme().equals("file")) {
+            path = uri.getPath();
+        }
+        return path;
+    }
+
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        imagePickerLauncher.launch(intent);
     }
 
     private void setUpMotorcycleDetailModels() {
@@ -126,6 +172,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
         TextView km = view.findViewById(R.id.motorcycle_km_text_view);
 
+        motorcycleImage.setImageURI(motorcycle.getPhotoUri());
         title.setText(motorcycle.getName());
         description.setText(motorcycle.getDescription());
         km.setText(motorcycle.getKm() == 0 ? "" : motorcycle.getKm().toString());
@@ -142,15 +189,23 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     }
 
     public void onSave() {
-        ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
         TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
         TextView km = view.findViewById(R.id.motorcycle_km_text_view);
 
-        //TODO motorcycleImage
         motorcycle.setName(title.getText().toString());
         motorcycle.setDescription(description.getText().toString());
         motorcycle.setKm(Integer.valueOf(km.getText().toString().isEmpty() ? "0" : km.getText().toString()));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (motorcycleExisting) {
+            return;
+        }
+        onSave();
+        dataPassingInterface.passingObject(motorcycle, RecyclerView.NO_POSITION, motorcycleIndex);
     }
 
     @Override

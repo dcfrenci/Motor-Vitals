@@ -43,9 +43,8 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
-//    implementation("androidx.core:core:2.2.0")
     implementation("androidx.work:work-runtime:2.9.0")
-    implementation("androidx.core:core-ktx:1.12.0") // Versione più recente di core-ktx
+    implementation("androidx.core:core-ktx:1.12.0")
 
 
     testImplementation("junit:junit:4.13.2")

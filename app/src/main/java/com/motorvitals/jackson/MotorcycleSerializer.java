@@ -22,6 +22,7 @@ public class MotorcycleSerializer extends StdSerializer<Motorcycle> {
         jsonGenerator.writeStringField("name", motorcycle.getName());
         jsonGenerator.writeStringField("description", motorcycle.getDescription());
         jsonGenerator.writeNumberField("km", motorcycle.getKm());
+        jsonGenerator.writeStringField("photo", motorcycle.getPhoto().toString());
         jsonGenerator.writeArrayFieldStart("elementLists");
         for (ElementList elementList : motorcycle.getElementList()) {
             jsonGenerator.writeObject(elementList);

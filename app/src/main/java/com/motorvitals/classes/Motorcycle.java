@@ -1,6 +1,6 @@
 package com.motorvitals.classes;
 
-import android.media.Image;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
@@ -15,6 +15,7 @@ import com.motorvitals.adapter.StatusElementRecyclerViewAdapter;
 import com.motorvitals.jackson.MotorcycleDeserializer;
 import com.motorvitals.jackson.MotorcycleSerializer;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class Motorcycle implements Motor, Parcelable {
     private String name;
     private Integer km;
     private String description;
-    private Image photo;
+    private String photo;
     private ArrayList<ElementList> elementList;
 
     public Motorcycle() {
@@ -37,10 +38,11 @@ public class Motorcycle implements Motor, Parcelable {
         this.km = km;
     }
 
-    public Motorcycle(ArrayList<ElementList> elementList, String name, String description, Integer km) {
+    public Motorcycle(ArrayList<ElementList> elementList, String name, String description, Integer km, String photo) {
         this.elementList = elementList;
         this.name = name;
         this.description = description;
+        this.photo = photo;
         setKm(km);
     }
 
@@ -88,11 +90,16 @@ public class Motorcycle implements Motor, Parcelable {
         this.description = description;
     }
 
-    public Image getPhoto() {
+    public Uri getPhotoUri() {
+        File file = new File(getPhoto());
+        return Uri.fromFile(file);
+    }
+
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -107,7 +114,8 @@ public class Motorcycle implements Motor, Parcelable {
     }
 
     public ImageView getPhotoView(ImageView imageView) {
-        //need to swap photo with the new one
+
+        imageView.setImageURI(getPhotoUri());
         return imageView;
     }
 

@@ -25,13 +25,14 @@ public class MotorcycleDeserializer extends StdDeserializer<Motorcycle> {
         String name = node.get("name").asText();
         String description = node.get("description").asText();
         int km = node.get("km").asInt();
+        String photo = node.get("photo").asText();
         JsonNode elementListsNode = node.get("elementLists");
         ArrayList<ElementList> elementLists = new ArrayList<>();
         for (JsonNode elementListNode : elementListsNode) {
             ElementList elementList = deserializeElementList(elementListNode, jsonParser);
             elementLists.add(elementList);
         }
-        return new Motorcycle(elementLists, name, description, km);
+        return new Motorcycle(elementLists, name, description, km, photo);
     }
 
     private ElementList deserializeElementList(JsonNode elementListNode, JsonParser jsonParser) throws IOException {

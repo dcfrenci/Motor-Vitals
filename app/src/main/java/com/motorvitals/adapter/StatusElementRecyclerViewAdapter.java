@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import android.content.res.Resources;
 public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<StatusElementRecyclerViewAdapter.StatusViewHolder> {
     private final Fragment fragment;
     private final ArrayList<Element> elementStatus;
@@ -146,7 +145,7 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
             }
         }
 
-        private Color gradientColor(Color x, Color y/*, int value, Resources resources*/) {
+        private Color gradientColor(Color x, Color y) {
             double blending = 0.5;
             double inverse_blending = 1 - blending;
             int red = (int) (x.red() * blending + y.red() * inverse_blending);
@@ -154,6 +153,5 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
             int blue = (int) (x.blue() * blending + y.blue() * inverse_blending);
             return Color.valueOf(red, green, blue);
         }
-
     }
 }

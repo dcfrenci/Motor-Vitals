@@ -16,6 +16,8 @@ import androidx.work.WorkerParameters;
 import com.motorvitals.R;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDate;
+
 
 public class NotificationWorker extends Worker {
 
@@ -25,10 +27,11 @@ public class NotificationWorker extends Worker {
 
     @Override
     public @NotNull Result doWork() {
-        String title = "Update MotorVitals!";
-        String message = "Update the kilometre of your vehicle";
-        sendNotification(title, message);
-
+        if (LocalDate.now().getDayOfWeek().toString().equals("MONDAY")){
+            String title = "Update MotorVitals!";
+            String message = "Update the kilometre of your vehicle";
+            sendNotification(title, message);
+        }
         return Result.success();
     }
 

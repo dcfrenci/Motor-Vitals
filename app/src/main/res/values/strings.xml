@@ -4,7 +4,7 @@
     <string name="image_description">Image_description</string>
 
     <!--  Bottom navigation menu  -->
-    <string name="app_name">motorvitals</string>
+    <string name="app_name">MotorVitals</string>
     <string name="Motorcycle">Motorcycle</string>
     <string name="Status">Status</string>
     <string name="Profile">Profile</string>

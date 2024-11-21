@@ -60,9 +60,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         view = inflater.inflate(R.layout.fragment_motorcycle, container, false);
         setUpMotorcycleModels();
 
-        view.findViewById(R.id.floating_button_motorcycle).setOnClickListener(click -> {
-            onCardClick(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION);
-        });
+        view.findViewById(R.id.floating_button_motorcycle).setOnClickListener(click -> onCardClick(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION));
         return view;
     }
 
