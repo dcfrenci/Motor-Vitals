@@ -114,8 +114,8 @@ public class Motorcycle implements Motor, Parcelable {
     }
 
     public ImageView getPhotoView(ImageView imageView) {
-
-        imageView.setImageURI(getPhotoUri());
+        if (getPhoto() != null)
+            imageView.setImageURI(getPhotoUri());
         return imageView;
     }
 
@@ -188,17 +188,4 @@ public class Motorcycle implements Motor, Parcelable {
         }
         dest.writeString(description);
     }
-
-//  ---------------------- Implementation Jackson ----------------------
-
-    /*@Override
-    public String toString() {
-        return "Motorcycle{" +
-                "elementList=" + elementList +
-                ", name='" + name + '\'' +
-                ", km=" + km +
-                ", description='" + description + '\'' +
-                ", photo=" + photo +
-                '}';
-    }*/
 }

@@ -26,6 +26,7 @@ public class ElementDeserializer extends StdDeserializer<Element> {
         Element element = new Element();
         element.setName(node.get("name").asText());
         element.setDescription(node.get("description").asText());
+        element.setPhoto(node.get("photo").asText());
         element.setPrice(node.get("price").asDouble());
         element.setState(node.get("state").asBoolean());
         HashMap<String, Integer> map = new HashMap<>();

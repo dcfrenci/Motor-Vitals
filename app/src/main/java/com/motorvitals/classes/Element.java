@@ -1,6 +1,7 @@
 package com.motorvitals.classes;
 
 import android.media.Image;
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import com.motorvitals.jackson.ElementSerializer;
 import com.motorvitals.jackson.MotorcycleDeserializer;
 import com.motorvitals.jackson.MotorcycleSerializer;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.HashMap;
 public class Element implements Parcelable {
     private String name;
     private String description;
-    private Image photo;
+    private String photo;
     private double price;
     private Boolean state;
     private HashMap<String, Integer> dayInterval;
@@ -74,11 +76,15 @@ public class Element implements Parcelable {
         this.description = description;
     }
 
-    public Image getPhoto() {
+    public String getPhoto() {
         return photo;
     }
+    public Uri getPhotoUri() {
+        File file = new File(getPhoto());
+        return Uri.fromFile(file);
+    }
 
-    public void setPhoto(Image photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -154,6 +160,8 @@ public class Element implements Parcelable {
     }
 
     public ImageView getImageView(ImageView imageView) {
+        if (getPhoto() != null)
+            imageView.setImageURI(getPhotoUri());
         return imageView;
     }
 

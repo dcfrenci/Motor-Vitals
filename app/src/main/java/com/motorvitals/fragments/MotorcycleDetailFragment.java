@@ -141,9 +141,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
 
     private String getRealPathFromURI(Uri uri) {
         String path = null;
-        // Se l'URI è un URI di tipo "content://"
         if (uri.getScheme().equals("content")) {
-            // Controlla se il contenuto è nel MediaStore (galleria immagini)
             String[] projection = { MediaStore.Images.Media.DATA };
             Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
             if (cursor != null) {
@@ -153,7 +151,6 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
                 cursor.close();
             }
         }
-        // Se l'URI è un URI di tipo "file://"
         else if (uri.getScheme().equals("file")) {
             path = uri.getPath();
         }
@@ -172,7 +169,8 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
         TextView km = view.findViewById(R.id.motorcycle_km_text_view);
 
-        motorcycleImage.setImageURI(motorcycle.getPhotoUri());
+        if (motorcycle.getPhoto() != null)
+            motorcycleImage.setImageURI(motorcycle.getPhotoUri());
         title.setText(motorcycle.getName());
         description.setText(motorcycle.getDescription());
         km.setText(motorcycle.getKm() == 0 ? "" : motorcycle.getKm().toString());

@@ -20,6 +20,7 @@ public class ElementSerializer extends StdSerializer<Element> {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeStringField("name", element.getName());
         jsonGenerator.writeStringField("description", element.getDescription());
+        jsonGenerator.writeStringField("photo", element.getPhoto());
         jsonGenerator.writeNumberField("price", element.getPrice());
         jsonGenerator.writeBooleanField("state", element.getState());
         //Day interval

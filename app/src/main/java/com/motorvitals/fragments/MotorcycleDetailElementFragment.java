@@ -1,9 +1,16 @@
 package com.motorvitals.fragments;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.widget.*;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +46,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
     private Integer elementListIndex;
     private Integer elementIndex;
     private Boolean existing;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     public MotorcycleDetailElementFragment() {
         // Required empty public constructor
@@ -80,6 +88,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_motorcycle_detail_element, container, false);
         setUpMotorcycleDetailElementModel();
+        initImagePickerLauncher();
 
         SwitchMaterial showNotification = view.findViewById(R.id.element_show_notification_switch);
         showNotification.setOnClickListener(click -> {
@@ -108,6 +117,10 @@ public class MotorcycleDetailElementFragment extends Fragment {
             existing = false;
             getParentFragmentManager().popBackStack();
         });
+
+        view.findViewById(R.id.element_image_view).setOnClickListener(click -> {
+            openImagePicker();
+        });
         return view;
     }
     @Override
@@ -117,17 +130,14 @@ public class MotorcycleDetailElementFragment extends Fragment {
         }
         try {
             onSave();
-        } catch (Exception e){
-            if (e.equals(new IllegalArgumentException("Incorrect value. Couldn't save.")))
-                return;
-            else
-                throw new RuntimeException(e);
+        } catch (IllegalArgumentException e){
+            return;
         }
         super.onDestroy();
         dataPassingInterface.passingObject(element, elementListIndex, elementIndex);
     }
 
-    private void onSave() throws ParseException, IllegalArgumentException {
+    private void onSave() throws IllegalArgumentException {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
         TextView price = view.findViewById(R.id.element_price);
@@ -177,6 +187,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
     private void setUpMotorcycleDetailElementModel() {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
+        ImageView elementImage = view.findViewById(R.id.element_image_view);
         TextView price = view.findViewById(R.id.element_price);
         TextView minDay = view.findViewById(R.id.element_min_date);
         TextView medDay = view.findViewById(R.id.element_med_date);
@@ -189,6 +200,8 @@ public class MotorcycleDetailElementFragment extends Fragment {
         ImageView saveButton = view.findViewById(R.id.element_check_save);
         SwitchMaterial notificationSwitch = view.findViewById(R.id.element_show_notification_switch);
 
+        if (element.getPhoto() != null)
+            elementImage.setImageURI(element.getPhotoUri());
         title.setText(element.getName());
         description.setText(element.getDescription());
         price.setText(element.getPrice() == 0 ? "" : String.valueOf(element.getPrice()));
@@ -223,6 +236,46 @@ public class MotorcycleDetailElementFragment extends Fragment {
         if (existing) {
             saveButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void initImagePickerLauncher() {
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        Uri selectedImageUri = result.getData().getData();
+                        if (selectedImageUri != null) {
+                            ImageView imageView = view.findViewById(R.id.element_image_view);
+                            imageView.setImageURI(selectedImageUri);
+                            element.setPhoto(getRealPathFromURI(selectedImageUri));
+                        }
+                    }
+                }
+        );
+    }
+
+    private String getRealPathFromURI(Uri uri) {
+        String path = null;
+        if (uri.getScheme().equals("content")) {
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
+            if (cursor != null) {
+                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                path = cursor.getString(columnIndex);
+                cursor.close();
+            }
+        }
+        else if (uri.getScheme().equals("file")) {
+            path = uri.getPath();
+        }
+        return path;
+    }
+
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        imagePickerLauncher.launch(intent);
     }
 
     public void setDataPassingInterface(DataPassingInterface dataPassingInterface) {
