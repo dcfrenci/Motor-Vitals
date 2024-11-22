@@ -1,5 +1,6 @@
 package com.motorvitals.adapter;
 
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,13 @@ public class MotorcycleDetailElementRecyclerViewAdapter extends RecyclerView.Ada
 
             itemView.findViewById(R.id.card_element_delete).setOnClickListener(click -> {
                 if (recyclerViewInterface != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    recyclerViewInterface.onCardDelete(position, getAdapterPosition());
+                    new AlertDialog.Builder(click.getContext())
+                            .setCancelable(true)
+                            .setTitle("Are you sure to delete this element ?")
+                            .setMessage("If you confirm the element will be deleted permanently")
+                            .setPositiveButton("Confirm", (dialog, which) -> recyclerViewInterface.onCardDelete(position, getAdapterPosition()))
+                            .setNegativeButton(android.R.string.cancel, (dialog, which) -> itemView.findViewById(R.id.card_element_delete).setVisibility(View.GONE))
+                            .show();
                 }
             });
         }

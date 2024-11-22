@@ -223,7 +223,11 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
     @Override
     public void onCardDelete(int listIndex, int index) {
         if (listIndex <= motorcycle.getElementList().size()) {
-            if (index <= motorcycle.getElementList().get(listIndex).getElements().size()) {
+            if (index == RecyclerView.NO_POSITION){
+                motorcycle.getElementList().remove(listIndex);
+                setUpMotorcycleDetailModels();
+            }
+            else if (index <= motorcycle.getElementList().get(listIndex).getElements().size()) {
                 motorcycle.getElementList().get(listIndex).getElements().remove(index);
                 setUpMotorcycleDetailModels();
             }

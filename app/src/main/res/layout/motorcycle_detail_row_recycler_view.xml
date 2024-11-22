@@ -21,6 +21,7 @@
             app:cardElevation="@dimen/card_elevation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/list_container_top"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -38,6 +39,18 @@
 
                     android:layout_marginStart="@dimen/card_title_margin_sx"
                     android:layout_marginTop="@dimen/card_top_margin"/>
+            <ImageView
+                    android:id="@+id/list_delete_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/image_description"
+                    app:srcCompat="@drawable/baseline_trash_delete_fill_24"
+                    app:tint="@color/dark_text"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/card_to_top"/>
             <ImageView
                     android:id="@+id/list_button_image_card"
                     android:src="@drawable/baseline_arrow_drop_down_24"

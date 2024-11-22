@@ -1,5 +1,6 @@
 package com.motorvitals.adapter;
 
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,28 @@ public class MotorcycleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Mo
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION){
                         recyclerViewInterface.onCardClick(position, RecyclerView.NO_POSITION);
+                    }
+                }
+            });
+            itemView.setOnLongClickListener(longClick -> {
+                if (itemView.findViewById(R.id.list_delete_image).getVisibility() == View.GONE) {
+                    itemView.findViewById(R.id.list_delete_image).setVisibility(View.VISIBLE);
+                } else {
+                    itemView.findViewById(R.id.list_delete_image).setVisibility(View.GONE);
+                }
+                return true;
+            });
+            itemView.findViewById(R.id.list_delete_image).setOnClickListener(click -> {
+                if (recyclerViewInterface != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        new AlertDialog.Builder(click.getContext())
+                                .setCancelable(true)
+                                .setTitle("Are you sure to delete this list ?")
+                                .setMessage("If you confirm the list all the contained elements will be deleted")
+                                .setPositiveButton("Confirm", (dialog, which) -> recyclerViewInterface.onCardDelete(position, RecyclerView.NO_POSITION))
+                                .setNegativeButton(android.R.string.cancel, (dialog, which) -> itemView.findViewById(R.id.list_delete_image).setVisibility(View.GONE))
+                                .show();
                     }
                 }
             });

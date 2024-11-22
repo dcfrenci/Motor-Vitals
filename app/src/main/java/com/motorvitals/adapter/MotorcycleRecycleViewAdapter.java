@@ -1,5 +1,6 @@
 package com.motorvitals.adapter;
 
+import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +79,13 @@ public class MotorcycleRecycleViewAdapter extends RecyclerView.Adapter<Motorcycl
 
             itemView.findViewById(R.id.cardMotorcycleCancel).setOnClickListener(click -> {
                 if (recyclerViewInterface != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                    recyclerViewInterface.onCardDelete(RecyclerView.NO_POSITION, getAdapterPosition());
+                    new AlertDialog.Builder(click.getContext())
+                            .setCancelable(true)
+                            .setTitle("Are you sure to delete this motorcycle ?")
+                            .setMessage("If you confirm the motorcycle and all the contained list and elements will be deleted")
+                            .setPositiveButton("Confirm", (dialog, which) -> recyclerViewInterface.onCardDelete(RecyclerView.NO_POSITION, getAdapterPosition()))
+                            .setNegativeButton(android.R.string.cancel, (dialog, which) -> itemView.findViewById(R.id.cardMotorcycleCancel).setVisibility(View.GONE))
+                            .show();
                 }
             });
         }
