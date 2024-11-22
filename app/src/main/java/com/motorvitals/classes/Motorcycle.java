@@ -131,12 +131,12 @@ public class Motorcycle implements Motor, Parcelable {
         return true;
     }
 
-    public RecyclerView getElementsWithStatusRecyclerView(RecyclerView recyclerView, Fragment fragment, Integer motorcyclePosition) {
+    public RecyclerView getElementsWithStatusRecyclerView(RecyclerView recyclerView, Fragment fragment, Integer motorcyclePosition, User user) {
         ArrayList<Element> filtered = new ArrayList<>();
         for (ElementList list : getElementList()) {
             filtered.addAll(getElementsWithState(list));
         }
-        StatusElementRecyclerViewAdapter adapter = new StatusElementRecyclerViewAdapter(fragment, filtered, getElementList(), motorcyclePosition);
+        StatusElementRecyclerViewAdapter adapter = new StatusElementRecyclerViewAdapter(fragment, filtered, getElementList(), motorcyclePosition, user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         return recyclerView;

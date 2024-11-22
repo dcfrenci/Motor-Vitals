@@ -70,6 +70,7 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
     @Override
     public void onCardClick(int position, int positionElement) {
         Motorcycle motorcycle = position == RecyclerView.NO_POSITION ? new Motorcycle() : motorcycles.get(position);

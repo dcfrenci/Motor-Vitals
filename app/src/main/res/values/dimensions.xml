@@ -53,4 +53,8 @@
     <dimen name="status_elem_card_margin_width">5dp</dimen>
     <dimen name="status_elem_card_margin_height">5dp</dimen>
 
+    <!--  Profile fragment  -->
+    <dimen name="profile_user_name_text">20sp</dimen>
+    <dimen name="profile_user_name_margin_bottom">15dp</dimen>
+
 </resources>

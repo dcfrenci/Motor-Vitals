@@ -13,7 +13,7 @@
     <color name="dark_less_text">#828582</color>
 
     <!--  State Color  -->
-    <color name="state_min">#FF0000</color>
+    <color name="state_max">#FF0000</color>
     <color name="state_med">#FFFF00</color>
-    <color name="state_max">#00FF00</color>
+    <color name="state_min">#00FF00</color>
 </resources>

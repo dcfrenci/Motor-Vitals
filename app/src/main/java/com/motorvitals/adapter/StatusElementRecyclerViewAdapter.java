@@ -26,13 +26,14 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
     private final ArrayList<ElementList> elementLists;
     private final Integer motorcycleIndex;
     // TODO - Make the user not static and using the correct color selected in the profile fragment
-    private static final User user = new User("Generic");
+    private final User user;
 
-    public StatusElementRecyclerViewAdapter(Fragment fragment, ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex) {
+    public StatusElementRecyclerViewAdapter(Fragment fragment, ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex, User user) {
         this.fragment = fragment;
         this.elementStatus = elementStatus;
         this.elementLists = elementLists;
         this.motorcycleIndex = motorcycleIndex;
+        this.user = user;
     }
 
     @NonNull
@@ -41,7 +42,7 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
     public StatusElementRecyclerViewAdapter.StatusViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup viewGroup, int position) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.status_element_row_recycler_view, viewGroup, false);
-        return new StatusElementRecyclerViewAdapter.StatusViewHolder(view, fragment);
+        return new StatusElementRecyclerViewAdapter.StatusViewHolder(view, fragment, user);
     }
 
     @Override
@@ -61,14 +62,14 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
 
     public static class StatusViewHolder extends RecyclerView.ViewHolder {
         private final Fragment fragment;
+        private final User user;
         private TextView title;
         private TextView dayInterval;
         private ImageView dayImage;
         private TextView kmInterval;
         private ImageView kmImage;
 
-
-        public StatusViewHolder(@NonNull @NotNull View itemView, Fragment fragment) {
+        public StatusViewHolder(@NonNull @NotNull View itemView, Fragment fragment, User user) {
             super(itemView);
 
             this.title = itemView.findViewById(R.id.status_elem_title);
@@ -77,6 +78,7 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
             this.kmInterval = itemView.findViewById(R.id.status_elem_km);
             this.kmImage = itemView.findViewById(R.id.status_elem_km_image);
             this.fragment = fragment;
+            this.user = user;
         }
 
         public TextView getTitle() {

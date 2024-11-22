@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.motorvitals.R;
 import com.motorvitals.classes.Motorcycle;
+import com.motorvitals.classes.User;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -17,10 +18,12 @@ import java.util.ArrayList;
 public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusRecyclerViewAdapter.StatusViewHolder> {
     private final ArrayList<Motorcycle> motorcycles;
     private final Fragment fragment;
+    private final User user;
 
-    public StatusRecyclerViewAdapter(ArrayList<Motorcycle> motorcycles, Fragment fragment) {
+    public StatusRecyclerViewAdapter(ArrayList<Motorcycle> motorcycles, Fragment fragment, User user) {
         this.motorcycles = motorcycles;
         this.fragment = fragment;
+        this.user = user;
     }
 
     @NonNull
@@ -35,7 +38,7 @@ public class StatusRecyclerViewAdapter extends RecyclerView.Adapter<StatusRecycl
     @Override
     public void onBindViewHolder(@NonNull @NotNull StatusRecyclerViewAdapter.StatusViewHolder holder, int position) {
         holder.setTitle(motorcycles.get(position).getNameView(holder.getTitle()));
-        holder.setRecyclerView(motorcycles.get(position).getElementsWithStatusRecyclerView(holder.getRecyclerView(), fragment, position));
+        holder.setRecyclerView(motorcycles.get(position).getElementsWithStatusRecyclerView(holder.getRecyclerView(), fragment, position, user));
     }
 
     @Override

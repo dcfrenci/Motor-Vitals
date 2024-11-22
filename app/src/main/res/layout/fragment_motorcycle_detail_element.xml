@@ -13,7 +13,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/dark_more_background"
+                android:background="@drawable/shape_round_bottom_style"
                 android:id="@+id/constraintLayout12">
 
                 <ImageView

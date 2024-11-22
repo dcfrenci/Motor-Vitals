@@ -43,5 +43,15 @@
     <string name="status_motorcycles">Motorcycles</string>
     <string name="status_detail">Detail</string>
 
+    <!--  Profile fragment  -->
+    <string name="profile_min_color">Minimum color</string>
+    <string name="profile_med_color">Medium color</string>
+    <string name="profile_max_color">Maximum color</string>
+    <string name="profile_hint_min">Color format Es: #00FF00</string>
+    <string name="profile_hint_med">Color format Es: #FFFF00</string>
+    <string name="profile_hint_max">Color format Es: #FF0000</string>
+    <string name="profile_backup">Backup</string>
+    <string name="profile_user">Your nickname</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
