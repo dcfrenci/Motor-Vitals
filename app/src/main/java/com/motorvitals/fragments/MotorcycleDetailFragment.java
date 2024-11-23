@@ -169,8 +169,7 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);
         TextView km = view.findViewById(R.id.motorcycle_km_text_view);
 
-        if (motorcycle.getPhoto() != null)
-            motorcycleImage.setImageURI(motorcycle.getPhotoUri());
+        motorcycle.getPhotoView(motorcycleImage);
         title.setText(motorcycle.getName());
         description.setText(motorcycle.getDescription());
         km.setText(motorcycle.getKm() == 0 ? "" : motorcycle.getKm().toString());

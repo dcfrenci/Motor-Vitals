@@ -114,7 +114,7 @@ public class Motorcycle implements Motor, Parcelable {
     }
 
     public ImageView getPhotoView(ImageView imageView) {
-        if (getPhoto() != null)
+        if (getPhoto() != null && getPhotoUri() != null)
             imageView.setImageURI(getPhotoUri());
         return imageView;
     }

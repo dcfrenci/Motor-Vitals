@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.status_fragment)
                 replaceFragment(StatusFragment.newInstance(motorcycles, user));
             if (item.getItemId() == R.id.profile_fragment)
-                replaceFragment(ProfileFragment.newInstance(user));
+                replaceFragment(ProfileFragment.newInstance(motorcycles, user));
             return true;
         });
     }
@@ -74,25 +74,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadData() {
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
-            motorcycles = mapper.readValue(file, new TypeReference<ArrayList<Motorcycle>>(){});
-        } catch (IOException e) {
-            System.err.println("Error while loading the ArrayList of motorcycle number: " + e.getMessage());
-            motorcycles = new ArrayList<>();
-        }
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            File fileUser = new File(getApplicationContext().getFilesDir(), "User");
-            user = mapper.readValue(fileUser, new TypeReference<User>() {});
-        } catch (IOException e) {
-            System.err.println("Error while loading the user data: " + e.getMessage());
-            user = new User();
-        }
-    }
-
-    private void saveData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -112,6 +93,25 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+            motorcycles = mapper.readValue(file, new TypeReference<ArrayList<Motorcycle>>(){});
+        } catch (IOException e) {
+            System.err.println("Error while loading the ArrayList of motorcycle number: " + e.getMessage());
+            motorcycles = new ArrayList<>();
+        }
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            File fileUser = new File(getApplicationContext().getFilesDir(), "User");
+            user = mapper.readValue(fileUser, new TypeReference<User>() {});
+        } catch (IOException e) {
+            System.err.println("Error while loading the user data: " + e.getMessage());
+            user = new User();
+        }
+    }
+
+    private void saveData() {
         try {
             ObjectMapper mapper = new ObjectMapper();
             File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
