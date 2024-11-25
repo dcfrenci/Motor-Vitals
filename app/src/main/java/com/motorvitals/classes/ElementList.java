@@ -45,10 +45,6 @@ public class ElementList implements Parcelable {
         return getElements().get(position);
     }
 
-    public void setElement(int position, Element element) {
-        elements.set(position, element);
-    }
-
     public TextView getTitleView(TextView textView) {
         textView.setText(getTitle());
         return textView;

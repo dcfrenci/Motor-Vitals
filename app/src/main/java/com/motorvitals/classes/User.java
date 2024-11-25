@@ -15,7 +15,7 @@ import java.util.Map;
 @JsonDeserialize(using = UserDeserializer.class)
 public class User implements Parcelable {
     private String name;
-    private Map<String, Integer> stateColor;
+    private final Map<String, Integer> stateColor;
 
     public User() {
         this.name = "";
@@ -37,10 +37,6 @@ public class User implements Parcelable {
 
     public Map<String, Integer> getStateColor() {
         return stateColor;
-    }
-
-    public void setStateColor(Map<String, Integer> stateColor) {
-        this.stateColor = stateColor;
     }
 
     public Color getColor(String string) {

@@ -1,44 +1,35 @@
 package com.motorvitals.fragments;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import androidx.recyclerview.widget.RecyclerView;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.motorvitals.MainActivity;
 import com.motorvitals.R;
 import com.motorvitals.classes.Motorcycle;
 import com.motorvitals.classes.User;
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -64,7 +55,6 @@ public class ProfileFragment extends Fragment {
      * @param user Parameter 1.
      * @return A new instance of fragment ProfileFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(ArrayList<Motorcycle> motorcycle, User user) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -117,12 +107,14 @@ public class ProfileFragment extends Fragment {
             updateTextViewClickable(view, R.id.profile_color_max, true);
         });
 
-        view.findViewById(R.id.profile_backup_button).setOnClickListener(click -> {
-            createBackup();
-        });
+        view.findViewById(R.id.profile_backup_button).setOnClickListener(click -> createBackup());
         return view;
     }
 
+    /**
+     * Load/Update the fragments with the stored user data if they are present.
+     * @param view View
+     */
     private void setUpUser(View view) {
         TextView name = view.findViewById(R.id.profile_user_name);
         TextView minColorCode = view.findViewById(R.id.profile_color_min);
@@ -141,6 +133,11 @@ public class ProfileFragment extends Fragment {
         maxColorCircle.setColorFilter(user.getStateColor().get("max") == null ? ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_max) : user.getStateColor().get("max"));
     }
 
+    /**
+     * Check if the String correspond to a color in the correct format.
+     * @param colorString Color in string form
+     * @return Integer
+     */
     private Integer checkIfColor(String colorString) {
         if (colorString == null || !colorString.matches("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$")) {
             return null;
@@ -152,11 +149,32 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Given the TextView ID check if the color is correct and in that case update the
+     * ImageView ID with that color corresponding to that String type.
+     *
+     * @param view View
+     * @param colorTextId ID of the TextView
+     * @param colorImageId ID of the ImageView
+     * @param type Type
+     * @return boolean
+     */
     private boolean updateColor(View view, int colorTextId, int colorImageId, String type) {
         TextView colorTextView = view.findViewById(colorTextId);
-        if (colorTextView.getText().toString().isEmpty())
-            return true;
         ImageView colorImageView = view.findViewById(colorImageId);
+        if (colorTextView.getText().toString().isEmpty()){
+            if (type.matches("min")) {
+                user.getStateColor().put(type, ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_min));
+                colorImageView.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_min));
+            } else if (type.matches("med")) {
+                user.getStateColor().put(type, ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_med));
+                colorImageView.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_med));
+            } else if (type.matches("max")) {
+                user.getStateColor().put(type, ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_max));
+                colorImageView.setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_max));
+            }
+            return true;
+        }
         Integer color = checkIfColor(colorTextView.getText().toString());
         if (color != null) {
             user.getStateColor().put(type, color);
@@ -172,6 +190,12 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+    /**
+     * Activate/Deactivate the EditText with the corresponding ID based on the value of the param active.
+     * @param view View
+     * @param id ID of the EditText view
+     * @param active True (activate) / False (deactivate)
+     */
     private void updateTextViewClickable(View view, int id, boolean active) {
         EditText text = view.findViewById(id);
         text.setEnabled(active);
@@ -180,15 +204,17 @@ public class ProfileFragment extends Fragment {
         text.setClickable(active);
     }
 
+    /**
+     * CreateBackup of the data of the app and save them in the Download directory with the name of the app and the date.
+     * When it has finished send a notification.
+     */
     private void createBackup() {
         saveData();
 
         if (ContextCompat.checkSelfPermission(Objects.requireNonNull(getContext()), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(Objects.requireNonNull(getActivity()), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
-
         try {
-            // Directory nella cartella Downloads
             File backupDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     "Motor-Vitals-Backup (" + LocalDate.now() + ")");
             if (backupDir.mkdirs()){
@@ -206,6 +232,9 @@ public class ProfileFragment extends Fragment {
         showNotification();
     }
 
+    /**
+     * Save all the data in the app local storage.
+     */
     private void saveData() {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -223,7 +252,9 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
+    /**
+     * Send a notification to let the user know that the backup is finished
+     */
     private void showNotification() {
         CharSequence name = "Backup Channel";
         String description = "Channel for backup notifications";

@@ -1,6 +1,5 @@
 package com.motorvitals.adapter;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +17,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<StatusElementRecyclerViewAdapter.StatusViewHolder> {
     private final Fragment fragment;
     private final ArrayList<Element> elementStatus;
     private final ArrayList<ElementList> elementLists;
     private final Integer motorcycleIndex;
-    // TODO - Make the user not static and using the correct color selected in the profile fragment
     private final User user;
 
     public StatusElementRecyclerViewAdapter(Fragment fragment, ArrayList<Element> elementStatus, ArrayList<ElementList> elementLists, Integer motorcycleIndex, User user) {
@@ -65,9 +62,9 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
         private final User user;
         private TextView title;
         private TextView dayInterval;
-        private ImageView dayImage;
+        private final ImageView dayImage;
         private TextView kmInterval;
-        private ImageView kmImage;
+        private final ImageView kmImage;
 
         public StatusViewHolder(@NonNull @NotNull View itemView, Fragment fragment, User user) {
             super(itemView);
@@ -109,16 +106,8 @@ public class StatusElementRecyclerViewAdapter extends RecyclerView.Adapter<Statu
             return dayImage;
         }
 
-        public void setDayImage(ImageView dayImage) {
-            this.dayImage = dayImage;
-        }
-
         public ImageView getKmImage() {
             return kmImage;
-        }
-
-        public void setKmImage(ImageView kmImage) {
-            this.kmImage = kmImage;
         }
 
         private void setImageStateColor(ImageView imageView, @NonNull HashMap<String, Integer> interval, int value) {

@@ -38,6 +38,7 @@ public class StatusFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param motorcycles ArrayList of motorcycles.
+     * @param user User profile
      * @return A new instance of fragment StatusFragment.
      */
     public static StatusFragment newInstance(ArrayList<Motorcycle> motorcycles, User user) {

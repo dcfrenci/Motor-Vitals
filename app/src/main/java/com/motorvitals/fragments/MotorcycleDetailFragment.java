@@ -27,6 +27,8 @@ import com.motorvitals.classes.Element;
 import com.motorvitals.classes.ElementList;
 import com.motorvitals.classes.Motorcycle;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MotorcycleDetailFragment#newInstance} factory method to
@@ -106,13 +108,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
             });
         });
 
-        view.findViewById(R.id.detail_motorcycle_image_view).setOnClickListener(click -> {
-            openImagePicker();
-        });
+        view.findViewById(R.id.detail_motorcycle_image_view).setOnClickListener(click -> openImagePicker());
 
-        view.findViewById(R.id.detail_motorcycle_back_button).setOnClickListener(click -> {
-            getParentFragmentManager().popBackStack();
-        });
+        view.findViewById(R.id.detail_motorcycle_back_button).setOnClickListener(click -> getParentFragmentManager().popBackStack());
 
         view.findViewById(R.id.detail_motorcycle_check_save).setOnClickListener(click -> {
             motorcycleExisting = false;
@@ -123,6 +121,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         return view;
     }
 
+    /**
+     * Load in the fragment the motorcycle image if it exists.
+     */
     private void initImagePickerLauncher() {
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -139,11 +140,16 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         );
     }
 
+    /**
+     * Returns the Path from the uri passed.
+     * @param uri Uri
+     * @return The path string or null if it doesn't exist.
+     */
     private String getRealPathFromURI(Uri uri) {
         String path = null;
         if (uri.getScheme().equals("content")) {
             String[] projection = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
+            Cursor cursor = Objects.requireNonNull(getContext()).getContentResolver().query(uri, projection, null, null, null);
             if (cursor != null) {
                 int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 cursor.moveToFirst();
@@ -157,12 +163,17 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         return path;
     }
 
-
+    /**
+     * Let the user choose an image.
+     */
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         imagePickerLauncher.launch(intent);
     }
 
+    /**
+     * Load/Update the fragment with motorcycle data.
+     */
     private void setUpMotorcycleDetailModels() {
         ImageView motorcycleImage = view.findViewById(R.id.detail_motorcycle_image_view);
         TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
@@ -185,6 +196,9 @@ public class MotorcycleDetailFragment extends Fragment implements RecyclerViewIn
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
+    /**
+     * Save all the data of the fragment.
+     */
     public void onSave() {
         TextView title = view.findViewById(R.id.detail_motorcycle_title_view);
         TextView description = view.findViewById(R.id.motorcycle_description_text_view);

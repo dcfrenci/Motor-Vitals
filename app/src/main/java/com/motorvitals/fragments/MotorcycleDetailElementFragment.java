@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.widget.*;
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,10 +18,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.motorvitals.R;
 import com.motorvitals.classes.Element;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Locale;
@@ -118,9 +114,7 @@ public class MotorcycleDetailElementFragment extends Fragment {
             getParentFragmentManager().popBackStack();
         });
 
-        view.findViewById(R.id.element_image_view).setOnClickListener(click -> {
-            openImagePicker();
-        });
+        view.findViewById(R.id.element_image_view).setOnClickListener(click -> openImagePicker());
         return view;
     }
     @Override
@@ -137,7 +131,10 @@ public class MotorcycleDetailElementFragment extends Fragment {
         dataPassingInterface.passingObject(element, elementListIndex, elementIndex);
     }
 
-    private void onSave() throws IllegalArgumentException {
+    /**
+     * Check if saving is possible and in that case save all the fragment data.
+     */
+    private void onSave() {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
         TextView price = view.findViewById(R.id.element_price);
@@ -174,6 +171,10 @@ public class MotorcycleDetailElementFragment extends Fragment {
         }
     }
 
+    /**
+     * Check if saving is possible.
+     * @return True is the value of km is correct.
+     */
     private boolean checkIfSave() {
         TextView lastKm = view.findViewById(R.id.element_last_km);
         if (Integer.parseInt(lastKm.getText().toString()) > element.getCurrentKm()) {
@@ -184,6 +185,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
         return true;
     }
 
+    /**
+     * Load/Update the fragments with the data of the element.
+     */
     private void setUpMotorcycleDetailElementModel() {
         TextView title = view.findViewById(R.id.element_title);
         TextView description = view.findViewById(R.id.element_description);
@@ -238,6 +242,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
         }
     }
 
+    /**
+     * Load in the fragment the motorcycle image if it exists.
+     */
     private void initImagePickerLauncher() {
         imagePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -254,11 +261,16 @@ public class MotorcycleDetailElementFragment extends Fragment {
         );
     }
 
+    /**
+     * Returns the Path from the uri passed.
+     * @param uri Uri
+     * @return The path string or null if it doesn't exist.
+     */
     private String getRealPathFromURI(Uri uri) {
         String path = null;
         if (uri.getScheme().equals("content")) {
             String[] projection = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContext().getContentResolver().query(uri, projection, null, null, null);
+            Cursor cursor = Objects.requireNonNull(getContext()).getContentResolver().query(uri, projection, null, null, null);
             if (cursor != null) {
                 int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 cursor.moveToFirst();
@@ -272,7 +284,9 @@ public class MotorcycleDetailElementFragment extends Fragment {
         return path;
     }
 
-
+    /**
+     * Let the user choose an image.
+     */
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         imagePickerLauncher.launch(intent);

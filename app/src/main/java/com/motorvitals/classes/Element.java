@@ -1,6 +1,5 @@
 package com.motorvitals.classes;
 
-import android.media.Image;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,8 +10,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.motorvitals.jackson.ElementDeserializer;
 import com.motorvitals.jackson.ElementSerializer;
-import com.motorvitals.jackson.MotorcycleDeserializer;
-import com.motorvitals.jackson.MotorcycleSerializer;
 
 import java.io.File;
 import java.time.LocalDate;

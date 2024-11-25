@@ -64,6 +64,9 @@ public class MotorcycleFragment extends Fragment implements RecyclerViewInterfac
         return view;
     }
 
+    /**
+     * Load/Update the fragments with all the motorcycles.
+     */
     private void setUpMotorcycleModels() {
         RecyclerView recyclerView = view.findViewById(R.id.motorcycleRecyclerView);
         MotorcycleRecycleViewAdapter adapter = new MotorcycleRecycleViewAdapter(this, this, motorcycles);
