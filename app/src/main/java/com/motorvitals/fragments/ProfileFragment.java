@@ -4,22 +4,30 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.motorvitals.R;
 import com.motorvitals.classes.Motorcycle;
@@ -27,11 +35,13 @@ import com.motorvitals.classes.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +53,7 @@ public class ProfileFragment extends Fragment {
     private static final String USER = "user";
     private ArrayList<Motorcycle> motorcycles;
     private User user;
+    private ActivityResultLauncher<Intent> folderPickerLauncher;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -78,6 +89,7 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         setUpUser(view);
+        loadBackup();
 
         view.findViewById(R.id.profile_save).setOnClickListener(click -> {
             TextView name = view.findViewById(R.id.profile_user_name);
@@ -108,6 +120,8 @@ public class ProfileFragment extends Fragment {
         });
 
         view.findViewById(R.id.profile_backup_button).setOnClickListener(click -> createBackup());
+
+        view.findViewById(R.id.profile_load_backup_button).setOnClickListener(click -> openFolderPicker());
         return view;
     }
 
@@ -129,7 +143,7 @@ public class ProfileFragment extends Fragment {
         medColorCode.setText(user.getStateColor().get("med") == null ? "" : String.format("#%08X", (user.getStateColor().get("med"))));
         maxColorCode.setText(user.getStateColor().get("max") == null ? "" : String.format("#%08X", (user.getStateColor().get("max"))));
         minColorCircle.setColorFilter(user.getStateColor().get("min") == null ? ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_min) : user.getStateColor().get("min"));
-        medColorCircle.setColorFilter(user.getStateColor().get("med") == null ? ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_med) : user.getStateColor().get("max"));
+        medColorCircle.setColorFilter(user.getStateColor().get("med") == null ? ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_med) : user.getStateColor().get("med"));
         maxColorCircle.setColorFilter(user.getStateColor().get("max") == null ? ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.state_max) : user.getStateColor().get("max"));
     }
 
@@ -205,6 +219,106 @@ public class ProfileFragment extends Fragment {
     }
 
     /**
+     * Let the user choose a directory
+     */
+    private void openFolderPicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+        folderPickerLauncher.launch(intent);
+    }
+
+    /**
+     * Load the backup, making sure that the user is sure before doing it
+     */
+    private void loadBackup() {
+        folderPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri folderUri = result.getData().getData();
+                        if (folderUri != null) {
+                            Objects.requireNonNull(getContext()).getContentResolver().takePersistableUriPermission(
+                                    folderUri,
+                                    Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                            );
+                            if (checkFolderFiles(folderUri)) {
+                                new AlertDialog.Builder(getContext())
+                                        .setCancelable(true)
+                                        .setTitle("Are you sure to load this backup ?")
+                                        .setMessage("If you confirm the vehicles will be added and the user data will be updated with the backup data")
+                                        .setPositiveButton("Confirm", (dialog, which) ->  loadFiles(folderUri))
+                                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {})
+                                        .show();
+                            } else {
+                                Toast.makeText(getContext(), "The selected folder is not a backup of " + ContextCompat.getString(getContext(), R.string.app_name), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+        );
+    }
+
+    /**
+     * Check if the given Uri is a directory and contains all the files of the backup
+     * @param folderUri Uri of the directory
+     * @return true if the Uri is correct, False otherwise
+     */
+    private boolean checkFolderFiles(Uri folderUri) {
+        DocumentFile directory = DocumentFile.fromTreeUri(Objects.requireNonNull(getContext()), folderUri);
+        if (directory == null || !directory.isDirectory()) {
+            return false;
+        }
+        Set<String> requiredFiles = new HashSet<>(Arrays.asList(ContextCompat.getString(getContext(), R.string.app_motorcycle_backup_file), ContextCompat.getString(getContext(), R.string.app_user_backup_file)));
+        int fileCount = 0;
+        for (DocumentFile file : directory.listFiles()) {
+            if (file.isFile() && requiredFiles.contains(file.getName())) {
+                fileCount++;
+            } else {
+                return false;
+            }
+        }
+        return fileCount == 2;
+    }
+
+    /**
+     * Load the files into the app, adding vehicles and restoring the user data
+     * @param folderUri Uri of the folder to load
+     */
+    private void loadFiles(Uri folderUri) {
+        DocumentFile directory = DocumentFile.fromTreeUri(Objects.requireNonNull(getContext()), folderUri);
+        if (directory == null || !directory.isDirectory()) {
+            return;
+        }
+        for (DocumentFile file : directory.listFiles()) {
+            if (file.getName() != null && file.getName().matches(ContextCompat.getString(getContext(), R.string.app_motorcycle_backup_file))) {
+                try {
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(file.getUri());
+                    ObjectMapper mapper = new ObjectMapper();
+                    ArrayList<Motorcycle> motorcyclesBackup = mapper.readValue(inputStream, new TypeReference<ArrayList<Motorcycle>>() {});
+                    motorcycles.addAll(motorcyclesBackup);
+                    inputStream.close();
+                } catch (IOException e) {
+                    System.err.println("Error while loading the ArrayList of backup motorcycle: " + e.getMessage());
+                    Toast.makeText(getContext(), "ERROR: The backup was not loaded successfully", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            if (file.getName() != null && file.getName().matches(ContextCompat.getString(getContext(), R.string.app_user_backup_file))) {
+                try {
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(file.getUri());
+                    ObjectMapper mapper = new ObjectMapper();
+                    user = mapper.readValue(inputStream, new TypeReference<User>() {});
+                    inputStream.close();
+                } catch (IOException e) {
+                    System.err.println("Error while loading the user backup data: " + e.getMessage());
+                    Toast.makeText(getContext(), "ERROR: The backup was not loaded successfully", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            Toast.makeText(getContext(), "DONE: The backup was not loaded successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
      * CreateBackup of the data of the app and save them in the Download directory with the name of the app and the date.
      * When it has finished send a notification.
      */
@@ -218,10 +332,10 @@ public class ProfileFragment extends Fragment {
             File backupDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                     "Motor-Vitals-Backup (" + LocalDate.now() + ")");
             if (backupDir.mkdirs()){
-                File fileMotorcycle = new File(getContext().getFilesDir(), "Motorcycles");
-                File fileUser = new File(getContext().getFilesDir(), "User");
-                File backupMotorcycle = new File(backupDir, "BackupMotorcycle");
-                File backupUser = new File(backupDir, "BackupUser");
+                File fileMotorcycle = new File(getContext().getFilesDir(), ContextCompat.getString(getContext(), R.string.app_motorcycle_file));
+                File fileUser = new File(getContext().getFilesDir(), ContextCompat.getString(getContext(), R.string.app_user_file));
+                File backupMotorcycle = new File(backupDir, ContextCompat.getString(getContext(), R.string.app_motorcycle_backup_file));
+                File backupUser = new File(backupDir, ContextCompat.getString(getContext(), R.string.app_user_backup_file));
                 Files.copy(fileMotorcycle.toPath(), backupMotorcycle.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 Files.copy(fileUser.toPath(), backupUser.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
@@ -238,14 +352,14 @@ public class ProfileFragment extends Fragment {
     private void saveData() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File file = new File(Objects.requireNonNull(getContext()).getFilesDir(), "Motorcycles");
+            File file = new File(Objects.requireNonNull(getContext()).getFilesDir(), ContextCompat.getString(getContext(), R.string.app_motorcycle_file));
             mapper.writeValue(file, motorcycles);
         } catch (IOException e) {
             System.err.println("Error while saving the ArrayList of motorcycle number: " + e.getMessage());
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File fileUser = new File(getContext().getFilesDir(), "User");
+            File fileUser = new File(getContext().getFilesDir(), ContextCompat.getString(getContext(), R.string.app_user_file));
             mapper.writeValue(fileUser, user);
         } catch (IOException e) {
             System.err.println("Error while saving the user data: " + e.getMessage());

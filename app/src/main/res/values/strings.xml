@@ -1,10 +1,16 @@
 <resources>
+    <!--  App configuration  -->
+    <string name="app_name">Motor Vitals</string>
+    <string name="app_motorcycle_file">Motorcycle</string>
+    <string name="app_user_file">User</string>
+    <string name="app_motorcycle_backup_file">BackupMotorcycle</string>
+    <string name="app_user_backup_file">BackupUser</string>
+
     <!--  Content description  -->
     <string name="button_description">Button_description</string>
     <string name="image_description">Image_description</string>
 
     <!--  Bottom navigation menu  -->
-    <string name="app_name">MotorVitals</string>
     <string name="Motorcycle">Motorcycle</string>
     <string name="Status">Status</string>
     <string name="Profile">Profile</string>
@@ -51,6 +57,7 @@
     <string name="profile_hint_med">Color format Es: #FFFF00</string>
     <string name="profile_hint_max">Color format Es: #FF0000</string>
     <string name="profile_backup">Backup</string>
+    <string name="profile_load_backup">Load Backup</string>
     <string name="profile_user">Your nickname</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

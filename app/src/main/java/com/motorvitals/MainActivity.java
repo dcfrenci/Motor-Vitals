@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param fragment Fragment that will be loaded
+     * Load the new fragment into the activity
+     * @param fragment Fragment to be loaded
      */
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    /**
+     * Load all the data of the app.
+     */
     private void loadData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+            File file = new File(getApplicationContext().getFilesDir(), ContextCompat.getString(getApplicationContext(), R.string.app_motorcycle_file));
             motorcycles = mapper.readValue(file, new TypeReference<ArrayList<Motorcycle>>(){});
         } catch (IOException e) {
             System.err.println("Error while loading the ArrayList of motorcycle number: " + e.getMessage());
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
         try{
             ObjectMapper mapper = new ObjectMapper();
-            File fileUser = new File(getApplicationContext().getFilesDir(), "User");
+            File fileUser = new File(getApplicationContext().getFilesDir(), ContextCompat.getString(getApplicationContext(), R.string.app_user_file));
             user = mapper.readValue(fileUser, new TypeReference<User>() {});
         } catch (IOException e) {
             System.err.println("Error while loading the user data: " + e.getMessage());
@@ -111,23 +114,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Save all the data of the app.
+     */
     private void saveData() {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File file = new File(getApplicationContext().getFilesDir(), "Motorcycles");
+            File file = new File(getApplicationContext().getFilesDir(), ContextCompat.getString(getApplicationContext(), R.string.app_motorcycle_file));
             mapper.writeValue(file, motorcycles);
         } catch (IOException e) {
             System.err.println("Error while saving the ArrayList of motorcycle number: " + e.getMessage());
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            File fileUser = new File(getApplicationContext().getFilesDir(), "User");
+            File fileUser = new File(getApplicationContext().getFilesDir(), ContextCompat.getString(getApplicationContext(), R.string.app_user_file));
             mapper.writeValue(fileUser, user);
         } catch (IOException e) {
             System.err.println("Error while saving the user data: " + e.getMessage());
         }
     }
 
+    /**
+     * Send periodically notification to the user
+     */
     private void notificationSystem() {
         WorkManager.getInstance(getApplicationContext()).cancelAllWork();
         PeriodicWorkRequest notificationRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 1, TimeUnit.DAYS).build();

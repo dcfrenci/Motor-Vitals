@@ -56,5 +56,6 @@
     <!--  Profile fragment  -->
     <dimen name="profile_user_name_text">20sp</dimen>
     <dimen name="profile_user_name_margin_bottom">15dp</dimen>
+    <dimen name="profile_button_spacing">30dp</dimen>
 
 </resources>
